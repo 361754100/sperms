@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class ReqCostAspect {
+public class MethodCostAspect {
 
-    private Logger logger = LoggerFactory.getLogger(ReqCostAspect.class);
+    private Logger logger = LoggerFactory.getLogger(MethodCostAspect.class);
     //耗时时间
     private long spendTime = 0L;
 
@@ -26,7 +26,7 @@ public class ReqCostAspect {
      * 定义拦截方法规则
      */
     @Pointcut("execution(public * com.smart.sperms.controller.*.*(..))")
-    public void spendTimeLog() {}
+    public void costTimeLog() {}
 
     /**
      * 获取方法执行耗时时间
@@ -34,8 +34,8 @@ public class ReqCostAspect {
      * @return
      * @throws Throwable
      */
-    @Around("spendTimeLog()")
-    public Object sqlLogAround(ProceedingJoinPoint point) throws Throwable {
+    @Around("costTimeLog()")
+    public Object methodAround(ProceedingJoinPoint point) throws Throwable {
         long start = System.currentTimeMillis();
         Object result = point.proceed();
         spendTime = System.currentTimeMillis() - start;
@@ -46,8 +46,8 @@ public class ReqCostAspect {
      * 记录执行方法和执行耗时时间
      * @param joinPoint 切点信息
      */
-    @AfterReturning(value = "spendTimeLog()")
-    public void sqlLogAfter(JoinPoint joinPoint) {
+    @AfterReturning(value = "costTimeLog()")
+    public void methodAfter(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
         //记录耗时
         logger.info("{}方法执行耗时：{}ms", method, spendTime);
