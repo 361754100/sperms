@@ -59,7 +59,7 @@ public class EquipmentController {
     }
 
     @ApiOperation(value = "删除设备信息")
-    @PostMapping(value = "/vehicle/delete")
+    @PostMapping(value = "/delete")
     public CommonWrapper delete(@RequestBody EquipmentDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = equipmentService.deleteInfo(params.geteIds());
