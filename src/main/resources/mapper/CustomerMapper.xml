@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.Customer" >
+    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_sex" property="customerSex" jdbcType="CHAR" />
+    <result column="customer_age" property="customerAge" jdbcType="INTEGER" />
+    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
+    <result column="customer_email" property="customerEmail" jdbcType="VARCHAR" />
+    <result column="customer_addr" property="customerAddr" jdbcType="VARCHAR" />
+    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_no, customer_name, customer_sex, customer_age, customer_phone, customer_email, 
+    customer_addr, customer_company, creation_time, modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from customer
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.Customer" >
+    insert into customer (customer_no, customer_name, customer_sex, 
+      customer_age, customer_phone, customer_email, 
+      customer_addr, customer_company, creation_time, 
+      modify_time)
+    values (#{customerNo,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerSex,jdbcType=CHAR}, 
+      #{customerAge,jdbcType=INTEGER}, #{customerPhone,jdbcType=CHAR}, #{customerEmail,jdbcType=VARCHAR}, 
+      #{customerAddr,jdbcType=VARCHAR}, #{customerCompany,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerNo != null" >
+        customer_no,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerSex != null" >
+        customer_sex,
+      </if>
+      <if test="customerAge != null" >
+        customer_age,
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone,
+      </if>
+      <if test="customerEmail != null" >
+        customer_email,
+      </if>
+      <if test="customerAddr != null" >
+        customer_addr,
+      </if>
+      <if test="customerCompany != null" >
+        customer_company,
+      </if>
+      <if test="creationTime != null" >
+        creation_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerNo != null" >
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerSex != null" >
+        #{customerSex,jdbcType=CHAR},
+      </if>
+      <if test="customerAge != null" >
+        #{customerAge,jdbcType=INTEGER},
+      </if>
+      <if test="customerPhone != null" >
+        #{customerPhone,jdbcType=CHAR},
+      </if>
+      <if test="customerEmail != null" >
+        #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddr != null" >
+        #{customerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCompany != null" >
+        #{customerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null" >
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.customerNo != null" >
+        customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerSex != null" >
+        customer_sex = #{record.customerSex,jdbcType=CHAR},
+      </if>
+      <if test="record.customerAge != null" >
+        customer_age = #{record.customerAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerPhone != null" >
+        customer_phone = #{record.customerPhone,jdbcType=CHAR},
+      </if>
+      <if test="record.customerEmail != null" >
+        customer_email = #{record.customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAddr != null" >
+        customer_addr = #{record.customerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerCompany != null" >
+        customer_company = #{record.customerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationTime != null" >
+        creation_time = #{record.creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      customer_sex = #{record.customerSex,jdbcType=CHAR},
+      customer_age = #{record.customerAge,jdbcType=INTEGER},
+      customer_phone = #{record.customerPhone,jdbcType=CHAR},
+      customer_email = #{record.customerEmail,jdbcType=VARCHAR},
+      customer_addr = #{record.customerAddr,jdbcType=VARCHAR},
+      customer_company = #{record.customerCompany,jdbcType=VARCHAR},
+      creation_time = #{record.creationTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smart.sperms.dao.model.Customer" >
+    update customer
+    <set >
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerSex != null" >
+        customer_sex = #{customerSex,jdbcType=CHAR},
+      </if>
+      <if test="customerAge != null" >
+        customer_age = #{customerAge,jdbcType=INTEGER},
+      </if>
+      <if test="customerPhone != null" >
+        customer_phone = #{customerPhone,jdbcType=CHAR},
+      </if>
+      <if test="customerEmail != null" >
+        customer_email = #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddr != null" >
+        customer_addr = #{customerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCompany != null" >
+        customer_company = #{customerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null" >
+        creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.Customer" >
+    update customer
+    set customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_sex = #{customerSex,jdbcType=CHAR},
+      customer_age = #{customerAge,jdbcType=INTEGER},
+      customer_phone = #{customerPhone,jdbcType=CHAR},
+      customer_email = #{customerEmail,jdbcType=VARCHAR},
+      customer_addr = #{customerAddr,jdbcType=VARCHAR},
+      customer_company = #{customerCompany,jdbcType=VARCHAR},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.CustomerExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

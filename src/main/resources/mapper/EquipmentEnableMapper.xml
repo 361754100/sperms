@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.EquipmentEnableMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.EquipmentEnable" >
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="ee_enable" property="eeEnable" jdbcType="INTEGER" />
+    <result column="ee_condition" property="eeCondition" jdbcType="VARCHAR" />
+    <result column="ee_longitude" property="eeLongitude" jdbcType="VARCHAR" />
+    <result column="ee_latitude" property="eeLatitude" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    e_id, ee_enable, ee_condition, ee_longitude, ee_latitude
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentEnableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from equipment_enable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.EquipmentEnableExample" >
+    delete from equipment_enable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.EquipmentEnable" >
+    insert into equipment_enable (e_id, ee_enable, ee_condition, 
+      ee_longitude, ee_latitude)
+    values (#{eId,jdbcType=VARCHAR}, #{eeEnable,jdbcType=INTEGER}, #{eeCondition,jdbcType=VARCHAR}, 
+      #{eeLongitude,jdbcType=VARCHAR}, #{eeLatitude,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.EquipmentEnable" >
+    insert into equipment_enable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="eeEnable != null" >
+        ee_enable,
+      </if>
+      <if test="eeCondition != null" >
+        ee_condition,
+      </if>
+      <if test="eeLongitude != null" >
+        ee_longitude,
+      </if>
+      <if test="eeLatitude != null" >
+        ee_latitude,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="eeEnable != null" >
+        #{eeEnable,jdbcType=INTEGER},
+      </if>
+      <if test="eeCondition != null" >
+        #{eeCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="eeLongitude != null" >
+        #{eeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="eeLatitude != null" >
+        #{eeLatitude,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.EquipmentEnableExample" resultType="java.lang.Integer" >
+    select count(*) from equipment_enable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update equipment_enable
+    <set >
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eeEnable != null" >
+        ee_enable = #{record.eeEnable,jdbcType=INTEGER},
+      </if>
+      <if test="record.eeCondition != null" >
+        ee_condition = #{record.eeCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eeLongitude != null" >
+        ee_longitude = #{record.eeLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eeLatitude != null" >
+        ee_latitude = #{record.eeLatitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update equipment_enable
+    set e_id = #{record.eId,jdbcType=VARCHAR},
+      ee_enable = #{record.eeEnable,jdbcType=INTEGER},
+      ee_condition = #{record.eeCondition,jdbcType=VARCHAR},
+      ee_longitude = #{record.eeLongitude,jdbcType=VARCHAR},
+      ee_latitude = #{record.eeLatitude,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentEnableExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from equipment_enable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

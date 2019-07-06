@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.ProductionStatMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.ProductionStat" >
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="ps_date" property="psDate" jdbcType="TIMESTAMP" />
+    <result column="ps_end_date" property="psEndDate" jdbcType="TIMESTAMP" />
+    <result column="ps_mount" property="psMount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    e_id, ps_date, ps_end_date, ps_mount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.ProductionStatExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from production_stat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.ProductionStatExample" >
+    delete from production_stat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.ProductionStat" >
+    insert into production_stat (e_id, ps_date, ps_end_date, 
+      ps_mount)
+    values (#{eId,jdbcType=VARCHAR}, #{psDate,jdbcType=TIMESTAMP}, #{psEndDate,jdbcType=TIMESTAMP}, 
+      #{psMount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.ProductionStat" >
+    insert into production_stat
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="psDate != null" >
+        ps_date,
+      </if>
+      <if test="psEndDate != null" >
+        ps_end_date,
+      </if>
+      <if test="psMount != null" >
+        ps_mount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="psDate != null" >
+        #{psDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psEndDate != null" >
+        #{psEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psMount != null" >
+        #{psMount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.ProductionStatExample" resultType="java.lang.Integer" >
+    select count(*) from production_stat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update production_stat
+    <set >
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psDate != null" >
+        ps_date = #{record.psDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psEndDate != null" >
+        ps_end_date = #{record.psEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psMount != null" >
+        ps_mount = #{record.psMount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update production_stat
+    set e_id = #{record.eId,jdbcType=VARCHAR},
+      ps_date = #{record.psDate,jdbcType=TIMESTAMP},
+      ps_end_date = #{record.psEndDate,jdbcType=TIMESTAMP},
+      ps_mount = #{record.psMount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.ProductionStatExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from production_stat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

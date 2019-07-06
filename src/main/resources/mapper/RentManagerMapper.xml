@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.RentManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.RentManager" >
+    <id column="trade_no" property="tradeNo" jdbcType="CHAR" />
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="rent_date" property="rentDate" jdbcType="TIMESTAMP" />
+    <result column="rent_end_date" property="rentEndDate" jdbcType="TIMESTAMP" />
+    <result column="cm_no" property="cmNo" jdbcType="CHAR" />
+    <result column="rent_place" property="rentPlace" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    trade_no, e_id, customer_no, rent_date, rent_end_date, cm_no, rent_place
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rent_manager
+    where trade_no = #{tradeNo,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rent_manager
+    where trade_no = #{tradeNo,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.RentManagerExample" >
+    delete from rent_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.RentManager" >
+    insert into rent_manager (trade_no, e_id, customer_no, 
+      rent_date, rent_end_date, cm_no, 
+      rent_place)
+    values (#{tradeNo,jdbcType=CHAR}, #{eId,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, 
+      #{rentDate,jdbcType=TIMESTAMP}, #{rentEndDate,jdbcType=TIMESTAMP}, #{cmNo,jdbcType=CHAR}, 
+      #{rentPlace,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.RentManager" >
+    insert into rent_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="customerNo != null" >
+        customer_no,
+      </if>
+      <if test="rentDate != null" >
+        rent_date,
+      </if>
+      <if test="rentEndDate != null" >
+        rent_end_date,
+      </if>
+      <if test="cmNo != null" >
+        cm_no,
+      </if>
+      <if test="rentPlace != null" >
+        rent_place,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=CHAR},
+      </if>
+      <if test="eId != null" >
+        #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null" >
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rentDate != null" >
+        #{rentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentEndDate != null" >
+        #{rentEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmNo != null" >
+        #{cmNo,jdbcType=CHAR},
+      </if>
+      <if test="rentPlace != null" >
+        #{rentPlace,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.RentManagerExample" resultType="java.lang.Integer" >
+    select count(*) from rent_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rent_manager
+    <set >
+      <if test="record.tradeNo != null" >
+        trade_no = #{record.tradeNo,jdbcType=CHAR},
+      </if>
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerNo != null" >
+        customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentDate != null" >
+        rent_date = #{record.rentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rentEndDate != null" >
+        rent_end_date = #{record.rentEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cmNo != null" >
+        cm_no = #{record.cmNo,jdbcType=CHAR},
+      </if>
+      <if test="record.rentPlace != null" >
+        rent_place = #{record.rentPlace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rent_manager
+    set trade_no = #{record.tradeNo,jdbcType=CHAR},
+      e_id = #{record.eId,jdbcType=VARCHAR},
+      customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      rent_date = #{record.rentDate,jdbcType=TIMESTAMP},
+      rent_end_date = #{record.rentEndDate,jdbcType=TIMESTAMP},
+      cm_no = #{record.cmNo,jdbcType=CHAR},
+      rent_place = #{record.rentPlace,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smart.sperms.dao.model.RentManager" >
+    update rent_manager
+    <set >
+      <if test="eId != null" >
+        e_id = #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null" >
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rentDate != null" >
+        rent_date = #{rentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentEndDate != null" >
+        rent_end_date = #{rentEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmNo != null" >
+        cm_no = #{cmNo,jdbcType=CHAR},
+      </if>
+      <if test="rentPlace != null" >
+        rent_place = #{rentPlace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where trade_no = #{tradeNo,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.RentManager" >
+    update rent_manager
+    set e_id = #{eId,jdbcType=VARCHAR},
+      customer_no = #{customerNo,jdbcType=VARCHAR},
+      rent_date = #{rentDate,jdbcType=TIMESTAMP},
+      rent_end_date = #{rentEndDate,jdbcType=TIMESTAMP},
+      cm_no = #{cmNo,jdbcType=CHAR},
+      rent_place = #{rentPlace,jdbcType=VARCHAR}
+    where trade_no = #{tradeNo,jdbcType=CHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

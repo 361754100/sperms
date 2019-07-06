@@ -1,0 +1,73 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      # wrjweb数据库
+      master:
+        url: jdbc:mysql://localhost:3306/sperms?useSSL=false&characterEncoding=UTF-8
+        username: root
+        password: 123456
+      # 使用druid数据源
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #慢sql记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  mqtt:
+      username: user
+      password: passwd
+      #MQTT-服务器连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613，tcp://192.168.2.133:61613
+      url: tcp://192.168.137.128:1883
+      #MQTT-连接服务器默认客户端ID
+      client:
+        id: bridge_aws
+      #MQTT-默认的消息推送主题，实际可在调用接口时指定
+      default:
+        topic: topic1
+      #连接超时
+      completionTimeout: 3000
+
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+#mybaits配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.smart.sperms.dao.model
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+logging:
+  level:
+    # 指定包设置debug级别
+    com.smart.sperms.dao: debug
+    #mongodb debug设置
+    org.springframework.data.mongodb.core: debug
+
+#management:
+#  endpoint:
+#    health:
+#      show-details: always
