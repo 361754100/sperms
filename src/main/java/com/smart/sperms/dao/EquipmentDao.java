@@ -18,7 +18,6 @@ public class EquipmentDao {
 
     private static final Logger logger = LoggerFactory.getLogger(EquipmentDao.class);
 
-
     @Autowired
     private EquipmentMapper mapper;
 

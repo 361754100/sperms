@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 
 /**
- * @Descript 登录控制类
+ * @Descript 系统管理控制类
  * @Version 1.0
  */
-@Api(description = "登录接口相关api")
+@Api(tags = "sys-main", description = "系统管理（登录、注销）")
 @RestController
-public class LoginController {
+public class SysMainController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysMainController.class);
 
     /**
      * 登录操作

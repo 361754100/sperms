@@ -1,5 +1,7 @@
 package com.smart.sperms.response;
 
+import com.smart.sperms.enums.ResultCodeEnum;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ public class CommonWrapper implements Serializable{
     /**
      * 状态码
      */
-    public int resultCode;
+    public int resultCode = ResultCodeEnum.SUCCESS.getCode();
 
     /**
      * 处理结果

@@ -7,12 +7,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(description = "MQTT接口相关api")
+@Api(tags = "mqtt-test", description = "MQTT消息测试")
 @RestController
-public class MessageController {
+@RequestMapping(value = "mqtt")
+public class MqttMsgController {
 
     @Autowired
     MqttSendService mqttSendService;
