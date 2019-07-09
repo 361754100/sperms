@@ -1,8 +1,7 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.common.JsonResult;
-import com.smart.sperms.common.PageJsonResult;
-import com.smart.sperms.dao.model.Users;
+import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.response.CommonWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.Serializable;
 
 /**
  * @Descript 系统管理控制类
@@ -31,7 +28,7 @@ public class SysMainController {
     /**
      * 登录操作
      * @return
-     */
+
     @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "登录账号", required = true, paramType = "form"),
@@ -57,11 +54,12 @@ public class SysMainController {
         }
         return JsonResult.jsonError("认证失败！", 401);
     }
+     */
 
     /**
      * 退出登录
      * @return
-     */
+
     @ApiOperation(value = "退出登录")
     @PostMapping(value = "/loginout")
     public String logout() {
@@ -71,11 +69,12 @@ public class SysMainController {
         subject.logout();
         return JsonResult.jsonSuccess("退出成功！");
     }
+     */
 
     /**
      * 保持会话存活
      * @return
-     */
+
     @ApiOperation(value = "保存会话存活")
     @PostMapping(value = "/keepalive")
     public String keepAlive() {
@@ -88,6 +87,38 @@ public class SysMainController {
             SecurityUtils.getSubject().getSession().touch();
         }
         return JsonResult.jsonSuccess(isAlive == true ? "session alive" : "session timeout");
+    }
+     */
+
+
+    /**
+     * 账号密码校验
+     * @return
+     */
+    @ApiOperation(value = "账号校验")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "登录账号", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "form")
+    })
+    @PostMapping(value = "/auth")
+    public CommonWrapper auth(@RequestParam(value = "username", required = true) String username,
+                                        @RequestParam(value = "password", required = true) String password) {
+        CommonWrapper wrapper = new CommonWrapper();
+        //获取shiro认证主体
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        //登录认证
+        subject.login(token);
+        //如果认证成功
+        if (subject.isAuthenticated()) {
+            wrapper.setResultMsg("鉴权成功");
+            wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+            return wrapper;
+        }
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("认证失败");
+
+        return wrapper;
     }
 
 }

@@ -58,9 +58,9 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         //获取shiro认证主体
-        Subject subject = SecurityUtils.getSubject();
-        subject.getSession(true).setAttribute("loginUserInfo", sysUser);
-        subject.getSession(true).setAttribute("systemVersion", systemVersion);
+//        Subject subject = SecurityUtils.getSubject();
+//        subject.getSession(true).setAttribute("loginUserInfo", sysUser);
+//        subject.getSession(true).setAttribute("systemVersion", systemVersion);
 
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(sysUser, password, getName());
 

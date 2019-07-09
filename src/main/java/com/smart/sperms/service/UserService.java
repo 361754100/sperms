@@ -8,6 +8,7 @@ import com.smart.sperms.request.UsersEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
+import com.smart.sperms.utils.EncryptUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +120,7 @@ public class UserService {
         info.setuId(req.getuId());
         info.setuName(req.getuName());
 
-        String encryptPwd = encryptPasswordByPassword(req.getuPassword());
+        String encryptPwd = EncryptUtils.encryptPasswordByPassword(req.getuPassword());
         info.setuPassword(encryptPwd);
 
         info.setRoleId(req.getRoleId());
@@ -174,8 +175,8 @@ public class UserService {
             wrapper.setResultMsg("用户信息不存在！");
             return wrapper;
         }
-        String encryptOldPassword = encryptPasswordByPassword(oldPassword);
-        String encryptNewPassword = encryptPasswordByPassword(newPassword);
+        String encryptOldPassword = EncryptUtils.encryptPasswordByPassword(oldPassword);
+        String encryptNewPassword = EncryptUtils.encryptPasswordByPassword(newPassword);
         if (!encryptOldPassword.equals(users.getuPassword())) {
             wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
             wrapper.setResultMsg("原密码错误！");
@@ -212,7 +213,7 @@ public class UserService {
 
         try {
             List<Users> list = usersDao.queryListByExample(example);
-            String resetPassword = encryptPasswordByPassword("123456");
+            String resetPassword = EncryptUtils.encryptPasswordByPassword("123456");
 
             Date modifyDate = new Date();
             list.stream().forEach(users -> {
