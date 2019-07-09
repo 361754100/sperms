@@ -254,4 +254,20 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" id="selectByConditionWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
 </mapper>
