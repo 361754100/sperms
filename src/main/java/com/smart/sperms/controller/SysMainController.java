@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Descript 系统管理控制类
  * @Version 1.0
  */
-@Api(tags = "sys-main", description = "系统管理（登录、注销）")
+@Api(tags = "sys-main", description = "系统管理（鉴权）")
 @RestController
 public class SysMainController {
 

@@ -10,6 +10,19 @@
     <result column="cm_no" property="cmNo" jdbcType="CHAR" />
     <result column="rent_place" property="rentPlace" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.RentManagerDto" >
+    <id column="trade_no" property="tradeNo" jdbcType="CHAR" />
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="rent_date" property="rentDate" jdbcType="TIMESTAMP" />
+    <result column="rent_end_date" property="rentEndDate" jdbcType="TIMESTAMP" />
+    <result column="cm_no" property="cmNo" jdbcType="CHAR" />
+    <result column="rent_place" property="rentPlace" jdbcType="VARCHAR" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -255,19 +268,59 @@
     </if>
   </select>
 
-  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" id="selectByConditionWithRowbounds" >
-    select
-    <if test="distinct" >
-      distinct
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select rent.*, equip.e_name as e_name, custom.customer_name as customer_name  from rent_manager rent
+    left join
+    equipment equip on rent.e_id = equip.e_id
+    <if test="equipmentName != null" >
+      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
     </if>
-    <include refid="Base_Column_List" />
-    from rent_manager
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
+    left join
+    customer custom on rent.customer_no = custom.customer_no
+    <if test="customerName != null" >
+      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
     </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
+    where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="tradeNo != null" >
+      and rent.trade_no like '%'+ #{tradeNo, jdbcType=VARCHAR} +'%'
+    </if>
+    order by rent.rent_date desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*)  from rent_manager rent
+    left join
+    equipment equip on rent.e_id = equip.e_id
+    <if test="equipmentName != null" >
+      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
+    </if>
+    left join
+    customer custom on rent.customer_no = custom.customer_no
+    <if test="customerName != null" >
+      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
+    </if>
+    where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="tradeNo != null" >
+      and rent.trade_no like '%'+ #{tradeNo, jdbcType=VARCHAR} +'%'
     </if>
   </select>
 
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByCondition" >
+    select rent.*, equip.e_name as e_name, custom.customer_name as customer_name  from rent_manager rent
+    left join
+    equipment equip on rent.e_id = equip.e_id
+    <if test="equipmentName != null" >
+      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
+    </if>
+    left join
+    customer custom on rent.customer_no = custom.customer_no
+    <if test="customerName != null" >
+      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
+    </if>
+    where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="tradeNo != null" >
+      and rent.trade_no = #{tradeNo, jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.smart.sperms.dao;
 
+import com.smart.sperms.dao.dto.RentManagerDto;
 import com.smart.sperms.dao.mapper.CustomerMapper;
 import com.smart.sperms.dao.mapper.RentManagerMapper;
 import com.smart.sperms.dao.model.Customer;
@@ -14,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RentManagerDao {
@@ -82,25 +85,36 @@ public class RentManagerDao {
      * @param pageSize
      * @param beginTime
      * @param endTime
+     * @param tradeNo
      * @param customerName
-     * @return /////////////////////////////////////////////////
+     * @param equipmentName
+     * @return
      */
-    public List<RentManager> queryPage(int pageNo, int pageSize, String beginTime, String endTime, String customerName, String equipmentName) {
+    public List<RentManagerDto> queryPage(int pageNo, int pageSize, String beginTime, String endTime,
+                                          String tradeNo, String customerName, String equipmentName) {
         int offset = (pageNo-1)*pageSize;
-        RentManagerExample example = new RentManagerExample();
-        RentManagerExample.Criteria criteria = example.createCriteria();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("pageSize", pageSize);
 
         if(!StringUtils.isEmpty(customerName)) {
-//            criteria.andCustomerNameLike("%" + customerName + "%");////////////////////////////////
+            params.put("customerName", customerName);
+        }
+        if(!StringUtils.isEmpty(tradeNo)) {
+            params.put("tradeNo", tradeNo);
+        }
+        if(!StringUtils.isEmpty(equipmentName)) {
+            params.put("equipmentName", equipmentName);
         }
         if(!StringUtils.isEmpty(beginTime)) {
-            criteria.andRentDateGreaterThanOrEqualTo(DateUtils.parseStrToDate(beginTime,"yyyy-MM-dd HH:mm:ss"));
+            params.put("beginTime", beginTime);
         }
         if(!StringUtils.isEmpty(endTime)) {
-            criteria.andRentDateLessThanOrEqualTo(DateUtils.parseStrToDate(endTime, "yyyy-MM-dd HH:mm:ss"));
+            params.put("endTime", endTime);
         }
 
-        List<RentManager> result = mapper.selectByExampleWithRowbounds(example, RowBoundsUtil.of(offset, pageSize));
+        List<RentManagerDto> result = mapper.selectDtoByConditionWithRowbounds(params);
         return result;
     }
 
@@ -111,21 +125,27 @@ public class RentManagerDao {
      * @param customerName
      * @return
      */
-    public int queryPageTotal(String beginTime, String endTime, String customerName) {
-        RentManagerExample example = new RentManagerExample();
-        RentManagerExample.Criteria criteria = example.createCriteria();
+    public int queryPageTotal(String beginTime, String endTime,
+                              String tradeNo, String customerName, String equipmentName) {
+        Map<String, Object> params = new HashMap<>();
 
+        if(!StringUtils.isEmpty(customerName)) {
+            params.put("customerName", customerName);
+        }
+        if(!StringUtils.isEmpty(tradeNo)) {
+            params.put("tradeNo", tradeNo);
+        }
+        if(!StringUtils.isEmpty(equipmentName)) {
+            params.put("equipmentName", equipmentName);
+        }
         if(!StringUtils.isEmpty(beginTime)) {
-            criteria.andRentDateGreaterThanOrEqualTo(DateUtils.parseStrToDate(beginTime,"yyyy-MM-dd HH:mm:ss"));
+            params.put("beginTime", beginTime);
         }
         if(!StringUtils.isEmpty(endTime)) {
-            criteria.andRentDateGreaterThanOrEqualTo(DateUtils.parseStrToDate(endTime, "yyyy-MM-dd HH:mm:ss"));
-        }
-        if(!StringUtils.isEmpty(customerName)) {
-//            criteria.andCustomerNameLike("%" + customerName + "%");
+            params.put("endTime", endTime);
         }
 
-        int total = mapper.countByExample(example);
+        int total = mapper.countByCondition(params);
         return total;
     }
 
@@ -153,4 +173,20 @@ public class RentManagerDao {
         return result;
     }
 
+    /**
+     * 条件查询
+     * @param condition
+     * @return
+     */
+    public List<RentManagerDto> queryDtoList(RentManager condition) {
+        List<RentManagerDto> result = null;
+        Map<String, Object> params = new HashMap<>();
+        String tradeNo = condition.getTradeNo();
+        if(!StringUtils.isEmpty(tradeNo)) {
+            params.put("tradeNo", tradeNo);
+        }
+
+        result = mapper.selectDtoByCondition(params);
+        return result;
+    }
 }
