@@ -4,6 +4,7 @@ import com.smart.sperms.request.SysRoleDelReq;
 import com.smart.sperms.request.SysRoleEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
+import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -63,6 +64,19 @@ public class SysRoleController {
     public CommonWrapper delete(@RequestBody SysRoleDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = sysRoleService.deleteInfo(params.getRoleIds());
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按ID查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/find_by_id")
+    public SingleQueryWrapper findRecordById(@RequestParam int recordId) {
+        SingleQueryWrapper wrapper = sysRoleService.findRecordById(recordId);
+
+        logger.debug(" recordId = {}",
+                new Object[]{recordId});
         return wrapper;
     }
 }

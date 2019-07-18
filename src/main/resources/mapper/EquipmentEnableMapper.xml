@@ -186,4 +186,48 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.EquipmentEnableDto" >
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="ee_enable" property="eeEnable" jdbcType="INTEGER" />
+    <result column="ee_condition" property="eeCondition" jdbcType="VARCHAR" />
+    <result column="ee_longitude" property="eeLongitude" jdbcType="VARCHAR" />
+    <result column="ee_latitude" property="eeLatitude" jdbcType="VARCHAR" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select equipenable.*, equip.e_name from equipment_enable equipenable
+    left join
+    equipment equip on equipenable.e_id = equip.e_id
+    where 1=1
+    <if test="eeEnable != -1" >
+      and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
+    </if>
+    order by equipenable.e_id desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*)  from equipment_enable equipenable
+    where 1=1
+    <if test="eeEnable != -1" >
+      and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByCondition" >
+    select equipenable.*, equip.e_name from equipment_enable equipenable
+    left join
+    equipment equip on equipenable.e_id = equip.e_id
+    where 1=1
+    <if test="eeEnable != -1" >
+      and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
+    </if>
+    <if test="eId != -1" >
+      and equipenable.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+  </select>
+
 </mapper>

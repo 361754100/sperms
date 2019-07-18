@@ -4,6 +4,7 @@ import com.smart.sperms.request.UsersDelReq;
 import com.smart.sperms.request.UsersEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
+import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -89,5 +90,19 @@ public class UserController {
     @PostMapping(value = "reset_password")
     public CommonWrapper resetPassword(@RequestParam List<String> ids) {
         return userService.resetPassword(ids);
+    }
+
+    @ApiOperation(value = "按ID查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "String")
+    })
+
+    @PostMapping(value = "/find_by_id")
+    public SingleQueryWrapper findRecordById(@RequestParam String recordId) {
+        SingleQueryWrapper wrapper = userService.findRecordById(recordId);
+
+        logger.debug(" recordId = {}",
+                new Object[]{recordId});
+        return wrapper;
     }
 }

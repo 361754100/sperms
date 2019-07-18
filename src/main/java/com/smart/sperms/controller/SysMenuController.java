@@ -6,6 +6,7 @@ import com.smart.sperms.request.SysMenuDelReq;
 import com.smart.sperms.request.SysMenuEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
+import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.service.EquipmentService;
 import com.smart.sperms.service.SysMenuService;
 import io.swagger.annotations.Api;
@@ -66,6 +67,19 @@ public class SysMenuController {
     public CommonWrapper delete(@RequestBody SysMenuDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = sysMenuService.deleteInfo(params.getMenuIds());
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按ID查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/find_by_id")
+    public SingleQueryWrapper findRecordById(@RequestParam int recordId) {
+        SingleQueryWrapper wrapper = sysMenuService.findRecordById(recordId);
+
+        logger.debug(" recordId = {}",
+                new Object[]{recordId});
         return wrapper;
     }
 }

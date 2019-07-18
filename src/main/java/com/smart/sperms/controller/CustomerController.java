@@ -6,6 +6,7 @@ import com.smart.sperms.request.EquipmentDelReq;
 import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
+import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.service.CustomerService;
 import com.smart.sperms.service.EquipmentService;
 import io.swagger.annotations.Api;
@@ -66,6 +67,19 @@ public class CustomerController {
     public CommonWrapper delete(@RequestBody CustomerDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = customerService.deleteInfo(params.getCustomerNos());
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按ID查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "String")
+    })
+    @PostMapping(value = "/find_by_id")
+    public SingleQueryWrapper findRecordById(@RequestParam String recordId) {
+        SingleQueryWrapper wrapper = customerService.findRecordById(recordId);
+
+        logger.debug(" recordId = {}",
+                new Object[]{recordId});
         return wrapper;
     }
 }
