@@ -205,15 +205,23 @@
     <if test="eeEnable != -1" >
       and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
     </if>
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
+    </if>
     order by equipenable.e_id desc
     limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
 
   <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
     select count(*)  from equipment_enable equipenable
+    left join
+    equipment equip on equipenable.e_id = equip.e_id
     where 1=1
     <if test="eeEnable != -1" >
       and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
     </if>
   </select>
 
@@ -227,6 +235,9 @@
     </if>
     <if test="eId != -1" >
       and equipenable.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
     </if>
   </select>
 

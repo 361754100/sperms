@@ -175,4 +175,51 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.ProductionStatDto" >
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="ps_date" property="psDate" jdbcType="TIMESTAMP" />
+    <result column="ps_end_date" property="psEndDate" jdbcType="TIMESTAMP" />
+    <result column="ps_mount" property="psMount" jdbcType="INTEGER" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select pstat.*, equip.e_name from production_stat pstat
+    left join
+    equipment equip on pstat.e_id = equip.e_id
+    where
+    pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
+    </if>
+    order by pstat.ps_date desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from production_stat pstat
+    left join
+    equipment equip on pstat.e_id = equip.e_id
+    where
+    pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
+    </if>
+  </select>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByCondition" >
+    select pstat.*, equip.e_name from production_stat pstat
+    left join
+    equipment equip on pstat.e_id = equip.e_id
+    where 1=1
+    <if test="eId != null" >
+      and pstat.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like '%'+ #{eName, jdbcType=VARCHAR} +'%'
+    </if>
+  </select>
+
 </mapper>

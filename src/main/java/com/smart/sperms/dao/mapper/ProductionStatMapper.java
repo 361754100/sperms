@@ -1,8 +1,12 @@
 package com.smart.sperms.dao.mapper;
 
+import com.smart.sperms.dao.dto.EquipmentEnableDto;
+import com.smart.sperms.dao.dto.ProductionStatDto;
 import com.smart.sperms.dao.model.ProductionStat;
 import com.smart.sperms.dao.model.ProductionStatExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -22,4 +26,11 @@ public interface ProductionStatMapper {
     int updateByExampleSelective(@Param("record") ProductionStat record, @Param("example") ProductionStatExample example);
 
     int updateByExample(@Param("record") ProductionStat record, @Param("example") ProductionStatExample example);
+
+    List<ProductionStatDto> selectDtoByConditionWithRowbounds(Map<String, Object> params);
+
+    List<ProductionStatDto> selectDtoByCondition(Map<String, Object> params);
+
+    int countByCondition(Map<String, Object> params);
+
 }

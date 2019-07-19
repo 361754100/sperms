@@ -1,13 +1,14 @@
 package com.smart.sperms.service;
 
-import com.smart.sperms.dao.EquipmentEnableDao;
-import com.smart.sperms.dao.dto.EquipmentEnableDto;
-import com.smart.sperms.dao.model.EquipmentEnable;
+import com.smart.sperms.dao.ProductionStatDao;
+import com.smart.sperms.dao.dto.ProductionStatDto;
+import com.smart.sperms.dao.model.ProductionStat;
 import com.smart.sperms.enums.ResultCodeEnum;
-import com.smart.sperms.request.EquipmentEnableEditReq;
+import com.smart.sperms.request.ProductionStatEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
+import com.smart.sperms.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -15,17 +16,17 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @Service
-public class EquipmentEnableService {
+public class ProductionStatService {
 
     @Autowired
-    private EquipmentEnableDao equipmentEnableDao;
+    private ProductionStatDao productionStatDao;
 
     /**
      * 新增记录
      * @param req
      * @return
      */
-    public CommonWrapper addInfo(EquipmentEnableEditReq req) {
+    public CommonWrapper addInfo(ProductionStatEditReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
@@ -35,14 +36,13 @@ public class EquipmentEnableService {
             wrapper.setResultMsg("该应用信息已存在");
             return wrapper;
         }
-        EquipmentEnable info = new EquipmentEnable();
+        ProductionStat info = new ProductionStat();
         info.seteId(req.geteId());
-        info.setEeCondition(req.getEeCondition());
-        info.setEeEnable(req.getEeEnable());
-        info.setEeLatitude(req.getEeLatitude());
-        info.setEeLongitude(req.getEeLongitude());
+        info.setPsMount(req.getPsMount());
+        info.setPsDate(DateUtils.parseStrToDate(req.getPsDate(), DateUtils.DEFAULT_FORMAT));
+        info.setPsEndDate(DateUtils.parseStrToDate(req.getPsEndDate(), DateUtils.DEFAULT_FORMAT));
 
-        int cnt = equipmentEnableDao.saveData(info);
+        int cnt = productionStatDao.saveData(info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
@@ -55,17 +55,16 @@ public class EquipmentEnableService {
      * @param req
      * @return
      */
-    public CommonWrapper updateInfo(EquipmentEnableEditReq req) {
+    public CommonWrapper updateInfo(ProductionStatEditReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
-        EquipmentEnable info = new EquipmentEnable();
-        info.setEeLongitude(req.getEeLongitude());
-        info.setEeLatitude(req.getEeLatitude());
-        info.setEeEnable(req.getEeEnable());
-        info.setEeCondition(req.getEeCondition());
+        ProductionStat info = new ProductionStat();
+        info.setPsDate(DateUtils.parseStrToDate(req.getPsDate(), DateUtils.DEFAULT_FORMAT));
+        info.setPsEndDate(DateUtils.parseStrToDate(req.getPsEndDate(), DateUtils.DEFAULT_FORMAT));
+        info.setPsMount(req.getPsMount());
 
-        int cnt = equipmentEnableDao.updateData(req.geteId(), info);
+        int cnt = productionStatDao.updateData(req.geteId(), info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
@@ -81,7 +80,7 @@ public class EquipmentEnableService {
     public CommonWrapper deleteInfo(List<String> eIds) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
-        int cnt = equipmentEnableDao.delData(eIds);
+        int cnt = productionStatDao.delData(eIds);
 
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
@@ -93,14 +92,16 @@ public class EquipmentEnableService {
      * 分页查询
      * @param pageNo    当前页
      * @param pageSize  每页大小
-     * @param e_enable  应用授权
+     * @param beginTime 开始时间
+     * @param endTime   结束时间
+     * @param eName     设备名称关键字
      * @return
      */
-    public PageSearchWrapper queryPage(int pageNo, int pageSize, int e_enable, String eName) {
+    public PageSearchWrapper queryPage(int pageNo, int pageSize, String beginTime, String endTime, String eName) {
         PageSearchWrapper wrapper = new PageSearchWrapper();
 
-        int total = equipmentEnableDao.queryPageTotal(e_enable, eName);
-        List<EquipmentEnableDto> result = equipmentEnableDao.queryPage(pageNo, pageSize, e_enable, eName);
+        int total = productionStatDao.queryPageTotal(beginTime, endTime, eName);
+        List<ProductionStatDto> result = productionStatDao.queryPage(pageNo, pageSize, beginTime, endTime, eName);
 
         wrapper.setTotalCount(total);
         wrapper.setPageNo(pageNo);
@@ -118,10 +119,10 @@ public class EquipmentEnableService {
     public SingleQueryWrapper findRecordById(String recordId) {
         SingleQueryWrapper wrapper = new SingleQueryWrapper();
 
-        EquipmentEnableDto condition = new EquipmentEnableDto();
+        ProductionStatDto condition = new ProductionStatDto();
         condition.seteId(recordId);
 
-        List<EquipmentEnableDto> result = equipmentEnableDao.queryList(condition);
+        List<ProductionStatDto> result = productionStatDao.queryList(condition);
         if(!CollectionUtils.isEmpty(result)) {
             wrapper.setRecord(result.get(0));
         }
@@ -137,10 +138,10 @@ public class EquipmentEnableService {
      */
     private boolean isExists(String eId) {
         boolean isExist= false;
-        EquipmentEnableDto condition = new EquipmentEnableDto();
+        ProductionStatDto condition = new ProductionStatDto();
         condition.seteId(eId);
 
-        List<EquipmentEnableDto> dataList = equipmentEnableDao.queryList(condition);
+        List<ProductionStatDto> dataList = productionStatDao.queryList(condition);
         if(!CollectionUtils.isEmpty(dataList)) {
             isExist = true;
         }
