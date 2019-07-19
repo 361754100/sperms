@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.CaculationMethod" >
     <id column="cm_no" property="cmNo" jdbcType="CHAR" />
     <result column="cm_day" property="cmDay" jdbcType="INTEGER" />
-    <result column="cm_fee" property="cmFee" jdbcType="INTEGER" />
+    <result column="cm_fee" property="cmFee" jdbcType="DOUBLE" />
     <result column="cm_remain" property="cmRemain" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.smart.sperms.dao.model.CaculationMethod" >
     insert into caculation_method (cm_no, cm_day, cm_fee, 
       cm_remain)
-    values (#{cmNo,jdbcType=CHAR}, #{cmDay,jdbcType=INTEGER}, #{cmFee,jdbcType=INTEGER}, 
+    values (#{cmNo,jdbcType=CHAR}, #{cmDay,jdbcType=INTEGER}, #{cmFee,jdbcType=DOUBLE}, 
       #{cmRemain,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.CaculationMethod" >
@@ -128,7 +128,7 @@
         #{cmDay,jdbcType=INTEGER},
       </if>
       <if test="cmFee != null" >
-        #{cmFee,jdbcType=INTEGER},
+        #{cmFee,jdbcType=DOUBLE},
       </if>
       <if test="cmRemain != null" >
         #{cmRemain,jdbcType=INTEGER},
@@ -151,7 +151,7 @@
         cm_day = #{record.cmDay,jdbcType=INTEGER},
       </if>
       <if test="record.cmFee != null" >
-        cm_fee = #{record.cmFee,jdbcType=INTEGER},
+        cm_fee = #{record.cmFee,jdbcType=DOUBLE},
       </if>
       <if test="record.cmRemain != null" >
         cm_remain = #{record.cmRemain,jdbcType=INTEGER},
@@ -165,7 +165,7 @@
     update caculation_method
     set cm_no = #{record.cmNo,jdbcType=CHAR},
       cm_day = #{record.cmDay,jdbcType=INTEGER},
-      cm_fee = #{record.cmFee,jdbcType=INTEGER},
+      cm_fee = #{record.cmFee,jdbcType=DOUBLE},
       cm_remain = #{record.cmRemain,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +178,7 @@
         cm_day = #{cmDay,jdbcType=INTEGER},
       </if>
       <if test="cmFee != null" >
-        cm_fee = #{cmFee,jdbcType=INTEGER},
+        cm_fee = #{cmFee,jdbcType=DOUBLE},
       </if>
       <if test="cmRemain != null" >
         cm_remain = #{cmRemain,jdbcType=INTEGER},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.CaculationMethod" >
     update caculation_method
     set cm_day = #{cmDay,jdbcType=INTEGER},
-      cm_fee = #{cmFee,jdbcType=INTEGER},
+      cm_fee = #{cmFee,jdbcType=DOUBLE},
       cm_remain = #{cmRemain,jdbcType=INTEGER}
     where cm_no = #{cmNo,jdbcType=CHAR}
   </update>

@@ -7,7 +7,7 @@ public class CaculationMethod implements Serializable {
 
     private Integer cmDay;
 
-    private Integer cmFee;
+    private Double cmFee;
 
     private Integer cmRemain;
 
@@ -29,11 +29,11 @@ public class CaculationMethod implements Serializable {
         this.cmDay = cmDay;
     }
 
-    public Integer getCmFee() {
+    public Double getCmFee() {
         return cmFee;
     }
 
-    public void setCmFee(Integer cmFee) {
+    public void setCmFee(Double cmFee) {
         this.cmFee = cmFee;
     }
 

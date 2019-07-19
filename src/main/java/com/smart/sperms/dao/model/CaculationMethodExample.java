@@ -244,52 +244,52 @@ public class CaculationMethodExample {
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeEqualTo(Integer value) {
+        public Criteria andCmFeeEqualTo(Double value) {
             addCriterion("cm_fee =", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeNotEqualTo(Integer value) {
+        public Criteria andCmFeeNotEqualTo(Double value) {
             addCriterion("cm_fee <>", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeGreaterThan(Integer value) {
+        public Criteria andCmFeeGreaterThan(Double value) {
             addCriterion("cm_fee >", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCmFeeGreaterThanOrEqualTo(Double value) {
             addCriterion("cm_fee >=", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeLessThan(Integer value) {
+        public Criteria andCmFeeLessThan(Double value) {
             addCriterion("cm_fee <", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeLessThanOrEqualTo(Integer value) {
+        public Criteria andCmFeeLessThanOrEqualTo(Double value) {
             addCriterion("cm_fee <=", value, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeIn(List<Integer> values) {
+        public Criteria andCmFeeIn(List<Double> values) {
             addCriterion("cm_fee in", values, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeNotIn(List<Integer> values) {
+        public Criteria andCmFeeNotIn(List<Double> values) {
             addCriterion("cm_fee not in", values, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeBetween(Integer value1, Integer value2) {
+        public Criteria andCmFeeBetween(Double value1, Double value2) {
             addCriterion("cm_fee between", value1, value2, "cmFee");
             return (Criteria) this;
         }
 
-        public Criteria andCmFeeNotBetween(Integer value1, Integer value2) {
+        public Criteria andCmFeeNotBetween(Double value1, Double value2) {
             addCriterion("cm_fee not between", value1, value2, "cmFee");
             return (Criteria) this;
         }
