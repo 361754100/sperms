@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50644
 File Encoding         : 65001
 
-Date: 2019-07-06 15:15:08
+Date: 2019-07-19 19:28:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `caculation_method`;
 CREATE TABLE `caculation_method` (
   `cm_no` char(3) CHARACTER SET utf8 NOT NULL COMMENT '计费编号',
   `cm_day` int(11) DEFAULT NULL COMMENT '按天或按量',
-  `cm_fee` int(11) DEFAULT NULL COMMENT '客户编号',
+  `cm_fee` double(11,0) DEFAULT NULL COMMENT '费用',
   `cm_remain` int(11) DEFAULT NULL COMMENT '保留',
   PRIMARY KEY (`cm_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='费用计算方式';
@@ -155,7 +155,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `u_id` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT '用户账号',
   `u_name` varchar(20) DEFAULT NULL,
-  `u_password` varchar(20) DEFAULT NULL,
+  `u_password` varchar(50) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL COMMENT '用户角色类型',
   `creation_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
