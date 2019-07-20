@@ -1,13 +1,11 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.request.EquipmentDelReq;
-import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.request.SysMenuDelReq;
 import com.smart.sperms.request.SysMenuEditReq;
 import com.smart.sperms.response.CommonWrapper;
+import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
-import com.smart.sperms.service.EquipmentService;
 import com.smart.sperms.service.SysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -80,6 +78,19 @@ public class SysMenuController {
 
         logger.debug(" recordId = {}",
                 new Object[]{recordId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按角色ID查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="roleId", value = "角色ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/find_by_roleid")
+    public ListQueryWrapper findMenusByRoleId(@RequestParam int roleId) {
+        ListQueryWrapper wrapper = sysMenuService.findMenusByRoleId(roleId);
+
+        logger.debug(" roleId = {}",
+                new Object[]{roleId});
         return wrapper;
     }
 }

@@ -1,10 +1,13 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.dao.SysMenuDao;
+import com.smart.sperms.dao.SysRoleMenuDao;
+import com.smart.sperms.dao.dto.SysMenuDto;
 import com.smart.sperms.dao.model.SysMenu;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.SysMenuEditReq;
 import com.smart.sperms.response.CommonWrapper;
+import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class SysMenuService {
 
     @Autowired
     private SysMenuDao sysMenuDao;
+
+    @Autowired
+    private SysRoleMenuDao sysRoleMenuDao;
 
     /**
      * 新增记录
@@ -135,6 +141,18 @@ public class SysMenuService {
         }
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
 
+        return wrapper;
+    }
+
+    /**
+     * 根据角色ID获取菜单列表
+     * @param roleId
+     * @return
+     */
+    public ListQueryWrapper findMenusByRoleId(int roleId) {
+        ListQueryWrapper wrapper = new ListQueryWrapper();
+        List<SysMenuDto> list = sysRoleMenuDao.queryMenusByRoleId(roleId);
+        wrapper.setRecords(list);
         return wrapper;
     }
 
