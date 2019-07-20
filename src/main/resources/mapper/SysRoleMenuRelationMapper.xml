@@ -151,4 +151,26 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <resultMap id="menuDtoResultMap" type="com.smart.sperms.dao.model.SysMenuDto" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_status" property="menuStatus" jdbcType="INTEGER" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="menu_remark" property="menuRemark" jdbcType="VARCHAR" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select resultMap="menuDtoResultMap" parameterType="java.util.Map" id="selectMenuDtoByRoleId" >
+    select menu.*, relation.role_id from sys_menu menu
+    left join (
+      select menu_id, role_id from sys_role_menu_relation where role_id = #{roleId, jdbcType=INTEGER}
+    ) relation
+    on menu.menu_id = relation.menu_id
+  </select>
+
 </mapper>
