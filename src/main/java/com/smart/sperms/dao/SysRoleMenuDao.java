@@ -37,15 +37,34 @@ public class SysRoleMenuDao {
     }
 
     /**
-     * 删除角色关联记录
-     * @param recordIds
+     * 删除角色菜单关联记录
+     * @param roleIds
      * @return
      */
-    public int delRelationByRoleIds(List<Integer> recordIds) {
+    public int delRelationByRoleIds(List<Integer> roleIds) {
         int cnt = 0;
         try {
             SysRoleMenuRelationExample example = new SysRoleMenuRelationExample();
-            example.createCriteria().andRoleIdIn(recordIds);
+            example.createCriteria().andRoleIdIn(roleIds);
+
+            cnt = mapper.deleteByExample(example);
+        } catch (Exception e) {
+            logger.error("delete data error...", e);
+        }
+        return cnt;
+    }
+
+    /**
+     * 删除角色菜单关联关系
+     * @param roleId
+     * @param menuId
+     * @return
+     */
+    public int delRelationByRoleMenuId(int roleId, int menuId) {
+        int cnt = 0;
+        try {
+            SysRoleMenuRelationExample example = new SysRoleMenuRelationExample();
+            example.createCriteria().andRoleIdEqualTo(roleId).andMenuIdEqualTo(menuId);
 
             cnt = mapper.deleteByExample(example);
         } catch (Exception e) {

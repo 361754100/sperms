@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(tags = "sysrole", description = "角色信息")
 @RestController
 @RequestMapping(value = "sysrole")
@@ -77,6 +79,29 @@ public class SysRoleController {
 
         logger.debug(" recordId = {}",
                 new Object[]{recordId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "根据角色ID和菜单ID删除关联关系")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="roleId", value = "角色ID", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name="menuId", value = "菜单ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/del_relation_by_role_menu_id")
+    public CommonWrapper delRelationByRoleMenuId(@RequestParam int roleId, @RequestParam int menuId) {
+        logger.debug(" roleId = {}, menuId = {}", new Object[]{roleId, menuId});
+        CommonWrapper wrapper = sysRoleService.delRelationByRoleMenuId(roleId, menuId);
+        return wrapper;
+    }
+
+    @ApiOperation(value = "根据角色ID删除关联关系")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="roleIds", value = "角色ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/del_relation_by_role_ids")
+    public CommonWrapper delRelationByRoleIds(@RequestParam List<Integer> roleIds) {
+        logger.debug(" roleIds = {}", new Object[]{roleIds});
+        CommonWrapper wrapper = sysRoleService.delRelationByRoleIds(roleIds);
         return wrapper;
     }
 }

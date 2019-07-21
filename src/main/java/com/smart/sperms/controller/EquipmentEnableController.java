@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "equipment", description = "设备信息")
+@Api(tags = "equipment_enable", description = "设备信息")
 @RestController
-@RequestMapping(value = "equipment")
+@RequestMapping(value = "equipment_enable")
 public class EquipmentEnableController {
 
     private static Logger logger = LoggerFactory.getLogger(EquipmentEnableController.class);

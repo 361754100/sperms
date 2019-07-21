@@ -2,12 +2,16 @@ package com.smart.sperms.service;
 
 import com.smart.sperms.dao.CustomerDao;
 import com.smart.sperms.dao.EquipmentDao;
+import com.smart.sperms.dao.UserCustomerDao;
+import com.smart.sperms.dao.dto.SysMenuDto;
 import com.smart.sperms.dao.model.Customer;
 import com.smart.sperms.dao.model.Equipment;
+import com.smart.sperms.dao.model.Users;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.CustomerEditReq;
 import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.response.CommonWrapper;
+import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.utils.DateUtils;
@@ -23,6 +27,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    private UserCustomerDao userCustomerDao;
 
     /**
      * 新增记录
@@ -160,5 +167,51 @@ public class CustomerService {
             isExist = true;
         }
         return isExist;
+    }
+
+
+    /**
+     * 删除客户与系统用户的关联关系
+     * @param customerNo
+     * @param userId
+     * @return
+     */
+    public CommonWrapper delRelationByCustomerUserId(String customerNo, String userId) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        int cnt = userCustomerDao.delRelationByCustomerUserId(customerNo, userId);
+
+        wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+        wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+    /**
+     * 删除关联关系
+     * @param customerNos
+     * @return
+     */
+    public CommonWrapper delRelationByCustomerNos(List<String> customerNos) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        int cnt = userCustomerDao.delRelationByCustomerNos(customerNos);
+
+        wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+        wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+    /**
+     * 根据客户编号获取系统用户列表
+     * @param customerNo
+     * @return
+     */
+    public ListQueryWrapper findUsersByCustomerNo(String customerNo) {
+        ListQueryWrapper wrapper = new ListQueryWrapper();
+        List<Users> list = userCustomerDao.queryUsersByCustomerNo(customerNo);
+        wrapper.setRecords(list);
+        return wrapper;
     }
 }

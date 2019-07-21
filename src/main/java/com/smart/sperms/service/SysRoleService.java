@@ -1,6 +1,7 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.dao.SysRoleDao;
+import com.smart.sperms.dao.SysRoleMenuDao;
 import com.smart.sperms.dao.model.SysRole;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.SysRoleEditReq;
@@ -19,6 +20,9 @@ public class SysRoleService {
 
     @Autowired
     private SysRoleDao sysRoleDao;
+
+    @Autowired
+    private SysRoleMenuDao sysRoleMenuDao;
 
     /**
      * 新增记录
@@ -82,6 +86,39 @@ public class SysRoleService {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
         int cnt = sysRoleDao.delData(roleIds);
+
+        wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+        wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+    /**
+     * 删除关联关系
+     * @param roleId
+     * @param menuId
+     * @return
+     */
+    public CommonWrapper delRelationByRoleMenuId(int roleId, int menuId) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        int cnt = sysRoleMenuDao.delRelationByRoleMenuId(roleId, menuId);
+
+        wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+        wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+    /**
+     * 删除关联关系
+     * @param roleIds
+     * @return
+     */
+    public CommonWrapper delRelationByRoleIds(List<Integer> roleIds) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        int cnt = sysRoleMenuDao.delRelationByRoleIds(roleIds);
 
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");

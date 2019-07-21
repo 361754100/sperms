@@ -151,4 +151,40 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+  <resultMap id="userResultMap" type="com.smart.sperms.dao.model.Users" >
+    <id column="u_id" property="uId" jdbcType="VARCHAR" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
+    <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select resultMap="userResultMap" parameterType="java.util.Map" id="selectUserByCustomerNo" >
+    select * from users us WHERE exists
+      (select 1 from users_customer_relation relation
+       where us.u_id = relation.u_id
+       and relation.customer_no = #{customerNo, jdbcType=VARCHAR} )
+  </select>
+
+  <resultMap id="customerResultMap" type="com.smart.sperms.dao.model.Customer" >
+    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_sex" property="customerSex" jdbcType="CHAR" />
+    <result column="customer_age" property="customerAge" jdbcType="INTEGER" />
+    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
+    <result column="customer_email" property="customerEmail" jdbcType="VARCHAR" />
+    <result column="customer_addr" property="customerAddr" jdbcType="VARCHAR" />
+    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select resultMap="customerResultMap" parameterType="java.util.Map" id="selectCustomerByUid" >
+    select * from users_customer_relation relation where exists
+      (select 1 from users us where relation.u_id = us.u_id and us.u_id = #{uId, jdbcType=VARCHAR})
+  </select>
+
 </mapper>

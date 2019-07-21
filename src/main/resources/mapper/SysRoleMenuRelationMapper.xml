@@ -152,7 +152,7 @@
     </if>
   </select>
 
-  <resultMap id="menuDtoResultMap" type="com.smart.sperms.dao.model.SysMenuDto" >
+  <resultMap id="menuDtoResultMap" type="com.smart.sperms.dao.dto.SysMenuDto" >
     <id column="menu_id" property="menuId" jdbcType="INTEGER" />
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="menu_name" property="menuName" jdbcType="VARCHAR" />

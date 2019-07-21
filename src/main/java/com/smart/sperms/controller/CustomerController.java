@@ -5,6 +5,7 @@ import com.smart.sperms.request.CustomerEditReq;
 import com.smart.sperms.request.EquipmentDelReq;
 import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.response.CommonWrapper;
+import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.service.CustomerService;
@@ -17,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(tags = "customer", description = "客户信息")
 @RestController
@@ -80,6 +83,43 @@ public class CustomerController {
 
         logger.debug(" recordId = {}",
                 new Object[]{recordId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按客户编号删除关联关系")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="customerNos", value = "客户编号", required = true, paramType = "form", dataType = "String")
+    })
+    @PostMapping(value = "/del_relation_by_customernos")
+    public CommonWrapper delRelationByCustomerNos(@RequestParam List<String> customerNos) {
+        CommonWrapper wrapper = customerService.delRelationByCustomerNos(customerNos);
+
+        logger.debug(" customerNos = {}", new Object[]{customerNos});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按客户编号和系统用户账号删除关联关系")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="customerNo", value = "客户编号", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="uId", value = "系统用户账号", required = true, paramType = "form", dataType = "String")
+    })
+    @PostMapping(value = "/del_relation_by_customer_user_id")
+    public CommonWrapper delRelationByCustomerUserId(@RequestParam String customerNo, @RequestParam String uId) {
+        CommonWrapper wrapper = customerService.delRelationByCustomerUserId(customerNo, uId);
+
+        logger.debug(" customerNo = {}, uId = {}", new Object[]{customerNo, uId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "按客户编号查询系统用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="roleId", value = "角色ID", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "/find_by_customerno")
+    public ListQueryWrapper findUsersByCustomerNo(@RequestParam String customerNo) {
+        ListQueryWrapper wrapper = customerService.findUsersByCustomerNo(customerNo);
+
+        logger.debug(" customerNo = {}", new Object[]{customerNo});
         return wrapper;
     }
 }
