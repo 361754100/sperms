@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "equipment_enable", description = "设备信息")
+@Api(tags = "equipment_enable", description = "设备应用信息")
 @RestController
 @RequestMapping(value = "equipment_enable")
 public class EquipmentEnableController {
