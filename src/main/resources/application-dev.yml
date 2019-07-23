@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /
   ssl:
-      key-store: server.keystore
+      key-store: classpath:server.keystore
       key-alias: tomcat
       enabled: true
       key-store-password: 123456
