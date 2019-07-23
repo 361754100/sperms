@@ -276,13 +276,13 @@
     customer custom on rent.customer_no = custom.customer_no
     where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
     <if test="equipmentName != null" >
-      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
+      and equip.e_name like CONCAT('%',#{equipmentName},'%')
     </if>
     <if test="customerName != null" >
-      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
+      and custom.customer_name like CONCAT('%',#{customerName},'%')
     </if>
     <if test="tradeNo != null" >
-      and rent.trade_no like '%'+ #{tradeNo, jdbcType=VARCHAR} +'%'
+      and rent.trade_no like CONCAT('%',#{tradeNo},'%')
     </if>
     order by rent.rent_date desc
     limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
@@ -296,13 +296,13 @@
     customer custom on rent.customer_no = custom.customer_no
     where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
     <if test="equipmentName != null" >
-      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
+      and equip.e_name like CONCAT('%',#{equipmentName},'%')
     </if>
     <if test="customerName != null" >
-      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
+      and custom.customer_name like CONCAT('%',#{customerName},'%')
     </if>
     <if test="tradeNo != null" >
-      and rent.trade_no like '%'+ #{tradeNo, jdbcType=VARCHAR} +'%'
+      and rent.trade_no like CONCAT('%',#{tradeNo},'%')
     </if>
   </select>
 
@@ -314,10 +314,10 @@
     customer custom on rent.customer_no = custom.customer_no
     where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
     <if test="equipmentName != null" >
-      and equip.e_name like '%'+ #{equipmentName, jdbcType=VARCHAR} +'%'
+      and equip.e_name like CONCAT('%',#{equipmentName},'%')
     </if>
     <if test="customerName != null" >
-      and custom.customer_name like '%'+ #{customerName, jdbcType=VARCHAR} +'%'
+      and custom.customer_name like CONCAT('%',#{customerName},'%')
     </if>
     <if test="tradeNo != null" >
       and rent.trade_no = #{tradeNo, jdbcType=VARCHAR}

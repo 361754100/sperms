@@ -113,9 +113,9 @@ public class CustomerController {
 
     @ApiOperation(value = "按客户编号查询系统用户信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="roleId", value = "角色ID", required = true, paramType = "form", dataType = "int")
+            @ApiImplicitParam(name="customerNo", value = "客户编号", required = true, paramType = "form", dataType = "String")
     })
-    @PostMapping(value = "/find_by_customerno")
+    @PostMapping(value = "/find_users_by_customerno")
     public ListQueryWrapper findUsersByCustomerNo(@RequestParam String customerNo) {
         ListQueryWrapper wrapper = customerService.findUsersByCustomerNo(customerNo);
 
