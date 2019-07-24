@@ -4,12 +4,12 @@ import com.smart.sperms.dao.CustomerDao;
 import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.UserCustomerDao;
 import com.smart.sperms.dao.dto.SysMenuDto;
-import com.smart.sperms.dao.model.Customer;
-import com.smart.sperms.dao.model.Equipment;
-import com.smart.sperms.dao.model.Users;
+import com.smart.sperms.dao.model.*;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.CustomerAddUserRelationReq;
 import com.smart.sperms.request.CustomerEditReq;
 import com.smart.sperms.request.EquipmentEditReq;
+import com.smart.sperms.request.SysRoleAddMenuRelationReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -211,7 +211,48 @@ public class CustomerService {
     public ListQueryWrapper findUsersByCustomerNo(String customerNo) {
         ListQueryWrapper wrapper = new ListQueryWrapper();
         List<Users> list = userCustomerDao.queryUsersByCustomerNo(customerNo);
+        if(!CollectionUtils.isEmpty(list)) {
+            for(Users user:list) {
+                user.setuPassword("");
+            }
+        }
         wrapper.setRecords(list);
+        return wrapper;
+    }
+
+    /**
+     * 客户关联系统用户
+     * @param req
+     * @return
+     */
+    public CommonWrapper addCustomerUserRelation(CustomerAddUserRelationReq req) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultMsg("客户关联系统用户异常");
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+
+        if(CollectionUtils.isEmpty(req.getUserIds())) {
+            wrapper.setResultMsg("系统用户ID不能为空");
+            return wrapper;
+        }
+
+        int cnt = 0;
+        for(String uId: req.getUserIds()) {
+            if(!userCustomerDao.isRelationExists(req.getCustomerNo(), uId)) {
+                UsersCustomerRelation relation = new UsersCustomerRelation();
+                relation.setCustomerNo(req.getCustomerNo());
+                relation.setuId(uId);
+
+                cnt +=userCustomerDao.saveData(relation);
+            }
+        }
+        if(cnt > 0) {
+            wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+            wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+        } else {
+            wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+            wrapper.setResultMsg("关联关系已存在");
+        }
+
         return wrapper;
     }
 }

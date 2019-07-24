@@ -14,7 +14,7 @@ public class SysRoleAddReq implements Serializable {
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 
-    @ApiModelProperty(value = "角色状态")
+    @ApiModelProperty(value = "角色状态（0:停用 1:启用）")
     private Integer roleStatus;
 
     @ApiModelProperty(value = "角色备注")

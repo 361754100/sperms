@@ -3,7 +3,9 @@ package com.smart.sperms.service;
 import com.smart.sperms.dao.SysRoleDao;
 import com.smart.sperms.dao.SysRoleMenuDao;
 import com.smart.sperms.dao.model.SysRole;
+import com.smart.sperms.dao.model.SysRoleMenuRelation;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.SysRoleAddMenuRelationReq;
 import com.smart.sperms.request.SysRoleAddReq;
 import com.smart.sperms.request.SysRoleEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -84,6 +86,42 @@ public class SysRoleService {
 
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+    /**
+     * 角色关联菜单
+     * @param req
+     * @return
+     */
+    public CommonWrapper addRoleMenuRelation(SysRoleAddMenuRelationReq req) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultMsg("角色关联菜单异常");
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+
+        if(CollectionUtils.isEmpty(req.getMenuIds())) {
+            wrapper.setResultMsg("菜单ID不能为空");
+            return wrapper;
+        }
+
+        int cnt = 0;
+        for(int menuId: req.getMenuIds()) {
+            if(!sysRoleMenuDao.isRelationExists(req.getRoleId(), menuId)) {
+                SysRoleMenuRelation relation = new SysRoleMenuRelation();
+                relation.setMenuId(menuId);
+                relation.setRoleId(req.getRoleId());
+
+                cnt +=sysRoleMenuDao.saveData(relation);
+            }
+        }
+        if(cnt > 0) {
+            wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+            wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+        } else {
+            wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+            wrapper.setResultMsg("关联关系已存在");
+        }
 
         return wrapper;
     }

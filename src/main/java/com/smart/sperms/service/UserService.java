@@ -50,7 +50,11 @@ public class UserService {
 
         int total = usersDao.queryPageTotal(beginTime, endTime, keywords);
         List<Users> result = usersDao.queryPage(pageNo, pageSize, beginTime, endTime, keywords);
-
+        if(!CollectionUtils.isEmpty(result)) {
+            for(Users user:result) {
+                user.setuPassword("");
+            }
+        }
         wrapper.setTotalCount(total);
         wrapper.setPageNo(pageNo);
         wrapper.setRecords(result);
@@ -77,6 +81,7 @@ public class UserService {
 
         List<Users> result = usersDao.queryList(condition);
         if(!CollectionUtils.isEmpty(result)) {
+            result.get(0).setuPassword("");
             wrapper.setRecord(result.get(0));
         }
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());

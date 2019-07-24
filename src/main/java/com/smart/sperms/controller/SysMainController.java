@@ -2,6 +2,7 @@ package com.smart.sperms.controller;
 
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.response.CommonWrapper;
+import com.smart.sperms.response.ListQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,6 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Descript 系统管理控制类
@@ -119,6 +124,21 @@ public class SysMainController {
         wrapper.setResultMsg("认证失败");
 
         return wrapper;
+    }
+
+    /**
+     * 查询响应码
+     * @return
+     */
+    @ApiOperation(value = "查询响应码")
+    @PostMapping(value = "/query_result_code")
+    public Map<Integer, String> queryResultCode() {
+        List<ResultCodeEnum> enums = ResultCodeEnum.getResultCodes();
+        Map<Integer, String> codes = new HashMap<>();
+        for(ResultCodeEnum code: enums) {
+            codes.put(code.getCode(), code.getDesc());
+        }
+        return codes;
     }
 
 }

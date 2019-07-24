@@ -14,7 +14,7 @@ public class SysMenuAddReq implements Serializable {
     @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty(value = "菜单状态")
+    @ApiModelProperty(value = "菜单状态（0:停用 1:启用）")
     private Integer menuStatus;
 
     @ApiModelProperty(value = "菜单连接")

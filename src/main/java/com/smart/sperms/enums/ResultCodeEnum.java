@@ -1,11 +1,17 @@
 package com.smart.sperms.enums;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 结果集状态码
  */
 public enum ResultCodeEnum {
 
     UNKNOW(-1, "未知异常"),
+    FORBIDDEN(403, "没有权限访问"),
+    RESOURCE_NOT_FOUND(404, "资源不存在"),
     SUCCESS(100, "成功"),
     FAILURE(-100, "异常");
 
@@ -35,6 +41,12 @@ public enum ResultCodeEnum {
             }
         }
         return result;
+    }
+
+    public static List<ResultCodeEnum> getResultCodes() {
+        ResultCodeEnum[] enums = values();
+        List<ResultCodeEnum> list = Arrays.asList(enums);
+        return list;
     }
 
 }

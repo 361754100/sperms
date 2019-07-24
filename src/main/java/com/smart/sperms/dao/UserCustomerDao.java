@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -97,4 +98,21 @@ public class UserCustomerDao {
         return customers;
     }
 
+    /**
+     * 判断关系是否存在
+     * @param customerNo
+     * @param userId
+     * @return
+     */
+    public boolean isRelationExists(String customerNo, String userId) {
+        boolean isExists = false;
+        UsersCustomerRelationExample example = new UsersCustomerRelationExample();
+        example.createCriteria().andCustomerNoEqualTo(customerNo).andUIdEqualTo(userId);
+
+        List<UsersCustomerRelation> result = mapper.selectByExample(example);
+        if(!CollectionUtils.isEmpty(result)) {
+            isExists = true;
+        }
+        return isExists;
+    }
 }

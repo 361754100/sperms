@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +85,24 @@ public class SysRoleMenuDao {
 
         List<SysMenuDto> menuDtos = mapper.selectMenuDtoByRoleId(params);
         return menuDtos;
+    }
+
+    /**
+     * 判断关系是否存在
+     * @param roleId
+     * @param menuId
+     * @return
+     */
+    public boolean isRelationExists(int roleId, int menuId) {
+        boolean isExists = false;
+        SysRoleMenuRelationExample example = new SysRoleMenuRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId).andMenuIdEqualTo(menuId);
+
+        List<SysRoleMenuRelation> result = mapper.selectByExample(example);
+        if(!CollectionUtils.isEmpty(result)) {
+            isExists = true;
+        }
+        return isExists;
     }
 
 }

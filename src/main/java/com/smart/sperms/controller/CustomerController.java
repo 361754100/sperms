@@ -1,9 +1,6 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.request.CustomerDelReq;
-import com.smart.sperms.request.CustomerEditReq;
-import com.smart.sperms.request.EquipmentDelReq;
-import com.smart.sperms.request.EquipmentEditReq;
+import com.smart.sperms.request.*;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -88,7 +85,7 @@ public class CustomerController {
 
     @ApiOperation(value = "按客户编号删除关联关系")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="customerNos", value = "客户编号", required = true, paramType = "form", dataType = "String")
+            @ApiImplicitParam(name="customerNos", value = "客户编号（多个ID用逗号隔开：101,102,103）", required = true, paramType = "form", dataType = "String")
     })
     @PostMapping(value = "/del_relation_by_customernos")
     public CommonWrapper delRelationByCustomerNos(@RequestParam List<String> customerNos) {
@@ -120,6 +117,14 @@ public class CustomerController {
         ListQueryWrapper wrapper = customerService.findUsersByCustomerNo(customerNo);
 
         logger.debug(" customerNo = {}", new Object[]{customerNo});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "客户关联系统用户")
+    @PostMapping(value = "/add_user_relation")
+    public CommonWrapper addUserRelation(@RequestBody CustomerAddUserRelationReq params) {
+        logger.debug(" params = {}", new Object[]{params});
+        CommonWrapper wrapper = customerService.addCustomerUserRelation(params);
         return wrapper;
     }
 }

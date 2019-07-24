@@ -1,5 +1,7 @@
 package com.smart.sperms.common;
 
+import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.response.CommonWrapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -27,33 +29,51 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public String defaultErrorHandler(HttpServletResponse response, Exception e) {
-        return JsonResult.jsonError("服务器内部错误！详细信息：" + e.getMessage(), 500);
+    public CommonWrapper defaultErrorHandler(HttpServletResponse response, Exception e) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("服务器内部错误！详细信息：" + e.getMessage());
+        return wrapper;
     }
 
     @ExceptionHandler(value = IncorrectCredentialsException.class)
-    public String incorrectCredentialsExceptionHandler() {
-        return JsonResult.jsonError( "认证失败，密码错误！", 401);
+    public CommonWrapper incorrectCredentialsExceptionHandler() {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("认证失败，密码错误！");
+        return wrapper;
     }
 
     @ExceptionHandler(value = UnknownAccountException.class)
-    public String unknownAccountExceptionHandler() {
-        return JsonResult.jsonError("认证失败，账号不存在！", 401);
+    public CommonWrapper unknownAccountExceptionHandler() {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("认证失败，账号不存在！");
+        return wrapper;
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
-    public String authenticationExceptionHandler() {
-        return JsonResult.jsonError("认证失败，账号信息认证错误！", 401);
+    public CommonWrapper authenticationExceptionHandler() {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("认证失败，账号信息认证错误！");
+        return wrapper;
     }
 
     @ExceptionHandler(value = GlobalException.class)
-    public String GlobalExceptionHandler(GlobalException e) {
-        return JsonResult.jsonError(e.getMessage());
+    public CommonWrapper GlobalExceptionHandler(GlobalException e) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.UNKNOW.getCode());
+        wrapper.setResultMsg(e.getMessage());
+        return wrapper;
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public String httpRequestMethodNotSupportedExceptionHandler(HttpServletResponse response) {
-        return JsonResult.jsonError("method方法不允许！", 405);
+    public CommonWrapper httpRequestMethodNotSupportedExceptionHandler(HttpServletResponse response) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        wrapper.setResultMsg("method方法不允许！");
+        return wrapper;
     }
 
     /**
@@ -70,13 +90,19 @@ public class GlobalExceptionHandler {
     }
 
     @RequestMapping(value = "/404")
-    public String noFoundPage404() {
-        return JsonResult.jsonError("没有找到访问资源！", 404);
+    public CommonWrapper noFoundPage404() {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.RESOURCE_NOT_FOUND.getCode());
+        wrapper.setResultMsg("没有找到访问资源！");
+        return wrapper;
     }
 
     @RequestMapping(value = "/403")
-    public String forbiden403() {
-        return JsonResult.jsonError("没有权限访问！", 403);
+    public CommonWrapper forbiden403() {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FORBIDDEN.getCode());
+        wrapper.setResultMsg("没有权限访问！");
+        return wrapper;
     }
 
 
