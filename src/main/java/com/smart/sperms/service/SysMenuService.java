@@ -5,6 +5,7 @@ import com.smart.sperms.dao.SysRoleMenuDao;
 import com.smart.sperms.dao.dto.SysMenuDto;
 import com.smart.sperms.dao.model.SysMenu;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.SysMenuAddReq;
 import com.smart.sperms.request.SysMenuEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.ListQueryWrapper;
@@ -31,16 +32,10 @@ public class SysMenuService {
      * @param req
      * @return
      */
-    public CommonWrapper addInfo(SysMenuEditReq req) {
+    public CommonWrapper addInfo(SysMenuAddReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
-        int menuId = req.getMenuId();
-        boolean isExist = this.isExists(menuId);
-        if(isExist) {
-            wrapper.setResultMsg("该菜单信息已存在");
-            return wrapper;
-        }
         SysMenu info = new SysMenu();
         info.setMenuIcon(req.getMenuIcon());
         info.setMenuName(req.getMenuName());

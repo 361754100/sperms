@@ -4,6 +4,7 @@ import com.smart.sperms.dao.SysRoleDao;
 import com.smart.sperms.dao.SysRoleMenuDao;
 import com.smart.sperms.dao.model.SysRole;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.SysRoleAddReq;
 import com.smart.sperms.request.SysRoleEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -29,16 +30,10 @@ public class SysRoleService {
      * @param req
      * @return
      */
-    public CommonWrapper addInfo(SysRoleEditReq req) {
+    public CommonWrapper addInfo(SysRoleAddReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
-        int roleId = req.getRoleId();
-        boolean isExist = this.isExists(roleId);
-        if(isExist) {
-            wrapper.setResultMsg("该菜单信息已存在");
-            return wrapper;
-        }
         SysRole info = new SysRole();
         info.setRoleName(req.getRoleName());
         info.setRoleRemark(req.getRoleRemark());

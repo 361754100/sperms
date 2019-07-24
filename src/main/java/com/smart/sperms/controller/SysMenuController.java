@@ -1,5 +1,6 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.request.SysMenuAddReq;
 import com.smart.sperms.request.SysMenuDelReq;
 import com.smart.sperms.request.SysMenuEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -46,7 +47,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "新增菜单信息")
     @PostMapping(value = "/add")
-    public CommonWrapper add(@RequestBody SysMenuEditReq params) {
+    public CommonWrapper add(@RequestBody SysMenuAddReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = sysMenuService.addInfo(params);
         return wrapper;

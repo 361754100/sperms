@@ -1,5 +1,6 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.request.SysRoleAddReq;
 import com.smart.sperms.request.SysRoleDelReq;
 import com.smart.sperms.request.SysRoleEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -47,7 +48,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "新增角色信息")
     @PostMapping(value = "/add")
-    public CommonWrapper add(@RequestBody SysRoleEditReq params) {
+    public CommonWrapper add(@RequestBody SysRoleAddReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = sysRoleService.addInfo(params);
         return wrapper;
