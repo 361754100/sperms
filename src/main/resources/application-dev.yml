@@ -18,7 +18,7 @@ spring:
       master:
         url: jdbc:mysql://localhost:3306/sperms?useSSL=false&characterEncoding=UTF-8
         username: root
-        password: 123456
+        password: Sperms_123
       # 使用druid数据源
       filters: stat
       maxActive: 20
