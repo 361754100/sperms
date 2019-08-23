@@ -1,5 +1,7 @@
 package com.smart.sperms.config.mqtt;
 
+import com.smart.sperms.dao.EquipmentDao;
+import com.smart.sperms.dao.model.Equipment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,15 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.core.MessageProducer;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @IntegrationComponentScan
@@ -25,6 +32,9 @@ public class MqttInputHandler {
     @Autowired
     private MqttConfig mqttConfig;
 
+    @Autowired
+    private EquipmentDao equipmentDao;
+
     //接收通道
     @Bean
     public MessageChannel mqttInputChannel() {
@@ -34,11 +44,26 @@ public class MqttInputHandler {
     //配置client,监听的topic
     @Bean
     public MessageProducer inbound() {
+        Equipment condition = new Equipment();
+        List<Equipment> equipList = equipmentDao.queryList(condition);
+
+        List<String> topicList = new ArrayList<>();
+        topicList.add(mqttConfig.getDefaultTopic());
+
+        String TOPIC_PREFIX_ANDROID = mqttConfig.getTopic_smart_android();
+
+        if(!CollectionUtils.isEmpty(equipList)) {
+            for(Equipment equipment:equipList) {
+                String topic = TOPIC_PREFIX_ANDROID + equipment.geteId();
+                topicList.add(topic);
+            }
+        }
+        String[] topics = new String[topicList.size()];
+        topicList.toArray(topics);
+
         MqttPahoMessageDrivenChannelAdapter adapter =
-//                new MqttPahoMessageDrivenChannelAdapter(clientId+"_inbound", mqttClientFactory(),
-//                        "hello","hello1");
                 new MqttPahoMessageDrivenChannelAdapter(mqttConfig.getClientId()+"_inbound", mqttConfig.mqttClientFactory(),
-                        mqttConfig.getDefaultTopic());
+                        topics);
         adapter.setCompletionTimeout(mqttConfig.getCompletionTimeout());
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
@@ -53,14 +78,9 @@ public class MqttInputHandler {
         return new MessageHandler() {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
-//                String topic = message.getHeaders().get("mqtt_receivedTopic").toString();
-//                String type = topic.substring(topic.lastIndexOf("/")+1, topic.length());
-//                if("hello".equalsIgnoreCase(topic)){
-//                    System.out.println("hello,...,"+message.getPayload().toString());
-//                }else if("hello1".equalsIgnoreCase(topic)){
-//                    System.out.println("hello1,...,"+message.getPayload().toString());
-//                }
-                logger.info("收到消息："+(String) message.getPayload());
+                String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
+                logger.info("recive mqtt msg...topic ={}, message ={}",
+                        topic, (String) message.getPayload());
             }
         };
     }

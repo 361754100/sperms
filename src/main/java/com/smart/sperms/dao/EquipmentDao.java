@@ -140,6 +140,10 @@ public class EquipmentDao {
         if(!StringUtils.isEmpty(eId)) {
             criteria.andEIdEqualTo(eId);
         }
+        String state = condition.geteState();
+        if(!StringUtils.isEmpty(state)) {
+            criteria.andEStateEqualTo(state);
+        }
         result = mapper.selectByExample(example);
         return result;
     }

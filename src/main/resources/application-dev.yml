@@ -17,7 +17,7 @@ spring:
       # wrjweb数据库
       master:
         url: jdbc:mysql://localhost:3306/sperms?useSSL=false&characterEncoding=UTF-8
-        username: root
+        username: smart
         password: Sperms_123
       # 使用druid数据源
       filters: stat
@@ -42,11 +42,16 @@ spring:
       #MQTT-连接服务器默认客户端ID
       client:
         id: bridge_aws
-      #MQTT-默认的消息推送主题，实际可在调用接口时指定
+      #MQTT-默认的消息推送主题，实际可在调用接口时指定,多个以逗号隔开
       default:
         topic: topic1
       #连接超时
       completionTimeout: 3000
+      #对接协议订阅主题前缀
+      api:
+        topic_prefix:
+          smart_android: /machine_android/
+          smart_web: /machine_web/
 
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
@@ -72,6 +77,11 @@ logging:
     com.smart.sperms.dao: debug
     #mongodb debug设置
     org.springframework.data.mongodb.core: debug
+
+# 加密算法配置
+encrypt:
+    xxtea:
+        key_smart: 25fd36gfegl
 
 #management:
 #  endpoint:

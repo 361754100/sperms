@@ -136,10 +136,13 @@ public class SysMenuDao {
         SysMenuExample example = new SysMenuExample();
         SysMenuExample.Criteria criteria = example.createCriteria();
 
-        int menuId = condition.getMenuId();
-//        if(!StringUtils.isEmpty(menuId)) {
+        Integer menuId = condition.getMenuId();
+        if(menuId !=null ) {
             criteria.andMenuIdEqualTo(menuId);
-//        }
+        }
+        if(!StringUtils.isEmpty(condition.getMenuName())) {
+            criteria.andMenuNameLike("%" + condition.getMenuName() + "%");
+        }
         result = mapper.selectByExample(example);
         return result;
     }

@@ -47,6 +47,11 @@ spring:
         topic: topic1
       #连接超时
       completionTimeout: 3000
+      #对接协议订阅主题前缀
+      api:
+        topic_prefix:
+          smart_android: /machine_android/
+          smart_web: /machine_web/
 
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
@@ -72,6 +77,11 @@ logging:
     com.smart.sperms.dao: debug
     #mongodb debug设置
     org.springframework.data.mongodb.core: debug
+
+# 加密算法配置
+encrypt:
+    xxtea:
+        key_smart: 25fd36gfegl
 
 #management:
 #  endpoint:

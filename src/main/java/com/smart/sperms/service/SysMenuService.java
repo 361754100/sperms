@@ -140,6 +140,19 @@ public class SysMenuService {
     }
 
     /**
+     * 根据查询条件获取菜单列表
+     * @param condition
+     * @return
+     */
+    public ListQueryWrapper listByCondition(SysMenu condition) {
+        ListQueryWrapper wrapper = new ListQueryWrapper();
+        List<SysMenu> result = sysMenuDao.queryList(condition);
+        wrapper.setRecords(result);
+
+        return wrapper;
+    }
+
+    /**
      * 根据角色ID获取菜单列表
      * @param roleId
      * @return

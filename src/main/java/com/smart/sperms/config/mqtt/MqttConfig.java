@@ -31,6 +31,12 @@ public class MqttConfig {
     @Value("${spring.mqtt.completionTimeout}")
     private int completionTimeout;
 
+    @Value("${spring.mqtt.api.topic_prefix.smart_android}")
+    private String topic_smart_android;
+
+    @Value("${spring.mqtt.api.topic_prefix.smart_web}")
+    private String topic_smart_web;
+
     @Bean
     public MqttConnectOptions getMqttConnectOptions(){
         MqttConnectOptions mqttConnectOptions=new MqttConnectOptions();
@@ -94,5 +100,21 @@ public class MqttConfig {
 
     public void setCompletionTimeout(int completionTimeout) {
         this.completionTimeout = completionTimeout;
+    }
+
+    public String getTopic_smart_android() {
+        return topic_smart_android;
+    }
+
+    public void setTopic_smart_android(String topic_smart_android) {
+        this.topic_smart_android = topic_smart_android;
+    }
+
+    public String getTopic_smart_web() {
+        return topic_smart_web;
+    }
+
+    public void setTopic_smart_web(String topic_smart_web) {
+        this.topic_smart_web = topic_smart_web;
     }
 }

@@ -1,5 +1,6 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.dao.model.SysMenu;
 import com.smart.sperms.request.SysMenuAddReq;
 import com.smart.sperms.request.SysMenuDelReq;
 import com.smart.sperms.request.SysMenuEditReq;
@@ -42,6 +43,21 @@ public class SysMenuController {
 
         logger.debug(" startTime = {}, endTime = {}, pageNo = {}, pageSize = {}, keywords = {}",
                 new Object[]{startTime, endTime, pageNo, pageSize, keywords});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "查询所有菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="keywords", value = "关键字", paramType = "form", dataType = "String")
+    })
+    @PostMapping(value = "/list_all")
+    public ListQueryWrapper listAll(@RequestParam(required = false) String keywords) {
+        SysMenu condition = new SysMenu();
+        condition.setMenuName(keywords);
+
+        ListQueryWrapper wrapper = sysMenuService.listByCondition(condition);
+
+        logger.debug(" keywords = {}", new Object[]{keywords});
         return wrapper;
     }
 

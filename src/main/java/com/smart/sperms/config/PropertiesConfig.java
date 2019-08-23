@@ -12,25 +12,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PropertiesConfig {
 
-//    @Value("${tcpserver.port}")
-    private int serverport;
+    @Value("${encrypt.xxtea.key_smart}")
+    private String xxtea_key_smart;
 
-//    @Value("${version}")
-    private String version;
-
-    public int getServerport() {
-        return serverport;
+    public String getXxtea_key_smart() {
+        return xxtea_key_smart;
     }
 
-    public void setServerport(int serverport) {
-        this.serverport = serverport;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
+    public void setXxtea_key_smart(String xxtea_key_smart) {
+        this.xxtea_key_smart = xxtea_key_smart;
     }
 }
