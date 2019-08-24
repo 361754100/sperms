@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import com.alibaba.fastjson.JSON;
 import com.smart.sperms.common.SpringContext;
@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * 协议消息解析器
  */
-public class ProtocolFactory {
+public class MsgDecoder {
 
-    private static Logger logger = LoggerFactory.getLogger(ProtocolFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(MsgDecoder.class);
 
     public static void decode(String topic, String data) {
         MqttConfig mqttConfig = SpringContext.getBean(MqttConfig.class);
@@ -26,7 +26,7 @@ public class ProtocolFactory {
             //TODO...
         }
         String msgBody = XxteaUtils.decryptFromHexString(data, propConfig.getXxtea_key_smart());
-        CommonPayload payload = JSON.parseObject(msgBody, CommonPayload.class);
+        MsgPayload payload = JSON.parseObject(msgBody, MsgPayload.class);
 
         ProtocolEnum protocol = ProtocolEnum.getProtocol(payload.getProtocol());
         switch(protocol) {

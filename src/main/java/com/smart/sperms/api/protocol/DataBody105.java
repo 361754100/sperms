@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -27,5 +27,13 @@ public class DataBody105 implements Serializable {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody105{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -15,5 +15,12 @@ public class DataBody109 implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody109{" +
+                "address='" + address + '\'' +
+                '}';
     }
 }

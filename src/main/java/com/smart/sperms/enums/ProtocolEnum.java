@@ -22,7 +22,9 @@ public enum ProtocolEnum {
     CODE_112(112, "Android端响应111"),
     CODE_113(113, "服务端下发更新密钥"),
     CODE_114(114, "Android端响应113"),
-    UNKNOW(-1, "未知异常");
+
+    CODE_SUCCESS(0, "成功"),
+    CODE_ERROR(-1,"失败");
 
     private int code;
     private String desc;
@@ -42,7 +44,7 @@ public enum ProtocolEnum {
     }
 
     public static ProtocolEnum getProtocol(int code) {
-        ProtocolEnum result = UNKNOW;
+        ProtocolEnum result = CODE_ERROR;
         for(ProtocolEnum codeEnum : values) {
             if(codeEnum.getCode() == code) {
                 result = codeEnum;

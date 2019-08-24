@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -15,5 +15,12 @@ public class DataBody102 implements Serializable {
 
     public void setWork(boolean work) {
         this.work = work;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody102{" +
+                "work=" + work +
+                '}';
     }
 }

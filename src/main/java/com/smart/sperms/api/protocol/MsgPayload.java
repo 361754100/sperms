@@ -1,14 +1,16 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
+
+import com.smart.sperms.enums.ProtocolEnum;
 
 import java.io.Serializable;
 
 /**
  * 通用消息体
  */
-public class CommonPayload implements Serializable {
+public class MsgPayload implements Serializable {
 
     private int protocol;
-    private int code;
+    private int code = ProtocolEnum.CODE_SUCCESS.getCode();
     private Object data;
 
     public int getProtocol() {

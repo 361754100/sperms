@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -15,5 +15,12 @@ public class DataBody112 implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody112{" +
+                "image='" + image + '\'' +
+                '}';
     }
 }

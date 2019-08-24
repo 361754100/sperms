@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -15,5 +15,12 @@ public class DataBody113 implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody113{" +
+                "password='" + password + '\'' +
+                '}';
     }
 }

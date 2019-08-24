@@ -1,4 +1,4 @@
-package com.smart.sperms.api;
+package com.smart.sperms.api.protocol;
 
 import java.io.Serializable;
 
@@ -24,5 +24,13 @@ public class DataBody101 implements Serializable {
 
     public void setSoftwareVersion(String softwareVersion) {
         this.softwareVersion = softwareVersion;
+    }
+
+    @Override
+    public String toString() {
+        return "DataBody101{" +
+                "firmwareVersion='" + firmwareVersion + '\'' +
+                ", softwareVersion='" + softwareVersion + '\'' +
+                '}';
     }
 }
