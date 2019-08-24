@@ -1,5 +1,6 @@
 package com.smart.sperms.config.mqtt;
 
+import com.smart.sperms.api.protocol.MsgDecoder;
 import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.model.Equipment;
 import org.slf4j.Logger;
@@ -79,8 +80,10 @@ public class MqttInputHandler {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
                 String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
-                logger.info("recive mqtt msg...topic ={}, message ={}",
-                        topic, (String) message.getPayload());
+                String payload = (String)message.getPayload();
+                logger.info("recive mqtt msg...topic ={}, payload ={}", topic, payload);
+
+                MsgDecoder.decode(topic, payload);
             }
         };
     }
