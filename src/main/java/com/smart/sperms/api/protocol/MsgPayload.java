@@ -36,4 +36,13 @@ public class MsgPayload implements Serializable {
     public void setData(Object data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "MsgPayload{" +
+                "protocol=" + protocol +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
+    }
 }
