@@ -1,13 +1,20 @@
 package com.smart.sperms.service;
 
+import com.smart.sperms.api.handler.Handler107;
+import com.smart.sperms.api.protocol.DataBody107;
+import com.smart.sperms.api.protocol.MsgPayload;
+import com.smart.sperms.common.SpringContext;
 import com.smart.sperms.dao.EquipmentEnableDao;
 import com.smart.sperms.dao.dto.EquipmentEnableDto;
 import com.smart.sperms.dao.model.EquipmentEnable;
+import com.smart.sperms.enums.ProtocolEnum;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.EquipmentEnableEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -16,6 +23,8 @@ import java.util.List;
 
 @Service
 public class EquipmentEnableService {
+
+    private static Logger logger = LoggerFactory.getLogger(EquipmentEnableService.class);
 
     @Autowired
     private EquipmentEnableDao equipmentEnableDao;
@@ -65,10 +74,33 @@ public class EquipmentEnableService {
         info.setEeEnable(req.getEeEnable());
         info.setEeCondition(req.getEeCondition());
 
+        EquipmentEnableDto queryCondition = new EquipmentEnableDto();
+        List<EquipmentEnableDto> tmpList = equipmentEnableDao.queryList(queryCondition);
+
         int cnt = equipmentEnableDao.updateData(req.geteId(), info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+
+            if(!CollectionUtils.isEmpty(tmpList)) {
+                EquipmentEnableDto enableDto = tmpList.get(0);
+                int isEnable = req.getEeEnable().intValue();
+                // 如果新旧状态不一致，则把新状态发送给设备
+                if(enableDto.getEeEnable().intValue() != isEnable) {
+                    boolean work = isEnable == 1?true:false;
+                    logger.info("change device work state...work ={}", work);
+
+                    DataBody107 body107 = new DataBody107();
+                    body107.setWork(work);
+
+                    MsgPayload payload = new MsgPayload();
+                    payload.setData(body107);
+                    payload.setProtocol(ProtocolEnum.CODE_107.getCode());
+
+                    Handler107 handler107 = SpringContext.getBean(Handler107.class);
+                    handler107.execute(req.geteId(), payload);
+                }
+            }
         }
         return wrapper;
     }
@@ -86,6 +118,20 @@ public class EquipmentEnableService {
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
 
+        for(String eId: eIds) {
+            boolean work = false;
+            logger.info("delete device and change work state...work ={}", work);
+
+            DataBody107 body107 = new DataBody107();
+            body107.setWork(work);
+
+            MsgPayload payload = new MsgPayload();
+            payload.setData(body107);
+            payload.setProtocol(ProtocolEnum.CODE_107.getCode());
+
+            Handler107 handler107 = SpringContext.getBean(Handler107.class);
+            handler107.execute(eId, payload);
+        }
         return wrapper;
     }
 

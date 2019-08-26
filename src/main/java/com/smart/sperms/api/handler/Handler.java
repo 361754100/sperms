@@ -32,6 +32,6 @@ public abstract class Handler {
         String payload = XxteaUtils.encryptToHexString(msg, key);
         mqttService.sendToMqtt(topic, payload);
 
-        logger.info("send msg to android...resp = {}", msg);
+        logger.info("send msg to android...msg = {}", msg);
     }
 }

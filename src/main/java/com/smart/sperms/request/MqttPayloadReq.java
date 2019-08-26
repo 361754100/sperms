@@ -18,6 +18,9 @@ public class MqttPayloadReq implements Serializable {
     @ApiModelProperty(value = "消息体")
     private MsgPayload payload;
 
+    @ApiModelProperty(value = "是否需要数据加密")
+    private boolean isEncrypt;
+
     public String getTopic() {
         return topic;
     }
@@ -34,11 +37,11 @@ public class MqttPayloadReq implements Serializable {
         this.payload = payload;
     }
 
-    @Override
-    public String toString() {
-        return "MqttPayloadReq{" +
-                "topic='" + topic + '\'' +
-                ", payload=" + payload +
-                '}';
+    public boolean isEncrypt() {
+        return isEncrypt;
+    }
+
+    public void setEncrypt(boolean encrypt) {
+        isEncrypt = encrypt;
     }
 }

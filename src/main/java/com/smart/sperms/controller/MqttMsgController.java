@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.xxtea.XXTEA;
 
 @Api(tags = "mqtt-msg", description = "MQTT消息请求")
 @RestController
@@ -65,10 +64,6 @@ public class MqttMsgController {
     }
 
     @ApiOperation(value = "发送Payload消息--指定主题")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "topic", value = "消息主题", required = true, paramType = "form"),
-//            @ApiImplicitParam(name = "payload", value = "消息内容", required = true, paramType = "form")
-//    })
     @PostMapping(value="/send_payload_by_topic")
     public CommonWrapper sendPayloadByTopic(@RequestBody MqttPayloadReq req){
         CommonWrapper wrapper = new CommonWrapper();
@@ -77,7 +72,7 @@ public class MqttMsgController {
         MsgPayload payload = req.getPayload();
         String message = JSON.toJSONString(payload);
         try {
-            String data = XxteaUtils.encryptToHexString(message, key);
+            String data = req.isEncrypt()? XxteaUtils.encryptToHexString(message, key) : message;
             mqttSendService.sendToMqtt(topic, data);
             logger.debug("mqtt send msg...topic = {}, message = {}", topic, payload);
         } catch (Exception e) {

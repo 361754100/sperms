@@ -52,6 +52,7 @@ public class MqttInputHandler {
         topicList.add(mqttConfig.getDefaultTopic());
 
         String TOPIC_PREFIX_ANDROID = mqttConfig.getTopic_smart_android();
+//        String TOPIC_PREFIX_ANDROID = mqttConfig.getTopic_smart_web();
 
         if(!CollectionUtils.isEmpty(equipList)) {
             for(Equipment equipment:equipList) {
