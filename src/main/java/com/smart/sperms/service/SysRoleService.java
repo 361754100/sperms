@@ -63,7 +63,6 @@ public class SysRoleService {
         info.setRoleName(req.getRoleName());
         info.setRoleRemark(req.getRoleRemark());
         info.setRoleStatus(req.getRoleStatus());
-        info.setCreationTime(new Date());
         info.setModifyTime(new Date());
 
         int cnt = sysRoleDao.updateData(req.getRoleId(), info);
