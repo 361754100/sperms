@@ -131,10 +131,10 @@ public class SysRoleService {
      * @param menuId
      * @return
      */
-    public CommonWrapper delRelationByRoleMenuId(int roleId, int menuId) {
+    public CommonWrapper delRelationByRoleMenuId(int roleId, List<Integer> menuIds) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
-        int cnt = sysRoleMenuDao.delRelationByRoleMenuId(roleId, menuId);
+        int cnt = sysRoleMenuDao.delRelationByRoleMenuId(roleId, menuIds);
 
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
