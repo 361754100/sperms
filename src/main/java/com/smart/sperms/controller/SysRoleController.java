@@ -1,9 +1,6 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.request.SysRoleAddMenuRelationReq;
-import com.smart.sperms.request.SysRoleAddReq;
-import com.smart.sperms.request.SysRoleDelReq;
-import com.smart.sperms.request.SysRoleEditReq;
+import com.smart.sperms.request.*;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
@@ -93,14 +90,10 @@ public class SysRoleController {
     }
 
     @ApiOperation(value = "根据角色ID和菜单ID删除关联关系")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="roleId", value = "角色ID", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name="menuId", value = "菜单ID", required = true, paramType = "form", dataType = "int")
-    })
-    @PostMapping(value = "/del_relation_by_role_menu_id")
-    public CommonWrapper delRelationByRoleMenuId(@RequestParam int roleId, @RequestParam int menuId) {
-        logger.debug(" roleId = {}, menuId = {}", new Object[]{roleId, menuId});
-        CommonWrapper wrapper = sysRoleService.delRelationByRoleMenuId(roleId, menuId);
+    @PostMapping(value = "/del_relation_by_role_menu_ids")
+    public CommonWrapper delRelationByRoleMenuIds(@RequestBody SysRoleDelMenuRelationReq params) {
+        logger.debug(" params = {}", params);
+        CommonWrapper wrapper = sysRoleService.delRelationByRoleMenuId(params.getRoleId(), params.getMenuIds());
         return wrapper;
     }
 

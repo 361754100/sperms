@@ -58,14 +58,14 @@ public class SysRoleMenuDao {
     /**
      * 删除角色菜单关联关系
      * @param roleId
-     * @param menuId
+     * @param menuIds
      * @return
      */
-    public int delRelationByRoleMenuId(int roleId, int menuId) {
+    public int delRelationByRoleMenuId(int roleId, List<Integer> menuIds) {
         int cnt = 0;
         try {
             SysRoleMenuRelationExample example = new SysRoleMenuRelationExample();
-            example.createCriteria().andRoleIdEqualTo(roleId).andMenuIdEqualTo(menuId);
+            example.createCriteria().andRoleIdEqualTo(roleId).andMenuIdIn(menuIds);
 
             cnt = mapper.deleteByExample(example);
         } catch (Exception e) {
