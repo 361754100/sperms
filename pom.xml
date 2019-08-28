@@ -145,6 +145,13 @@
             <version>1.20</version>
         </dependency>
 
+        <!--XXTEA加密算法-->
+        <dependency>
+            <groupId>org.xxtea</groupId>
+            <artifactId>xxtea-java</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>
