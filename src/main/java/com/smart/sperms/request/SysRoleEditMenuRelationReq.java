@@ -10,7 +10,7 @@ import java.util.List;
  * 删除角色关联菜单信息
  */
 @ApiModel(description = "删除角色关联菜单消息体")
-public class SysRoleDelMenuRelationReq implements Serializable {
+public class SysRoleEditMenuRelationReq implements Serializable {
 
     @ApiModelProperty(value = "角色ID")
     private int roleId;

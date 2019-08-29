@@ -7,14 +7,17 @@ import com.smart.sperms.dao.model.SysRoleMenuRelation;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.SysRoleAddMenuRelationReq;
 import com.smart.sperms.request.SysRoleAddReq;
+import com.smart.sperms.request.SysRoleEditMenuRelationReq;
 import com.smart.sperms.request.SysRoleEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +97,7 @@ public class SysRoleService {
      * @param req
      * @return
      */
-    public CommonWrapper addRoleMenuRelation(SysRoleAddMenuRelationReq req) {
+    public CommonWrapper addRoleMenuRelation(SysRoleEditMenuRelationReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultMsg("角色关联菜单异常");
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
@@ -128,7 +131,7 @@ public class SysRoleService {
     /**
      * 删除关联关系
      * @param roleId
-     * @param menuId
+     * @param menuIds
      * @return
      */
     public CommonWrapper delRelationByRoleMenuId(int roleId, List<Integer> menuIds) {
@@ -139,6 +142,23 @@ public class SysRoleService {
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
 
+        return wrapper;
+    }
+
+    /**
+     * 删除关联关系
+     * @param req
+     * @return
+     */
+    @Transactional
+    public CommonWrapper resetRelationByRoleMenuIds(SysRoleEditMenuRelationReq req) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+
+        int roleId = req.getRoleId();
+        this.delRelationByRoleId(roleId);
+
+        wrapper = this.addRoleMenuRelation(req);
         return wrapper;
     }
 
@@ -157,6 +177,24 @@ public class SysRoleService {
 
         return wrapper;
     }
+
+    /**
+     * 删除关联关系
+     * @param roleId
+     * @return
+     */
+    public CommonWrapper delRelationByRoleId(int roleId) {
+        CommonWrapper wrapper = new CommonWrapper();
+        wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
+        int cnt = sysRoleMenuDao.delRelationByRoleId(roleId);
+
+        wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
+        wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
+
+        return wrapper;
+    }
+
+
 
     /**
      * 分页查询

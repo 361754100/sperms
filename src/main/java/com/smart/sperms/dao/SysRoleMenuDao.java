@@ -56,6 +56,24 @@ public class SysRoleMenuDao {
     }
 
     /**
+     * 删除角色菜单关联记录
+     * @param roleId
+     * @return
+     */
+    public int delRelationByRoleId(Integer roleId) {
+        int cnt = 0;
+        try {
+            SysRoleMenuRelationExample example = new SysRoleMenuRelationExample();
+            example.createCriteria().andRoleIdEqualTo(roleId);
+
+            cnt = mapper.deleteByExample(example);
+        } catch (Exception e) {
+            logger.error("delete data error...", e);
+        }
+        return cnt;
+    }
+
+    /**
      * 删除角色菜单关联关系
      * @param roleId
      * @param menuIds

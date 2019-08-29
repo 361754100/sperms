@@ -83,7 +83,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "角色关联菜单")
     @PostMapping(value = "/add_menu_relation")
-    public CommonWrapper addMenuRelation(@RequestBody SysRoleAddMenuRelationReq params) {
+    public CommonWrapper addMenuRelation(@RequestBody SysRoleEditMenuRelationReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = sysRoleService.addRoleMenuRelation(params);
         return wrapper;
@@ -91,9 +91,17 @@ public class SysRoleController {
 
     @ApiOperation(value = "根据角色ID和菜单ID删除关联关系")
     @PostMapping(value = "/del_relation_by_role_menu_ids")
-    public CommonWrapper delRelationByRoleMenuIds(@RequestBody SysRoleDelMenuRelationReq params) {
+    public CommonWrapper delRelationByRoleMenuIds(@RequestBody SysRoleEditMenuRelationReq params) {
         logger.debug(" params = {}", params);
         CommonWrapper wrapper = sysRoleService.delRelationByRoleMenuId(params.getRoleId(), params.getMenuIds());
+        return wrapper;
+    }
+
+    @ApiOperation(value = "重置角色ID和菜单ID的关联关系")
+    @PostMapping(value = "/reset_relation_by_role_menu_ids")
+    public CommonWrapper resetRelationByRoleMenuIds(@RequestBody SysRoleEditMenuRelationReq params) {
+        logger.debug(" params = {}", params);
+        CommonWrapper wrapper = sysRoleService.resetRelationByRoleMenuIds(params);
         return wrapper;
     }
 
