@@ -1,6 +1,7 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.dao.UsersDao;
+import com.smart.sperms.dao.dto.UsersDto;
 import com.smart.sperms.dao.model.Users;
 import com.smart.sperms.dao.model.UsersExample;
 import com.smart.sperms.enums.ResultCodeEnum;
@@ -49,7 +50,7 @@ public class UserService {
         PageSearchWrapper wrapper = new PageSearchWrapper();
 
         int total = usersDao.queryPageTotal(beginTime, endTime, keywords);
-        List<Users> result = usersDao.queryPage(pageNo, pageSize, beginTime, endTime, keywords);
+        List<UsersDto> result = usersDao.queryPage(pageNo, pageSize, beginTime, endTime, keywords);
         if(!CollectionUtils.isEmpty(result)) {
             for(Users user:result) {
                 user.setuPassword("");

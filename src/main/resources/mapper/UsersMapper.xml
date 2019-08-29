@@ -9,6 +9,15 @@
     <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.UsersDto" >
+    <id column="u_id" property="uId" jdbcType="VARCHAR" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
+    <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -238,5 +247,17 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+  </select>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select users.*, role.role_name as role_name from users users
+    left join
+    sys_role role on users.role_id = role.role_id
+    where users.creation_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and users.creation_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    <if test="uName != null" >
+      and users.u_name like CONCAT('%',#{uName},'%')
+    </if>
+    order by users.creation_time desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
 </mapper>

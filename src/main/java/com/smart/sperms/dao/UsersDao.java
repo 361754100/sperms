@@ -1,5 +1,6 @@
 package com.smart.sperms.dao;
 
+import com.smart.sperms.dao.dto.UsersDto;
 import com.smart.sperms.dao.mapper.UsersMapper;
 import com.smart.sperms.dao.model.Users;
 import com.smart.sperms.dao.model.UsersExample;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UsersDao {
@@ -84,22 +87,24 @@ public class UsersDao {
      * @param uName
      * @return
      */
-    public List<Users> queryPage(int pageNo, int pageSize, String beginTime, String endTime, String uName) {
+    public List<UsersDto> queryPage(int pageNo, int pageSize, String beginTime, String endTime, String uName) {
         int offset = (pageNo-1)*pageSize;
-        UsersExample example = new UsersExample();
-        UsersExample.Criteria criteria = example.createCriteria();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("pageSize", pageSize);
 
         if(!StringUtils.isEmpty(uName)) {
-            criteria.andUNameLike("%" + uName + "%");
+            params.put("uName", uName);
         }
         if(!StringUtils.isEmpty(beginTime)) {
-            criteria.andCreationTimeGreaterThanOrEqualTo(DateUtils.parseStrToDate(beginTime,"yyyy-MM-dd HH:mm:ss"));
+            params.put("beginTime", beginTime);
         }
         if(!StringUtils.isEmpty(endTime)) {
-            criteria.andCreationTimeLessThanOrEqualTo(DateUtils.parseStrToDate(endTime, "yyyy-MM-dd HH:mm:ss"));
+            params.put("endTime", endTime);
         }
 
-        List<Users> result = mapper.selectByExampleWithRowbounds(example, RowBoundsUtil.of(offset, pageSize));
+        List<UsersDto> result = mapper.selectDtoByConditionWithRowbounds(params);
         return result;
     }
 
