@@ -33,21 +33,21 @@ import java.util.Map;
 public class RsaUtil {
 	
 	public static final String KEY_ALGORITHM = "RSA";
-	private static final String PUBLIC_KEY = "NexwiseRsaPublicKey";
-    private static final String PRIVATE_KEY = "NexwiseRSAPrivateKey";
+	private static final String PUBLIC_KEY = "tokenRsaPublicKey";
+    private static final String PRIVATE_KEY = "tokenRSAPrivateKey";
 
-	private static final String PRIVATE_MODULUS = "MTY4NDc2NjM4NDEzNjMwODgzODk3MTUwMTc5NTM5MTkzNjg0MDYwMjM2NTk2Mjg0MjkzNTM0ODAyNzgwOTM0MDA4NTg1OTU3ODU4MDAwMDMyMTUxMjI3MjE0NTgyNDA3ODkzNTkyMzgzNTk0ODk3MzY5MzA2NzAzNDg3MDU2NzcxMDM4NzA4NTg0MjEzNjgwNjY4MTM2ODMxNzE0ODgyOTI5OTA1NTg5NjgwNDQ2MDc0ODk5MTk0NTUwNDY0MTQxNDg3MTA3Njc1MDkzNDk5NjMyNjQ1NDk5NTQwMDI4ODQ1NDI4MjU0MzAxNjEwNDg2NzEwOTE3NzMwOTEyNzQzNDIxOTYwNDUyMzc1OTU4NTU4MzQyNDgzNTcyNjgzNzM4MDUwNjA3Mjg4Mjk0NjQ1NzE5MjUx";
-	private static final String PRIVATE_EXPONENT = "MTMyMTQ5OTMxNzA3MTQ0MTk2Njc2OTQ0MzU0MDE5NzQxMzc1NDQ4OTkwOTg5MzQzMjc3NzQzMTA4MDQyMTI0MTk5MjM2NjEwNjExNTM3NzUxOTk5MTE0NzkzMDYwNzYzNTQwODcwMTk2NTQ2NjcyNzgyODAzMzA4MDQ2Njg1Njk0Njc2NTMxNjMwNjgzMjU0Nzc4NjE3Mjk5NjkwMjU2Njg0MjY0MTUwNDI3MTE5NDA5MTAyNjA2OTM5MTgwNTIyOTk0NDI5NDk4MzgwOTkwNDc3OTA1MDEwODUwMjk4NzAwMDMzODI2MDYzMzAyMjgxNjMxNzg4NjMzNDQxMjA5MTg3NzcwODA0NzU0Njk3ODM0MzYwNTUyODc4MzA3NzY3NTI5NzM3ODg1NzYzNTIyODg2Mjcz";
-    private static Logger logger = LoggerFactory.getLogger(RsaUtil.class);
+	private static final String PRIVATE_MODULUS = "MTA4ODc2MzgxOTQ5NTE5MTc3NjQ2NTQ3OTY1OTM3MDUzNDMzNjE4NzkyMzA2NzU2NDc1MTczOTIxMzk5ODAxNTk1OTU3MTU4NTIzNDgyNzEzMjU3MTUzMDIxMjE5NzAwMDI3MjM1NTI1MDQzODE5NDk3NTUzMzA1MzMyMDk1NjUzNjUzMzM5NTAwMzEyNjM1NjE0OTQwMTI3MjY4OTA2MzYxNDg5OTkwMTU3MDk2NjI3OTE2NDkxNTkwNDg5NDgzMTcxOTk0MjkxNDY5NTE5NjUyNDE0MzI4NzYxNjk1MzQwNTIyMTU0NTIyMjE1NDEzMjcxNjYxMzU3MzM5MjgzNjU5ODMzNDc2MjkxMTI4ODk3NzgzMzE0OTQzOTAzOTYwNDQ3NzgyMTc5MzMxOTkyNDEwNjk5";
+	private static final String PRIVATE_EXPONENT = "NjM3MjIzNDU4ODc2MzE1MjI2MDUzNzc3MzA1ODY1MDE2NDg3Mzc1OTg4NjAzNDIzNzMyODkwNzQ5MjE1MjgxNDE2MDEzNjYwOTA2ODUwNTQ3Mzg2MTUxMDk1NTUyNzQ2Mzc5MDk0NzE1MDYyNjAzNDg2MjIxODQ5MTI2OTM0ODU5MjY3NDU4NTY3NDQ5MTkxMTg3MDAyNTI2OTQ2MjQ1MTYyMDc4MDE0MzE2NjQ2MTAzMjU1NDU2NTk1NjkyNjg5NTUxNTk3MjEyNzc2MDE3NjY1NTE5MjcyNjM1MzY4Nzg5OTQ5MjQ3MjA4MTUxMDY1MjgxNDM2NDc3NjAyODE3Mjk3NjExNDgxMzYzODU5MDIyMzYyNTEzMTU4OTkzMTIzNjUxMTM5NzM2NTM4NTYzOTI5Nzc=";
+	private static Logger logger = LoggerFactory.getLogger(RsaUtil.class);
     
     /**
-     * 获得公钥
+     * 获得公钥---base64格式
      * 
      * @param keyMap
      * @return
      * @throws Exception
      */
-    public static String getPublicKey(Map<String, Object> keyMap) throws Exception {
+    public static String getPublicKeyBase64(Map<String, Object> keyMap) throws Exception {
         //获得map中的公钥对象 转为key对象
     	RSAPublicKey key = (RSAPublicKey) keyMap.get(PUBLIC_KEY);
     	logger.info("public modulus ="+ key.getModulus() + " exponent ="+ key.getPublicExponent());
@@ -59,14 +59,33 @@ public class RsaUtil {
         return encryptBASE64(key.getEncoded());
     }
 
+	/**
+	 * 获得公钥---十六进制字符串
+	 *
+	 * @param keyMap
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPublicKeyHex(Map<String, Object> keyMap) throws Exception {
+		//获得map中的公钥对象 转为key对象
+		RSAPublicKey key = (RSAPublicKey) keyMap.get(PUBLIC_KEY);
+		logger.info("public modulus ="+ key.getModulus() + " exponent ="+ key.getPublicExponent());
+
+		String hex_modulus = StringUtils.bytesToHexString(StringUtils.toString(key.getModulus()).getBytes("UTF-8"));
+		String hex_exponent = StringUtils.bytesToHexString(StringUtils.toString(key.getPublicExponent()).getBytes("UTF-8"));
+		logger.info("Hex public modulus ="+ hex_modulus + " exponent ="+ hex_exponent);
+		//编码返回字符串
+		return StringUtils.bytesToHexString(key.getEncoded());
+	}
+
     /**
-     * 获得私钥
+     * 获得私钥---base64格式
      * 
      * @param keyMap
      * @return
      * @throws Exception
      */
-    public static String getPrivateKey(Map<String, Object> keyMap) throws Exception {
+    public static String getPrivateKeyBase64(Map<String, Object> keyMap) throws Exception {
         //获得map中的私钥对象 转为key对象
     	RSAPrivateKey key = (RSAPrivateKey) keyMap.get(PRIVATE_KEY);
     	logger.info("private modulus ="+ key.getModulus() + " exponent ="+ key.getPrivateExponent());
@@ -77,6 +96,25 @@ public class RsaUtil {
         //编码返回字符串
         return encryptBASE64(key.getEncoded());
     }
+
+	/**
+	 * 获得私钥---base64格式
+	 *
+	 * @param keyMap
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPrivateKeyHex(Map<String, Object> keyMap) throws Exception {
+		//获得map中的私钥对象 转为key对象
+		RSAPrivateKey key = (RSAPrivateKey) keyMap.get(PRIVATE_KEY);
+		logger.info("private modulus ="+ key.getModulus() + " exponent ="+ key.getPrivateExponent());
+
+		String hex_modulus = StringUtils.bytesToHexString(StringUtils.toString(key.getModulus()).getBytes("UTF-8"));
+		String hex_exponent = StringUtils.bytesToHexString(StringUtils.toString(key.getPrivateExponent()).getBytes("UTF-8"));
+		logger.info("Hex private modulus ="+ hex_modulus + " exponent ="+ hex_exponent);
+		//编码返回字符串
+		return StringUtils.bytesToHexString(key.getEncoded());
+	}
 
     /**
      * 解码返回byte
@@ -225,48 +263,104 @@ public class RsaUtil {
     
     public static void main(String[] args) {
     	try {
-			/*
-			// 以下逻辑用于生成 公钥和私钥，便于理解RSA 的工作原理(没问题的)
-			//1.生成 公钥+私钥 对
-			Map<String, Object> keyMap = RsaUtil.initKey();
-    		String publicKey = RsaUtil.getPublicKey(keyMap);
-    		String privateKey = RsaUtil.getPrivateKey(keyMap);
-
-    		RSAPublicKey pubKey = (RSAPublicKey) keyMap.get(PUBLIC_KEY);
-    		RSAPrivateKey priKey = (RSAPrivateKey) keyMap.get(PRIVATE_KEY);
-
-    		//2.使用公钥 进行数据加密、私钥进行数据解密
-    		String clientData = "Oh my God!";
-    		//--加密数据
-    		String encryDatas = Base64.getEncoder().encodeToString(RsaUtil.encryptData(clientData.getBytes(), pubKey));
-    		//--解密数据
-    		String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas), priKey));
-    		
-    		logger.info("public Key = "+ publicKey  +", private Key = " + privateKey);
-    		logger.info("clientData = "+ clientData +", encryDatas = "+ encryDatas +", decryDatas = " + decryDatas);
-    		
-    		//3.根据 N、E、D值还原 公钥+私钥 对
-//    		PublicKey pubKey2 =  RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent()));
-    		PrivateKey priKey2 = RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent()));
-    		String decryDatas2 = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas), priKey2));
-    		
-    		String publicKey2 = RsaUtil.encryptBASE64(RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent())).getEncoded());
-    		String privateKey2 = RsaUtil.encryptBASE64(RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent())).getEncoded());
-		
-    		logger.info("public Key2 = "+ publicKey2  +", private Key2 = " + privateKey2 +", decryDatas2 = "+ decryDatas2);
-			*/
-
-
-			String encryDatas = "UO3HUwVeHommDfUQUZD6FtaruHXq3H3NCatDH7LD7Rmflc2/2sPcVwPN0SKNlZxT6mKCoIBfZoY/K7s7m12opSv1mnSfTn07SpieolMMFUbOLBzt12oE3PFSvG1IKT+YIk5wiWOWqE++ooYd5oTWTmwRoImK4IxbLN20a0NXJB4=";
-
-//			String encryDatas = "bGQKU8h9q/xzZi4KJb6tFiVCD2rnAACIO4s7vvyoeDV43Bz+FBWuSYEA4bphIb53kt8UE9DHHpAiYxSuNm5vB3Hct3tY8AbpBJ3LCtXLRxpZIOiP3RGIGBMX8/XcECinaTLmRJJZHtvDEeoZSDV70qzA9JrILI3k1f4O7JAIgrM=";
-			//--解密数据
-			String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas)));
-
-			logger.info("decryDatas = "+ decryDatas);
-
+//			testBase64();
+			decryBase64();
     	} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
+
+    public static void testBase64() {
+		try {
+			// 以下逻辑用于生成 公钥和私钥，便于理解RSA 的工作原理(没问题的)
+			//1.生成 公钥+私钥 对
+			Map<String, Object> keyMap = RsaUtil.initKey();
+			String publicKey = RsaUtil.getPublicKeyBase64(keyMap);
+			String privateKey = RsaUtil.getPrivateKeyBase64(keyMap);
+
+			RSAPublicKey pubKey = (RSAPublicKey) keyMap.get(PUBLIC_KEY);
+			RSAPrivateKey priKey = (RSAPrivateKey) keyMap.get(PRIVATE_KEY);
+
+			//2.使用公钥 进行数据加密、私钥进行数据解密
+			String clientData = "sperms:2019-08-29 17:26:11";
+			//--加密数据
+			String encryDatas = Base64.getEncoder().encodeToString(RsaUtil.encryptData(clientData.getBytes(), pubKey));
+			//--解密数据
+			String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas), priKey));
+
+			logger.info("public Key = "+ publicKey  +", private Key = " + privateKey);
+			logger.info("clientData = "+ clientData +", encryDatas = "+ encryDatas +", decryDatas = " + decryDatas);
+
+			//3.根据 N、E、D值还原 公钥+私钥 对
+//    		PublicKey pubKey2 =  RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent()));
+			PrivateKey priKey2 = RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent()));
+			String decryDatas2 = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas), priKey2));
+
+			String publicKey2 = RsaUtil.encryptBASE64(RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent())).getEncoded());
+			String privateKey2 = RsaUtil.encryptBASE64(RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent())).getEncoded());
+
+			logger.info("public Key2 = "+ publicKey2  +", private Key2 = " + privateKey2 +", decryDatas2 = "+ decryDatas2);
+/*
+			String encryDatas = "gowN40vZ3+/NeAAzvwzwQvuhtAGr1Bx3lwSPw1jth7sbNCsDXVVUozL9bTUjFV6mekK5YFT3bmvHvpQZzeuyDfm2Urz9nIx8+yAgoo+OnaP2vmzNeJrgmhFNWNWPS8Je3RdXMzMSX38ALFMPfL03gL/WqOjQ/tSN4td6Azi2jnQ=";
+			//--解密数据
+			String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas)));
+
+			logger.info("decryDatas = "+ decryDatas);
+*/
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void testHex() {
+		try {
+			// 以下逻辑用于生成 公钥和私钥，便于理解RSA 的工作原理(没问题的)
+			//1.生成 公钥+私钥 对
+			Map<String, Object> keyMap = RsaUtil.initKey();
+			String publicKey = RsaUtil.getPublicKeyHex(keyMap);
+			String privateKey = RsaUtil.getPrivateKeyHex(keyMap);
+
+			RSAPublicKey pubKey = (RSAPublicKey) keyMap.get(PUBLIC_KEY);
+			RSAPrivateKey priKey = (RSAPrivateKey) keyMap.get(PRIVATE_KEY);
+
+			//2.使用公钥 进行数据加密、私钥进行数据解密
+			String clientData = "sperms:2019-08-29 17:26:11";
+			//--加密数据
+			String encryDatas = StringUtils.bytesToHexString(RsaUtil.encryptData(clientData.getBytes(), pubKey));
+			//--解密数据
+			String decryDatas = new String(RsaUtil.decryptData(StringUtils.hexStringToBytes(encryDatas), priKey));
+
+			logger.info("public Key = "+ publicKey  +", private Key = " + privateKey);
+			logger.info("clientData = "+ clientData +", encryDatas = "+ encryDatas +", decryDatas = " + decryDatas);
+
+			//3.根据 N、E、D值还原 公钥+私钥 对
+//    		PublicKey pubKey2 =  RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent()));
+			PrivateKey priKey2 = RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent()));
+			String decryDatas2 = new String(RsaUtil.decryptData(StringUtils.hexStringToBytes(encryDatas), priKey2));
+
+			String publicKey2 = StringUtils.bytesToHexString(RsaUtil.restorePublicKey(String.valueOf(pubKey.getModulus()), String.valueOf(pubKey.getPublicExponent())).getEncoded());
+			String privateKey2 = StringUtils.bytesToHexString(RsaUtil.restorePrivateKey(String.valueOf(priKey.getModulus()), String.valueOf(priKey.getPrivateExponent())).getEncoded());
+
+			logger.info("public Key2 = "+ publicKey2  +", private Key2 = " + privateKey2 +", decryDatas2 = "+ decryDatas2);
+/*
+			String encryDatas = "gowN40vZ3+/NeAAzvwzwQvuhtAGr1Bx3lwSPw1jth7sbNCsDXVVUozL9bTUjFV6mekK5YFT3bmvHvpQZzeuyDfm2Urz9nIx8+yAgoo+OnaP2vmzNeJrgmhFNWNWPS8Je3RdXMzMSX38ALFMPfL03gL/WqOjQ/tSN4td6Azi2jnQ=";
+			//--解密数据
+			String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas)));
+
+			logger.info("decryDatas = "+ decryDatas);
+*/
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void decryBase64() {
+		String encryDatas = "fbKuRtPls0yJxoYIx6UltLFY2X+dLjLof79wHhMdeceYxp7HJZ9z3xn5yzoejvzaEdWifJYr0a+UEMUZf+wLicFE7Iq5Wqk/1MhsIAqf6xK9LnbRYuWpGTz2AFShmMn0lHb8+O33v1wuCI3mrEhjA//3S3d7GaqFOp4YsW5lUtk=";
+		//--解密数据
+		String decryDatas = new String(RsaUtil.decryptData(Base64.getDecoder().decode(encryDatas)));
+
+		logger.info("decryDatas = "+ decryDatas);
+	}
 }

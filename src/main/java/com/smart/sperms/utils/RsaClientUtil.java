@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.Cipher;
 import java.math.BigInteger;
 import java.security.KeyFactory;
-import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 
@@ -32,10 +29,15 @@ import java.util.Base64;
 public class RsaClientUtil {
 
 	public static final String KEY_ALGORITHM = "RSA";
-	private static final String PUBLIC_MODULUS = "MTEzMDMzMzE5MTI5ODIxNDMyNzcwNzQ3NzM1NTcwMjU1OTcxMDI2NDQwNzAxODg1NTcwNDczOTgwOTE5NjE2MTY5NjMyMTQxOTY1Mjc2Mzg1NjUyNjA3NTc0NjU1OTE1MTkxOTg5MzUyODkwNTg1NTg1MjIzMTE1OTgyNzQ4MzA5Mjg0MDIyODg5MzE1MTc0MDU0MzA2MTY3MzAxNTQ4MzY1OTM0MDc1MTA2MTE2NDcyMDk0MjU3NTI3ODg5ODA4NjUzMzU0Nzk0ODc2Mzg3NjEzOTA4NDE4MzQxMjk1MzMyNDkzMjkwODc0NDY4NTkyMzQ1NTc1NjUyNzY3ODY2MjM0MTM4NTA3NTgzNDQ1NjczMzk1MDA1Mjk1NDE2MTAzMDY3MjY0ODgxNDUzNDczMDEyOTQz";
+
+	private static final String PUBLIC_MODULUS = "MTA4ODc2MzgxOTQ5NTE5MTc3NjQ2NTQ3OTY1OTM3MDUzNDMzNjE4NzkyMzA2NzU2NDc1MTczOTIxMzk5ODAxNTk1OTU3MTU4NTIzNDgyNzEzMjU3MTUzMDIxMjE5NzAwMDI3MjM1NTI1MDQzODE5NDk3NTUzMzA1MzMyMDk1NjUzNjUzMzM5NTAwMzEyNjM1NjE0OTQwMTI3MjY4OTA2MzYxNDg5OTkwMTU3MDk2NjI3OTE2NDkxNTkwNDg5NDgzMTcxOTk0MjkxNDY5NTE5NjUyNDE0MzI4NzYxNjk1MzQwNTIyMTU0NTIyMjE1NDEzMjcxNjYxMzU3MzM5MjgzNjU5ODMzNDc2MjkxMTI4ODk3NzgzMzE0OTQzOTAzOTYwNDQ3NzgyMTc5MzMxOTkyNDEwNjk5";
 	private static final String PUBLIC_EXPONENT = "NjU1Mzc=";
 
+//	private static final String PRIVATE_MODULUS = "";
+//	private static final String PRIVATE_EXPONENT = "";
+
 	private static PublicKey pubKey = null;
+//	private static PrivateKey priKey = null;
 
 	private static Logger logger = LoggerFactory.getLogger(RsaClientUtil.class);
 
@@ -115,8 +117,8 @@ public class RsaClientUtil {
 	public static PublicKey restorePublicKey(String modulus, String publicExponent) {
 		try {
 			BigInteger bigIntModulus = new BigInteger(modulus);
-			BigInteger bigIntPrivateExponent = new BigInteger(publicExponent);
-			RSAPublicKeySpec keySpec = new RSAPublicKeySpec(bigIntModulus, bigIntPrivateExponent);
+			BigInteger bigIntPublicExponent = new BigInteger(publicExponent);
+			RSAPublicKeySpec keySpec = new RSAPublicKeySpec(bigIntModulus, bigIntPublicExponent);
 			KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
 			pubKey = keyFactory.generatePublic(keySpec);
 		} catch (Exception e) {
@@ -124,6 +126,27 @@ public class RsaClientUtil {
 		}
 		return pubKey;
 	}
+
+	/**
+	 * 根据N、E值 还原私钥
+	 *
+	 * @param modulus
+	 * @param privateExponent
+	 * @return
+
+	public static PrivateKey restorePrivateKey(String modulus, String privateExponent) {
+		try {
+			BigInteger bigIntModulus = new BigInteger(modulus);
+			BigInteger bigIntPrivateExponent = new BigInteger(privateExponent);
+			RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(bigIntModulus, bigIntPrivateExponent);
+			KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+			priKey = keyFactory.generatePrivate(keySpec);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return priKey;
+	}
+	 */
 
 	/**
 	 * 使用指定的私钥解密数据。
@@ -152,17 +175,16 @@ public class RsaClientUtil {
 
 	public static void main(String[] args) {
 		try {
+    		byte[] encryData = RsaClientUtil.encryptData("sperms:2019-08-29 17:26:11");
+			String baseEncryData = Base64.getEncoder().encodeToString(encryData);
+			logger.info("baseEncryData="+ baseEncryData  );
 
-//    		byte[] encryData = RsaClientUtil.encryptData("Nexwise_opengw_key_111");
-//			String baseEncryData = Base64.getEncoder().encodeToString(encryData);
-//			logger.info("baseEncryData="+ baseEncryData  );
-
-//			RsaClientUtil.decryptBASE64("fB8zUx77xSJIqyqq/+VTgNwrGqSOM8g0MskP35iCqM0f1BTI9xYuB28kJaDBZ1RkF6fyEN/3V3o+smCuL2zSIn4D68Rn3vxdLr6z8sXQvpjb0K/wpXRkqx7HhfJ7fty/nW1vfLFY0WqsRY4YnUwupIHw7qKM0uNXrnsMwoAODjw=");
-
-			String encryDatas = "UO3HUwVeHommDfUQUZD6FtaruHXq3H3NCatDH7LD7Rmflc2/2sPcVwPN0SKNlZxT6mKCoIBfZoY/K7s7m12opSv1mnSfTn07SpieolMMFUbOLBzt12oE3PFSvG1IKT+YIk5wiWOWqE++ooYd5oTWTmwRoImK4IxbLN20a0NXJB4=";
-			//--解密数据
-			String decryDatas = new String(RsaClientUtil.decryptBASE64(encryDatas), "UTF-8");
-			System.out.println("decryDatas = "+ decryDatas);
+			/*
+			//公钥不具备解密功能
+			String data = "gYEWimIFKZQScdFojL4I/Gju9DNtL4XuV/9DeyvMfGR3hvP+4AJ8KbpLddG4I1h+NkKinUZ8rIO4bA8ESZ/0i2mLFXtYrVZnKw2gEDQYViFgesqCF+9QfwImjbj5kxkcnzmSxwm0KNTzvTSFnbiwX8PFljJejT6OmZLhxpK7AuM=";
+			String decryData = new String(RsaClientUtil.decryptData(Base64.getDecoder().decode(data)));
+			logger.info("decryData ="+ decryData);
+			*/
 
 		} catch (Exception e) {
 			e.printStackTrace();

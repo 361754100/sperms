@@ -1,5 +1,6 @@
 package com.smart.sperms;
 
+import com.smart.sperms.utils.RsaUtil;
 import com.smart.sperms.utils.XxteaUtils;
 import org.junit.Test;
 
@@ -19,5 +20,12 @@ public class TestUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testStr() {
+        String decryptToken = "sperms:201908301123311";
+        boolean isOk = decryptToken.matches("^sperms:\\d{14}$");
+        System.out.println("isOk = "+ isOk);
     }
 }
