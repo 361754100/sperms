@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.RepairMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.Repair" >
+    <id column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="r_time" property="rTime" jdbcType="TIMESTAMP" />
+    <result column="r_manufacturer" property="rManufacturer" jdbcType="VARCHAR" />
+    <result column="r_state" property="rState" jdbcType="VARCHAR" />
+    <result column="r_cost" property="rCost" jdbcType="DOUBLE" />
+    <result column="r_person" property="rPerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.RepairDto" >
+    <id column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="r_time" property="rTime" jdbcType="TIMESTAMP" />
+    <result column="r_manufacturer" property="rManufacturer" jdbcType="VARCHAR" />
+    <result column="r_state" property="rState" jdbcType="VARCHAR" />
+    <result column="r_cost" property="rCost" jdbcType="DOUBLE" />
+    <result column="r_person" property="rPerson" jdbcType="VARCHAR" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    e_id, r_time, r_manufacturer, r_state, r_cost, r_person
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from repair
+    where e_id = #{eId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from repair
+    where e_id = #{eId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.RepairExample" >
+    delete from repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.Repair" >
+    insert into repair (e_id, r_time, r_manufacturer, 
+      r_state, r_cost, r_person
+      )
+    values (#{eId,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, #{rManufacturer,jdbcType=VARCHAR}, 
+      #{rState,jdbcType=VARCHAR}, #{rCost,jdbcType=DOUBLE}, #{rPerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Repair" >
+    insert into repair
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="rTime != null" >
+        r_time,
+      </if>
+      <if test="rManufacturer != null" >
+        r_manufacturer,
+      </if>
+      <if test="rState != null" >
+        r_state,
+      </if>
+      <if test="rCost != null" >
+        r_cost,
+      </if>
+      <if test="rPerson != null" >
+        r_person,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="rTime != null" >
+        #{rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rManufacturer != null" >
+        #{rManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rState != null" >
+        #{rState,jdbcType=VARCHAR},
+      </if>
+      <if test="rCost != null" >
+        #{rCost,jdbcType=DOUBLE},
+      </if>
+      <if test="rPerson != null" >
+        #{rPerson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.RepairExample" resultType="java.lang.Integer" >
+    select count(*) from repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update repair
+    <set >
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rTime != null" >
+        r_time = #{record.rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rManufacturer != null" >
+        r_manufacturer = #{record.rManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rState != null" >
+        r_state = #{record.rState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rCost != null" >
+        r_cost = #{record.rCost,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rPerson != null" >
+        r_person = #{record.rPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update repair
+    set e_id = #{record.eId,jdbcType=VARCHAR},
+      r_time = #{record.rTime,jdbcType=TIMESTAMP},
+      r_manufacturer = #{record.rManufacturer,jdbcType=VARCHAR},
+      r_state = #{record.rState,jdbcType=VARCHAR},
+      r_cost = #{record.rCost,jdbcType=DOUBLE},
+      r_person = #{record.rPerson,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smart.sperms.dao.model.Repair" >
+    update repair
+    <set >
+      <if test="rTime != null" >
+        r_time = #{rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rManufacturer != null" >
+        r_manufacturer = #{rManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rState != null" >
+        r_state = #{rState,jdbcType=VARCHAR},
+      </if>
+      <if test="rCost != null" >
+        r_cost = #{rCost,jdbcType=DOUBLE},
+      </if>
+      <if test="rPerson != null" >
+        r_person = #{rPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where e_id = #{eId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.Repair" >
+    update repair
+    set r_time = #{rTime,jdbcType=TIMESTAMP},
+      r_manufacturer = #{rManufacturer,jdbcType=VARCHAR},
+      r_state = #{rState,jdbcType=VARCHAR},
+      r_cost = #{rCost,jdbcType=DOUBLE},
+      r_person = #{rPerson,jdbcType=VARCHAR}
+    where e_id = #{eId,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from repair
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from repair r
+    left join
+    equipment equip on r.e_id = equip.e_id
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and r.r_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and r.r_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="rState != null" >
+      and r.r_state = #{rState, jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+  </select>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select r.*, equip.e_name from repair r
+    left join
+    equipment equip on r.e_id = equip.e_id
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and r.r_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and r.r_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="rState != null" >
+      and r.r_state = #{rState, jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+    order by r.r_time desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+</mapper>
