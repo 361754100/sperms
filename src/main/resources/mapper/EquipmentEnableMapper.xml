@@ -233,7 +233,7 @@
     <if test="eeEnable != null and eeEnable != -1" >
       and equipenable.ee_enable = #{eeEnable, jdbcType=INTEGER}
     </if>
-    <if test="eId != null and eId != -1" >
+    <if test="eId != null" >
       and equipenable.e_id = #{eId, jdbcType=VARCHAR}
     </if>
     <if test="eName != null" >

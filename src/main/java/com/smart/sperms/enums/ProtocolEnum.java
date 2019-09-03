@@ -8,6 +8,8 @@ import java.util.List;
  */
 public enum ProtocolEnum {
 
+    CODE_10001(10001, "Android端发送心跳请求"),
+    CODE_10002(10002, "服务端响应10001"),
     CODE_101(101, "Android端发送设备信息"),
     CODE_102(102, "服务端响应101"),
     CODE_103(103, "Android端发送压接信息"),

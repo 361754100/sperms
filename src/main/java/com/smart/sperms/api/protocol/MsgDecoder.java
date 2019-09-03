@@ -1,6 +1,5 @@
 package com.smart.sperms.api.protocol;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.smart.sperms.api.handler.*;
 import com.smart.sperms.common.SpringContext;
@@ -42,6 +41,11 @@ public class MsgDecoder {
 
         ProtocolEnum protocol = ProtocolEnum.getProtocol(payload.getProtocol());
         switch(protocol) {
+            case CODE_10001:
+                handler = SpringContext.getBean(Handler10001.class);
+                break;
+            case CODE_10002:
+                break;
             case CODE_101:
                 handler = SpringContext.getBean(Handler101.class);
                 dataBody = JSON.parseObject(dataStr, DataBody101.class);
@@ -84,11 +88,17 @@ public class MsgDecoder {
 //            case CODE_114:
 //                handler = SpringContext.getBean(Handler114.class);
 //                break;
+            case CODE_114:
+                break;
+            case CODE_SUCCESS:
+                break;
+            case CODE_ERROR:
+                break;
             default:
                 break;
         }
 
-        logger.info("equipmentId = {}, protocol = {}", equipmentId, protocol);
+        logger.info("equipmentId = {}, protocol = {}", equipmentId, payload.getProtocol());
         if(handler != null) {
             payload.setData(dataBody);
             handler.execute(equipmentId, payload);

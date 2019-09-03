@@ -34,7 +34,9 @@ public class TokenInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            String timeStr = decryptToken.replaceFirst("sperms:","");
+            logger.debug("token author success... decryptToken ={}", decryptToken);
+
+            /*String timeStr = decryptToken.replaceFirst("sperms:","");
             Date reqTime = DateUtils.parseStrToDate(timeStr, "yyyyMMddHHmmss");
 
             long curTimeStamp = System.currentTimeMillis()/1000;
@@ -42,10 +44,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
             // 如果请求间隔超过 10秒，则认为是无效请求
             long timeCut = curTimeStamp - reqTimeStamp;
-            if(timeCut <0l || timeCut > 10l) {
+            if(timeCut <0l || timeCut > 20l) {
                 logger.error("token author timeover... timeCut ={}", timeCut);
                 return false;
-            }
+            }*/
         } catch (Exception e) {
             logger.error("token author error...reqUri ="+ reqUri, e);
             return false;

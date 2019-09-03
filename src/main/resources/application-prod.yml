@@ -81,7 +81,8 @@ logging:
 # 加密算法配置
 encrypt:
     xxtea:
-        key_smart: 25fd36gfegl
+        ## key_smart: 25fd36gfegl
+        key_smart: smart_encrypt_test
 
 # 文件存储路径
 file_store:

@@ -1,5 +1,6 @@
 package com.smart.sperms.service;
 
+import com.smart.sperms.config.mqtt.MqttInputHandler;
 import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.model.Equipment;
 import com.smart.sperms.enums.ResultCodeEnum;
@@ -9,6 +10,7 @@ import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.core.MessageProducer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,6 +23,8 @@ public class EquipmentService {
     @Autowired
     private EquipmentDao equipmentDao;
 
+    @Autowired
+    private MqttInputHandler mqttInputHandler;
     /**
      * 新增记录
      * @param req
@@ -49,6 +53,8 @@ public class EquipmentService {
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+
+            mqttInputHandler.addListenTopic(eId);
         }
         return wrapper;
     }
@@ -90,6 +96,11 @@ public class EquipmentService {
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
 
+        if(cnt > 0 ) {
+            for(String eId: eIds) {
+                mqttInputHandler.removeListenTopic(eId);
+            }
+        }
         return wrapper;
     }
 

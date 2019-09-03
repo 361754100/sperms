@@ -14,9 +14,10 @@ public class XxteaUtils {
      * @return
      */
     public static String encryptToHexString(String data, String key) {
-        byte[] dataBytes = XXTEA.encrypt(data, key);
-        String encryptData = StringUtils.bytesToHexString(dataBytes);
-        return encryptData;
+//        byte[] dataBytes = XXTEA.encrypt(data, key);
+//        String encryptData = StringUtils.bytesToHexString(dataBytes);
+//        return encryptData;
+        return XXTEATool.Encrypt(data, key);
     }
 
     /**
@@ -26,9 +27,10 @@ public class XxteaUtils {
      * @return
      */
     public static String decryptFromHexString(String data, String key) {
-        byte[] dataBytes = StringUtils.hexStringToBytes(data);
-        String decryptData = XXTEA.decryptToString(dataBytes, key);
-        return decryptData;
+//        byte[] dataBytes = StringUtils.hexStringToBytes(data);
+//        String decryptData = XXTEA.decryptToString(dataBytes, key);
+//        return decryptData;
+        return XXTEATool.Decrypt(data, key);
     }
 
 }

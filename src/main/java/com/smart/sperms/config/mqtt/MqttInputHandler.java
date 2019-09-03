@@ -36,6 +36,8 @@ public class MqttInputHandler {
     @Autowired
     private EquipmentDao equipmentDao;
 
+    private MqttPahoMessageDrivenChannelAdapter adapter;
+
     //接收通道
     @Bean
     public MessageChannel mqttInputChannel() {
@@ -63,7 +65,7 @@ public class MqttInputHandler {
         String[] topics = new String[topicList.size()];
         topicList.toArray(topics);
 
-        MqttPahoMessageDrivenChannelAdapter adapter =
+        adapter =
                 new MqttPahoMessageDrivenChannelAdapter(mqttConfig.getClientId()+"_inbound", mqttConfig.mqttClientFactory(),
                         topics);
         adapter.setCompletionTimeout(mqttConfig.getCompletionTimeout());
@@ -71,6 +73,34 @@ public class MqttInputHandler {
         adapter.setQos(1);
         adapter.setOutputChannel(mqttInputChannel());
         return adapter;
+    }
+
+    /**
+     * 增加消息订阅
+     * @param eId
+     */
+    public void addListenTopic(String eId) {
+        if(adapter == null) {
+            adapter = new MqttPahoMessageDrivenChannelAdapter(mqttConfig.getClientId()+"_inbound", mqttConfig.mqttClientFactory(),
+                    "");
+        }
+        String TOPIC_PREFIX_ANDROID = mqttConfig.getTopic_smart_android();
+        String topic = TOPIC_PREFIX_ANDROID + eId;
+        adapter.addTopic(topic);
+    }
+
+    /**
+     * 移除消息订阅
+     * @param eId
+     */
+    public void removeListenTopic(String eId) {
+        if(adapter == null) {
+            adapter = new MqttPahoMessageDrivenChannelAdapter(mqttConfig.getClientId()+"_inbound", mqttConfig.mqttClientFactory(),
+                    "");
+        }
+        String TOPIC_PREFIX_ANDROID = mqttConfig.getTopic_smart_android();
+        String topic = TOPIC_PREFIX_ANDROID + eId;
+        adapter.removeTopic(topic);
     }
 
     //通过通道获取数据
