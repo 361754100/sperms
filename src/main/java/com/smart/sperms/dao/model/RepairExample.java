@@ -305,6 +305,76 @@ public class RepairExample {
             return (Criteria) this;
         }
 
+        public Criteria andErrCodeIsNull() {
+            addCriterion("err_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeIsNotNull() {
+            addCriterion("err_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeEqualTo(String value) {
+            addCriterion("err_code =", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeNotEqualTo(String value) {
+            addCriterion("err_code <>", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeGreaterThan(String value) {
+            addCriterion("err_code >", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("err_code >=", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeLessThan(String value) {
+            addCriterion("err_code <", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeLessThanOrEqualTo(String value) {
+            addCriterion("err_code <=", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeLike(String value) {
+            addCriterion("err_code like", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeNotLike(String value) {
+            addCriterion("err_code not like", value, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeIn(List<String> values) {
+            addCriterion("err_code in", values, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeNotIn(List<String> values) {
+            addCriterion("err_code not in", values, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeBetween(String value1, String value2) {
+            addCriterion("err_code between", value1, value2, "errCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeNotBetween(String value1, String value2) {
+            addCriterion("err_code not between", value1, value2, "errCode");
+            return (Criteria) this;
+        }
+
         public Criteria andRStateIsNull() {
             addCriterion("r_state is null");
             return (Criteria) this;
@@ -512,6 +582,11 @@ public class RepairExample {
 
         public Criteria andRManufacturerLikeInsensitive(String value) {
             addCriterion("upper(r_manufacturer) like", value.toUpperCase(), "rManufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andErrCodeLikeInsensitive(String value) {
+            addCriterion("upper(err_code) like", value.toUpperCase(), "errCode");
             return (Criteria) this;
         }
 

@@ -87,8 +87,12 @@ public class ProductionStatDao {
         Map<String, Object> params = new HashMap<>();
         params.put("offset", offset);
         params.put("pageSize", pageSize);
-        params.put("beginTime", beginTime);
-        params.put("endTime", endTime);
+        if(!StringUtils.isEmpty(beginTime)) {
+            params.put("beginTime", beginTime);
+        }
+        if(!StringUtils.isEmpty(endTime)) {
+            params.put("endTime", endTime);
+        }
         if(!StringUtils.isEmpty(eName)) {
             params.put("eName", eName);
         }
@@ -106,8 +110,12 @@ public class ProductionStatDao {
      */
     public int queryPageTotal(String beginTime, String endTime, String eName) {
         Map<String, Object> params = new HashMap<>();
-        params.put("beginTime", beginTime);
-        params.put("endTime", endTime);
+        if(!StringUtils.isEmpty(beginTime)) {
+            params.put("beginTime", beginTime);
+        }
+        if(!StringUtils.isEmpty(endTime)) {
+            params.put("endTime", endTime);
+        }
         if(!StringUtils.isEmpty(eName)) {
             params.put("eName", eName);
         }

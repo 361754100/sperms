@@ -189,8 +189,10 @@
     select pstat.*, equip.e_name from production_stat pstat
     left join
     equipment equip on pstat.e_id = equip.e_id
-    where
-    pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
     </if>
@@ -202,8 +204,10 @@
     select count(*) from production_stat pstat
     left join
     equipment equip on pstat.e_id = equip.e_id
-    where
-    pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
     </if>

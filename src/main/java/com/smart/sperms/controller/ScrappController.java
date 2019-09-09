@@ -27,14 +27,14 @@ public class ScrappController {
 
     @ApiOperation(value = "分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="startTime", value = "开始时间", required = true, paramType = "form", dataType = "String"),
-            @ApiImplicitParam(name="endTime", value = "结束时间", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="startTime", value = "开始时间", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="endTime", value = "结束时间", paramType = "form", dataType = "String"),
             @ApiImplicitParam(name="pageNo", value = "当前页", required = true, paramType = "form", dataType = "int"),
             @ApiImplicitParam(name="pageSize", value = "每页大小", required = true, paramType = "form", dataType = "int"),
             @ApiImplicitParam(name="keywords", value = "关键字", paramType = "form", dataType = "String")
     })
     @PostMapping(value = "/page_search")
-    public PageSearchWrapper pageSearch(@RequestParam String startTime, @RequestParam String endTime,
+    public PageSearchWrapper pageSearch(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
                                         @RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String keywords) {
         PageSearchWrapper wrapper = scrappService.queryPage(pageNo, pageSize, startTime, endTime, keywords);
 

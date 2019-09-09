@@ -10,6 +10,8 @@ public class Repair implements Serializable {
 
     private String rManufacturer;
 
+    private String errCode;
+
     private String rState;
 
     private Double rCost;
@@ -40,6 +42,14 @@ public class Repair implements Serializable {
 
     public void setrManufacturer(String rManufacturer) {
         this.rManufacturer = rManufacturer;
+    }
+
+    public String getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
     }
 
     public String getrState() {

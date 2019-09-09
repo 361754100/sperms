@@ -274,7 +274,10 @@
     equipment equip on rent.e_id = equip.e_id
     left join
     customer custom on rent.customer_no = custom.customer_no
-    where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
     <if test="equipmentName != null" >
       and equip.e_name like CONCAT('%',#{equipmentName},'%')
     </if>
@@ -294,7 +297,10 @@
     equipment equip on rent.e_id = equip.e_id
     left join
     customer custom on rent.customer_no = custom.customer_no
-    where rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    where 1=1
+    <if test="beginTime != null and endTime != null" >
+      and rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
     <if test="equipmentName != null" >
       and equip.e_name like CONCAT('%',#{equipmentName},'%')
     </if>

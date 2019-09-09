@@ -7,7 +7,10 @@ import com.smart.sperms.dao.model.Repair;
  */
 public class RepairDto extends Repair {
 
+    // 设备名称
     private String eName;
+    // 故障名称
+    private String errName;
 
     public String geteName() {
         return eName;
@@ -17,10 +20,19 @@ public class RepairDto extends Repair {
         this.eName = eName;
     }
 
+    public String getErrName() {
+        return errName;
+    }
+
+    public void setErrName(String errName) {
+        this.errName = errName;
+    }
+
     @Override
     public String toString() {
         return "RepairDto{" +
                 "eName='" + eName + '\'' +
+                ", errName='" + errName + '\'' +
                 '}';
     }
 }

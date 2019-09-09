@@ -27,14 +27,14 @@ public class ProductionStatController {
 
     @ApiOperation(value = "分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="startTime", value = "开始时间", required = true, paramType = "form", dataType = "String"),
-            @ApiImplicitParam(name="endTime", value = "结束时间", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="startTime", value = "开始时间", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="endTime", value = "结束时间", paramType = "form", dataType = "String"),
             @ApiImplicitParam(name="pageNo", value = "当前页", required = true, paramType = "form", dataType = "int"),
             @ApiImplicitParam(name="pageSize", value = "每页大小", required = true, paramType = "form", dataType = "int"),
             @ApiImplicitParam(name="eName", value = "设备名称关键字", paramType = "form", dataType = "string")
     })
     @PostMapping(value = "/page_search")
-    public PageSearchWrapper pageSearch(@RequestParam String startTime, @RequestParam String endTime,
+    public PageSearchWrapper pageSearch(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
                                         @RequestParam int pageNo, @RequestParam int pageSize,
                                         @RequestParam(required = false) String eName) {
         PageSearchWrapper wrapper = productionStatService.queryPage(pageNo, pageSize, startTime, endTime, eName);
