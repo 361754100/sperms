@@ -43,6 +43,7 @@ public class RepairService {
         info.setrCost(req.getrCost());
         info.setrPerson(req.getrPerson());
         info.setrState(req.getrState());
+        info.setErrCode(req.getErrCode());
         info.setrTime(DateUtils.parseStrToDate(req.getrTime(), DateUtils.DEFAULT_FORMAT));
 
         int cnt = repairDao.saveData(info);
@@ -67,6 +68,7 @@ public class RepairService {
         info.setrPerson(req.getrPerson());
         info.setrState(req.getrState());
         info.setrCost(req.getrCost());
+        info.setErrCode(req.getErrCode());
         info.setrTime(DateUtils.parseStrToDate(req.getrTime(), DateUtils.DEFAULT_FORMAT));
 
         int cnt = repairDao.updateData(req.geteId(), info);

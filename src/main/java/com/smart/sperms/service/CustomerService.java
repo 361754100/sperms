@@ -56,6 +56,8 @@ public class CustomerService {
         info.setCustomerCompany(req.getCustomerCompany());
         info.setCustomerAge(req.getCustomerAge());
         info.setCustomerAddr(req.getCustomerAddr());
+        info.setCustomerQq(req.getCustomerQq());
+        info.setCustomerWx(req.getCustomerWx());
         info.setCreationTime(new Date());
 
         int cnt = customerDao.saveData(info);
@@ -83,6 +85,8 @@ public class CustomerService {
         info.setCustomerName(req.getCustomerName());
         info.setCustomerPhone(req.getCustomerPhone());
         info.setCustomerSex(req.getCustomerSex());
+        info.setCustomerQq(req.getCustomerQq());
+        info.setCustomerWx(req.getCustomerWx());
         info.setModifyTime(new Date());
 
         int cnt = customerDao.updateData(req.getCustomerNo(), info);

@@ -21,6 +21,9 @@ public class RentManagerEditReq implements Serializable {
     @ApiModelProperty(value = "客户编号")
     private String customerNo;
 
+    @ApiModelProperty(value = "租借开始时间")
+    private String rentBeginDate;
+
     @ApiModelProperty(value = "租借时间")
     private String rentDate;
 
@@ -32,6 +35,12 @@ public class RentManagerEditReq implements Serializable {
 
     @ApiModelProperty(value = "使用地点")
     private String rentPlace;
+
+    @ApiModelProperty(value = "是否启动自动锁机策略，0：不启动；1：启动；启动后，同时会检查结束时间，进行确认是否自动锁机")
+    private Integer autoLock;
+
+    @ApiModelProperty(value = "产量总额（达标锁机），0为无限量")
+    private Integer lrMount;
 
     public String getTradeNo() {
         return tradeNo;
@@ -55,6 +64,14 @@ public class RentManagerEditReq implements Serializable {
 
     public void setCustomerNo(String customerNo) {
         this.customerNo = customerNo;
+    }
+
+    public String getRentBeginDate() {
+        return rentBeginDate;
+    }
+
+    public void setRentBeginDate(String rentBeginDate) {
+        this.rentBeginDate = rentBeginDate;
     }
 
     public String getRentDate() {
@@ -89,16 +106,35 @@ public class RentManagerEditReq implements Serializable {
         this.rentPlace = rentPlace;
     }
 
+    public Integer getAutoLock() {
+        return autoLock;
+    }
+
+    public void setAutoLock(Integer autoLock) {
+        this.autoLock = autoLock;
+    }
+
+    public Integer getLrMount() {
+        return lrMount;
+    }
+
+    public void setLrMount(Integer lrMount) {
+        this.lrMount = lrMount;
+    }
+
     @Override
     public String toString() {
         return "RentManagerEditReq{" +
                 "tradeNo='" + tradeNo + '\'' +
                 ", eId='" + eId + '\'' +
                 ", customerNo='" + customerNo + '\'' +
-                ", rentDate=" + rentDate +
-                ", rentEndDate=" + rentEndDate +
+                ", rentBeginDate='" + rentBeginDate + '\'' +
+                ", rentDate='" + rentDate + '\'' +
+                ", rentEndDate='" + rentEndDate + '\'' +
                 ", cmNo='" + cmNo + '\'' +
                 ", rentPlace='" + rentPlace + '\'' +
+                ", autoLock=" + autoLock +
+                ", lrMount=" + lrMount +
                 '}';
     }
 }

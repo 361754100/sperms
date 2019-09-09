@@ -12,11 +12,17 @@ public class RentManager implements Serializable {
 
     private Date rentDate;
 
+    private Date rentBeginDate;
+
     private Date rentEndDate;
 
     private String cmNo;
 
     private String rentPlace;
+
+    private Integer autoLock;
+
+    private Integer lrMount;
 
     private static final long serialVersionUID = 1L;
 
@@ -52,6 +58,14 @@ public class RentManager implements Serializable {
         this.rentDate = rentDate;
     }
 
+    public Date getRentBeginDate() {
+        return rentBeginDate;
+    }
+
+    public void setRentBeginDate(Date rentBeginDate) {
+        this.rentBeginDate = rentBeginDate;
+    }
+
     public Date getRentEndDate() {
         return rentEndDate;
     }
@@ -74,5 +88,21 @@ public class RentManager implements Serializable {
 
     public void setRentPlace(String rentPlace) {
         this.rentPlace = rentPlace;
+    }
+
+    public Integer getAutoLock() {
+        return autoLock;
+    }
+
+    public void setAutoLock(Integer autoLock) {
+        this.autoLock = autoLock;
+    }
+
+    public Integer getLrMount() {
+        return lrMount;
+    }
+
+    public void setLrMount(Integer lrMount) {
+        this.lrMount = lrMount;
     }
 }

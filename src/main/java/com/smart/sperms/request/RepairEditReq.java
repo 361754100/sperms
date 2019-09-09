@@ -27,6 +27,9 @@ public class RepairEditReq implements Serializable {
     @ApiModelProperty(value = "维修负责人")
     private String rPerson;
 
+    @ApiModelProperty(value = "故障编码")
+    private String errCode;
+
     @ApiModelProperty(value = "维修时间")
     private String rTime;
 
@@ -70,6 +73,14 @@ public class RepairEditReq implements Serializable {
         this.rPerson = rPerson;
     }
 
+    public String getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
+
     public String getrTime() {
         return rTime;
     }
@@ -86,7 +97,8 @@ public class RepairEditReq implements Serializable {
                 ", rState='" + rState + '\'' +
                 ", rCost=" + rCost +
                 ", rPerson='" + rPerson + '\'' +
-                ", rTime=" + rTime +
+                ", errCode='" + errCode + '\'' +
+                ", rTime='" + rTime + '\'' +
                 '}';
     }
 }

@@ -8,6 +8,8 @@
     <result column="customer_age" property="customerAge" jdbcType="INTEGER" />
     <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
     <result column="customer_email" property="customerEmail" jdbcType="VARCHAR" />
+    <result column="customer_qq" property="customerQq" jdbcType="VARCHAR" />
+    <result column="customer_wx" property="customerWx" jdbcType="VARCHAR" />
     <result column="customer_addr" property="customerAddr" jdbcType="VARCHAR" />
     <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
     <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
@@ -73,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     customer_no, customer_name, customer_sex, customer_age, customer_phone, customer_email, 
-    customer_addr, customer_company, creation_time, modify_time
+    customer_qq, customer_wx, customer_addr, customer_company, creation_time, modify_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.CustomerExample" >
     select
@@ -108,12 +110,14 @@
   <insert id="insert" parameterType="com.smart.sperms.dao.model.Customer" >
     insert into customer (customer_no, customer_name, customer_sex, 
       customer_age, customer_phone, customer_email, 
-      customer_addr, customer_company, creation_time, 
-      modify_time)
+      customer_qq, customer_wx, customer_addr, 
+      customer_company, creation_time, modify_time
+      )
     values (#{customerNo,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerSex,jdbcType=CHAR}, 
       #{customerAge,jdbcType=INTEGER}, #{customerPhone,jdbcType=CHAR}, #{customerEmail,jdbcType=VARCHAR}, 
-      #{customerAddr,jdbcType=VARCHAR}, #{customerCompany,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+      #{customerQq,jdbcType=VARCHAR}, #{customerWx,jdbcType=VARCHAR}, #{customerAddr,jdbcType=VARCHAR}, 
+      #{customerCompany,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Customer" >
     insert into customer
@@ -135,6 +139,12 @@
       </if>
       <if test="customerEmail != null" >
         customer_email,
+      </if>
+      <if test="customerQq != null" >
+        customer_qq,
+      </if>
+      <if test="customerWx != null" >
+        customer_wx,
       </if>
       <if test="customerAddr != null" >
         customer_addr,
@@ -167,6 +177,12 @@
       </if>
       <if test="customerEmail != null" >
         #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerQq != null" >
+        #{customerQq,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWx != null" >
+        #{customerWx,jdbcType=VARCHAR},
       </if>
       <if test="customerAddr != null" >
         #{customerAddr,jdbcType=VARCHAR},
@@ -209,6 +225,12 @@
       <if test="record.customerEmail != null" >
         customer_email = #{record.customerEmail,jdbcType=VARCHAR},
       </if>
+      <if test="record.customerQq != null" >
+        customer_qq = #{record.customerQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerWx != null" >
+        customer_wx = #{record.customerWx,jdbcType=VARCHAR},
+      </if>
       <if test="record.customerAddr != null" >
         customer_addr = #{record.customerAddr,jdbcType=VARCHAR},
       </if>
@@ -234,6 +256,8 @@
       customer_age = #{record.customerAge,jdbcType=INTEGER},
       customer_phone = #{record.customerPhone,jdbcType=CHAR},
       customer_email = #{record.customerEmail,jdbcType=VARCHAR},
+      customer_qq = #{record.customerQq,jdbcType=VARCHAR},
+      customer_wx = #{record.customerWx,jdbcType=VARCHAR},
       customer_addr = #{record.customerAddr,jdbcType=VARCHAR},
       customer_company = #{record.customerCompany,jdbcType=VARCHAR},
       creation_time = #{record.creationTime,jdbcType=TIMESTAMP},
@@ -260,6 +284,12 @@
       <if test="customerEmail != null" >
         customer_email = #{customerEmail,jdbcType=VARCHAR},
       </if>
+      <if test="customerQq != null" >
+        customer_qq = #{customerQq,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWx != null" >
+        customer_wx = #{customerWx,jdbcType=VARCHAR},
+      </if>
       <if test="customerAddr != null" >
         customer_addr = #{customerAddr,jdbcType=VARCHAR},
       </if>
@@ -282,6 +312,8 @@
       customer_age = #{customerAge,jdbcType=INTEGER},
       customer_phone = #{customerPhone,jdbcType=CHAR},
       customer_email = #{customerEmail,jdbcType=VARCHAR},
+      customer_qq = #{customerQq,jdbcType=VARCHAR},
+      customer_wx = #{customerWx,jdbcType=VARCHAR},
       customer_addr = #{customerAddr,jdbcType=VARCHAR},
       customer_company = #{customerCompany,jdbcType=VARCHAR},
       creation_time = #{creationTime,jdbcType=TIMESTAMP},

@@ -375,6 +375,66 @@ public class RentManagerExample {
             return (Criteria) this;
         }
 
+        public Criteria andRentBeginDateIsNull() {
+            addCriterion("rent_begin_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateIsNotNull() {
+            addCriterion("rent_begin_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateEqualTo(Date value) {
+            addCriterion("rent_begin_date =", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateNotEqualTo(Date value) {
+            addCriterion("rent_begin_date <>", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateGreaterThan(Date value) {
+            addCriterion("rent_begin_date >", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("rent_begin_date >=", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateLessThan(Date value) {
+            addCriterion("rent_begin_date <", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateLessThanOrEqualTo(Date value) {
+            addCriterion("rent_begin_date <=", value, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateIn(List<Date> values) {
+            addCriterion("rent_begin_date in", values, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateNotIn(List<Date> values) {
+            addCriterion("rent_begin_date not in", values, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateBetween(Date value1, Date value2) {
+            addCriterion("rent_begin_date between", value1, value2, "rentBeginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentBeginDateNotBetween(Date value1, Date value2) {
+            addCriterion("rent_begin_date not between", value1, value2, "rentBeginDate");
+            return (Criteria) this;
+        }
+
         public Criteria andRentEndDateIsNull() {
             addCriterion("rent_end_date is null");
             return (Criteria) this;
@@ -572,6 +632,126 @@ public class RentManagerExample {
 
         public Criteria andRentPlaceNotBetween(String value1, String value2) {
             addCriterion("rent_place not between", value1, value2, "rentPlace");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockIsNull() {
+            addCriterion("auto_lock is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockIsNotNull() {
+            addCriterion("auto_lock is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockEqualTo(Integer value) {
+            addCriterion("auto_lock =", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockNotEqualTo(Integer value) {
+            addCriterion("auto_lock <>", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockGreaterThan(Integer value) {
+            addCriterion("auto_lock >", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockGreaterThanOrEqualTo(Integer value) {
+            addCriterion("auto_lock >=", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockLessThan(Integer value) {
+            addCriterion("auto_lock <", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockLessThanOrEqualTo(Integer value) {
+            addCriterion("auto_lock <=", value, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockIn(List<Integer> values) {
+            addCriterion("auto_lock in", values, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockNotIn(List<Integer> values) {
+            addCriterion("auto_lock not in", values, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockBetween(Integer value1, Integer value2) {
+            addCriterion("auto_lock between", value1, value2, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoLockNotBetween(Integer value1, Integer value2) {
+            addCriterion("auto_lock not between", value1, value2, "autoLock");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountIsNull() {
+            addCriterion("lr_mount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountIsNotNull() {
+            addCriterion("lr_mount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountEqualTo(Integer value) {
+            addCriterion("lr_mount =", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountNotEqualTo(Integer value) {
+            addCriterion("lr_mount <>", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountGreaterThan(Integer value) {
+            addCriterion("lr_mount >", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("lr_mount >=", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountLessThan(Integer value) {
+            addCriterion("lr_mount <", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountLessThanOrEqualTo(Integer value) {
+            addCriterion("lr_mount <=", value, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountIn(List<Integer> values) {
+            addCriterion("lr_mount in", values, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountNotIn(List<Integer> values) {
+            addCriterion("lr_mount not in", values, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountBetween(Integer value1, Integer value2) {
+            addCriterion("lr_mount between", value1, value2, "lrMount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLrMountNotBetween(Integer value1, Integer value2) {
+            addCriterion("lr_mount not between", value1, value2, "lrMount");
             return (Criteria) this;
         }
 

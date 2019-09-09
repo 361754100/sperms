@@ -29,6 +29,12 @@ public class CustomerEditReq implements Serializable {
     @ApiModelProperty(value = "客户邮箱")
     private String customerEmail;
 
+    @ApiModelProperty(value = "客户QQ")
+    private String customerQq;
+
+    @ApiModelProperty(value = "客户微信")
+    private String customerWx;
+
     @ApiModelProperty(value = "客户地址")
     private String customerAddr;
 
@@ -99,6 +105,22 @@ public class CustomerEditReq implements Serializable {
         this.customerCompany = customerCompany;
     }
 
+    public String getCustomerQq() {
+        return customerQq;
+    }
+
+    public void setCustomerQq(String customerQq) {
+        this.customerQq = customerQq;
+    }
+
+    public String getCustomerWx() {
+        return customerWx;
+    }
+
+    public void setCustomerWx(String customerWx) {
+        this.customerWx = customerWx;
+    }
+
     @Override
     public String toString() {
         return "CustomerEditReq{" +
@@ -108,6 +130,8 @@ public class CustomerEditReq implements Serializable {
                 ", customerAge=" + customerAge +
                 ", customerPhone='" + customerPhone + '\'' +
                 ", customerEmail='" + customerEmail + '\'' +
+                ", customerQq='" + customerQq + '\'' +
+                ", customerWx='" + customerWx + '\'' +
                 ", customerAddr='" + customerAddr + '\'' +
                 ", customerCompany='" + customerCompany + '\'' +
                 '}';

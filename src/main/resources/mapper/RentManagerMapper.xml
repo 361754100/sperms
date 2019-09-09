@@ -6,21 +6,27 @@
     <result column="e_id" property="eId" jdbcType="VARCHAR" />
     <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
     <result column="rent_date" property="rentDate" jdbcType="TIMESTAMP" />
+    <result column="rent_begin_date" property="rentBeginDate" jdbcType="TIMESTAMP" />
     <result column="rent_end_date" property="rentEndDate" jdbcType="TIMESTAMP" />
     <result column="cm_no" property="cmNo" jdbcType="CHAR" />
     <result column="rent_place" property="rentPlace" jdbcType="VARCHAR" />
+    <result column="auto_lock" property="autoLock" jdbcType="INTEGER" />
+    <result column="lr_mount" property="lrMount" jdbcType="INTEGER" />
   </resultMap>
 
   <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.RentManagerDto" >
     <id column="trade_no" property="tradeNo" jdbcType="CHAR" />
     <result column="e_id" property="eId" jdbcType="VARCHAR" />
     <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="rent_begin_date" property="rentBeginDate" jdbcType="TIMESTAMP" />
     <result column="rent_date" property="rentDate" jdbcType="TIMESTAMP" />
     <result column="rent_end_date" property="rentEndDate" jdbcType="TIMESTAMP" />
     <result column="cm_no" property="cmNo" jdbcType="CHAR" />
     <result column="rent_place" property="rentPlace" jdbcType="VARCHAR" />
     <result column="e_name" property="eName" jdbcType="VARCHAR" />
     <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="auto_lock" property="autoLock" jdbcType="INTEGER" />
+    <result column="lr_mount" property="lrMount" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="Example_Where_Clause" >
@@ -82,7 +88,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    trade_no, e_id, customer_no, rent_date, rent_end_date, cm_no, rent_place
+    trade_no, e_id, customer_no, rent_date, rent_begin_date, rent_end_date, cm_no, rent_place, 
+    auto_lock, lr_mount
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" >
     select
@@ -116,11 +123,13 @@
   </delete>
   <insert id="insert" parameterType="com.smart.sperms.dao.model.RentManager" >
     insert into rent_manager (trade_no, e_id, customer_no, 
-      rent_date, rent_end_date, cm_no, 
-      rent_place)
+      rent_date, rent_begin_date, rent_end_date, 
+      cm_no, rent_place, auto_lock, 
+      lr_mount)
     values (#{tradeNo,jdbcType=CHAR}, #{eId,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, 
-      #{rentDate,jdbcType=TIMESTAMP}, #{rentEndDate,jdbcType=TIMESTAMP}, #{cmNo,jdbcType=CHAR}, 
-      #{rentPlace,jdbcType=VARCHAR})
+      #{rentDate,jdbcType=TIMESTAMP}, #{rentBeginDate,jdbcType=TIMESTAMP}, #{rentEndDate,jdbcType=TIMESTAMP}, 
+      #{cmNo,jdbcType=CHAR}, #{rentPlace,jdbcType=VARCHAR}, #{autoLock,jdbcType=INTEGER}, 
+      #{lrMount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.RentManager" >
     insert into rent_manager
@@ -137,6 +146,9 @@
       <if test="rentDate != null" >
         rent_date,
       </if>
+      <if test="rentBeginDate != null" >
+        rent_begin_date,
+      </if>
       <if test="rentEndDate != null" >
         rent_end_date,
       </if>
@@ -145,6 +157,12 @@
       </if>
       <if test="rentPlace != null" >
         rent_place,
+      </if>
+      <if test="autoLock != null" >
+        auto_lock,
+      </if>
+      <if test="lrMount != null" >
+        lr_mount,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -160,6 +178,9 @@
       <if test="rentDate != null" >
         #{rentDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="rentBeginDate != null" >
+        #{rentBeginDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="rentEndDate != null" >
         #{rentEndDate,jdbcType=TIMESTAMP},
       </if>
@@ -168,6 +189,12 @@
       </if>
       <if test="rentPlace != null" >
         #{rentPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="autoLock != null" >
+        #{autoLock,jdbcType=INTEGER},
+      </if>
+      <if test="lrMount != null" >
+        #{lrMount,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -192,6 +219,9 @@
       <if test="record.rentDate != null" >
         rent_date = #{record.rentDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.rentBeginDate != null" >
+        rent_begin_date = #{record.rentBeginDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.rentEndDate != null" >
         rent_end_date = #{record.rentEndDate,jdbcType=TIMESTAMP},
       </if>
@@ -200,6 +230,12 @@
       </if>
       <if test="record.rentPlace != null" >
         rent_place = #{record.rentPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autoLock != null" >
+        auto_lock = #{record.autoLock,jdbcType=INTEGER},
+      </if>
+      <if test="record.lrMount != null" >
+        lr_mount = #{record.lrMount,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -212,9 +248,12 @@
       e_id = #{record.eId,jdbcType=VARCHAR},
       customer_no = #{record.customerNo,jdbcType=VARCHAR},
       rent_date = #{record.rentDate,jdbcType=TIMESTAMP},
+      rent_begin_date = #{record.rentBeginDate,jdbcType=TIMESTAMP},
       rent_end_date = #{record.rentEndDate,jdbcType=TIMESTAMP},
       cm_no = #{record.cmNo,jdbcType=CHAR},
-      rent_place = #{record.rentPlace,jdbcType=VARCHAR}
+      rent_place = #{record.rentPlace,jdbcType=VARCHAR},
+      auto_lock = #{record.autoLock,jdbcType=INTEGER},
+      lr_mount = #{record.lrMount,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -231,6 +270,9 @@
       <if test="rentDate != null" >
         rent_date = #{rentDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="rentBeginDate != null" >
+        rent_begin_date = #{rentBeginDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="rentEndDate != null" >
         rent_end_date = #{rentEndDate,jdbcType=TIMESTAMP},
       </if>
@@ -240,6 +282,12 @@
       <if test="rentPlace != null" >
         rent_place = #{rentPlace,jdbcType=VARCHAR},
       </if>
+      <if test="autoLock != null" >
+        auto_lock = #{autoLock,jdbcType=INTEGER},
+      </if>
+      <if test="lrMount != null" >
+        lr_mount = #{lrMount,jdbcType=INTEGER},
+      </if>
     </set>
     where trade_no = #{tradeNo,jdbcType=CHAR}
   </update>
@@ -248,9 +296,12 @@
     set e_id = #{eId,jdbcType=VARCHAR},
       customer_no = #{customerNo,jdbcType=VARCHAR},
       rent_date = #{rentDate,jdbcType=TIMESTAMP},
+      rent_begin_date = #{rentBeginDate,jdbcType=TIMESTAMP},
       rent_end_date = #{rentEndDate,jdbcType=TIMESTAMP},
       cm_no = #{cmNo,jdbcType=CHAR},
-      rent_place = #{rentPlace,jdbcType=VARCHAR}
+      rent_place = #{rentPlace,jdbcType=VARCHAR},
+      auto_lock = #{autoLock,jdbcType=INTEGER},
+      lr_mount = #{lrMount,jdbcType=INTEGER}
     where trade_no = #{tradeNo,jdbcType=CHAR}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RentManagerExample" id="selectByExampleWithRowbounds" >

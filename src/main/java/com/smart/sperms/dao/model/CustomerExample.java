@@ -515,6 +515,146 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
+        public Criteria andCustomerQqIsNull() {
+            addCriterion("customer_qq is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqIsNotNull() {
+            addCriterion("customer_qq is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqEqualTo(String value) {
+            addCriterion("customer_qq =", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqNotEqualTo(String value) {
+            addCriterion("customer_qq <>", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqGreaterThan(String value) {
+            addCriterion("customer_qq >", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqGreaterThanOrEqualTo(String value) {
+            addCriterion("customer_qq >=", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqLessThan(String value) {
+            addCriterion("customer_qq <", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqLessThanOrEqualTo(String value) {
+            addCriterion("customer_qq <=", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqLike(String value) {
+            addCriterion("customer_qq like", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqNotLike(String value) {
+            addCriterion("customer_qq not like", value, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqIn(List<String> values) {
+            addCriterion("customer_qq in", values, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqNotIn(List<String> values) {
+            addCriterion("customer_qq not in", values, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqBetween(String value1, String value2) {
+            addCriterion("customer_qq between", value1, value2, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqNotBetween(String value1, String value2) {
+            addCriterion("customer_qq not between", value1, value2, "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxIsNull() {
+            addCriterion("customer_wx is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxIsNotNull() {
+            addCriterion("customer_wx is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxEqualTo(String value) {
+            addCriterion("customer_wx =", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxNotEqualTo(String value) {
+            addCriterion("customer_wx <>", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxGreaterThan(String value) {
+            addCriterion("customer_wx >", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxGreaterThanOrEqualTo(String value) {
+            addCriterion("customer_wx >=", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxLessThan(String value) {
+            addCriterion("customer_wx <", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxLessThanOrEqualTo(String value) {
+            addCriterion("customer_wx <=", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxLike(String value) {
+            addCriterion("customer_wx like", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxNotLike(String value) {
+            addCriterion("customer_wx not like", value, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxIn(List<String> values) {
+            addCriterion("customer_wx in", values, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxNotIn(List<String> values) {
+            addCriterion("customer_wx not in", values, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxBetween(String value1, String value2) {
+            addCriterion("customer_wx between", value1, value2, "customerWx");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxNotBetween(String value1, String value2) {
+            addCriterion("customer_wx not between", value1, value2, "customerWx");
+            return (Criteria) this;
+        }
+
         public Criteria andCustomerAddrIsNull() {
             addCriterion("customer_addr is null");
             return (Criteria) this;
@@ -797,6 +937,16 @@ public class CustomerExample {
 
         public Criteria andCustomerEmailLikeInsensitive(String value) {
             addCriterion("upper(customer_email) like", value.toUpperCase(), "customerEmail");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerQqLikeInsensitive(String value) {
+            addCriterion("upper(customer_qq) like", value.toUpperCase(), "customerQq");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerWxLikeInsensitive(String value) {
+            addCriterion("upper(customer_wx) like", value.toUpperCase(), "customerWx");
             return (Criteria) this;
         }
 

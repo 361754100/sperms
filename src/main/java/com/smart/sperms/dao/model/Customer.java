@@ -16,6 +16,10 @@ public class Customer implements Serializable {
 
     private String customerEmail;
 
+    private String customerQq;
+
+    private String customerWx;
+
     private String customerAddr;
 
     private String customerCompany;
@@ -72,6 +76,22 @@ public class Customer implements Serializable {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerQq() {
+        return customerQq;
+    }
+
+    public void setCustomerQq(String customerQq) {
+        this.customerQq = customerQq;
+    }
+
+    public String getCustomerWx() {
+        return customerWx;
+    }
+
+    public void setCustomerWx(String customerWx) {
+        this.customerWx = customerWx;
     }
 
     public String getCustomerAddr() {

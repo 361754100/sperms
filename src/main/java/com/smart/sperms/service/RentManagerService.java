@@ -44,8 +44,11 @@ public class RentManagerService {
         info.setCustomerNo(req.getCustomerNo());
         info.setRentPlace(req.getRentPlace());
         info.setTradeNo(req.getTradeNo());
+        info.setRentBeginDate(DateUtils.parseStrToDate(req.getRentBeginDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentDate(DateUtils.parseStrToDate(req.getRentDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentEndDate(DateUtils.parseStrToDate(req.getRentEndDate(), DateUtils.DEFAULT_FORMAT));
+        info.setAutoLock(req.getAutoLock());
+        info.setLrMount(req.getLrMount());
 
         int cnt = rentManagerDao.saveData(info);
         if(cnt > 0) {
@@ -70,8 +73,11 @@ public class RentManagerService {
         info.seteId(req.geteId());
         info.setCustomerNo(req.getCustomerNo());
         info.setRentPlace(req.getRentPlace());
+        info.setRentBeginDate(DateUtils.parseStrToDate(req.getRentBeginDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentDate(DateUtils.parseStrToDate(req.getRentDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentEndDate(DateUtils.parseStrToDate(req.getRentEndDate(), DateUtils.DEFAULT_FORMAT));
+        info.setAutoLock(req.getAutoLock());
+        info.setLrMount(req.getLrMount());
 
         int cnt = rentManagerDao.updateData(req.getTradeNo(), info);
         if(cnt > 0) {
