@@ -18,10 +18,10 @@ public class CommonTaskManager {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonTaskManager.class);
 	
-	private final static int initialThreadSize = 500;
-	private final static int maxThreadSize = 500;
+	private final static int initialThreadSize = 300;
+	private final static int maxThreadSize = 300;
 	private final static int threadWaitingTimeoutMillis = 30000;
-	private final static int backlogSize = 10;
+	private final static int backlogSize = 100;
 	
 	private ThreadPoolExecutor taskExecutor = new ThreadPoolExecutor( initialThreadSize, maxThreadSize, threadWaitingTimeoutMillis,
 			TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(backlogSize));
