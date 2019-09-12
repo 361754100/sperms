@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.StatsMapper" >
+
+  <!--销售额统计结果-->
+  <resultMap id="SalesAccountResultMap" type="com.smart.sperms.dao.dto.StatSalesAccountDto" >
+    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
+    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
+    <result column="sales_account" property="salesAccount" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <!--销售额统计SQL-->
+  <select resultMap="SalesAccountResultMap" parameterType="java.util.Map" id="statSalesAccount" >
+    select customer_no, customer_name, customer_company, customer_phone, sum(sales) sales_account from (
+      select
+        rent.rent_begin_date, rent.rent_date, rent.rent_end_date,
+        cust.*,
+        cacum.cm_price, cacum.cm_unit, IFNULL(cacum.cm_price,0) * IFNULL(cacum.cm_unit,0) as sales
+      from rent_manager rent
+        left join customer cust on rent.customer_no = cust.customer_no
+        left join caculation_method cacum on rent.cm_no = cacum.cm_no
+      where 1=1
+      <if test="beginTime != null and endTime != null" >
+        and rent.rent_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      </if>
+    ) tmp group by customer_no, customer_name, customer_company
+    order by customer_no asc
+  </select>
+
+
+  <!--生产统计结果-->
+  <resultMap id="ProductMountResultMap" type="com.smart.sperms.dao.dto.StatProductionMountDto" >
+    <id column="e_id" property="eId" jdbcType="VARCHAR" />
+    <id column="e_name" property="eName" jdbcType="VARCHAR" />
+    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
+    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
+    <result column="ps_mount" property="psMount" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <!--生产统计SQL-->
+  <select resultMap="ProductMountResultMap" parameterType="java.util.Map" id="statProductMount" >
+    select e_id, e_name, customer_no, customer_name, customer_company, sum(ps_mount) as ps_mount from(
+      select pstat.e_id, pstat.ps_mount,
+        equip.e_name,
+        rent.customer_no,
+        cust.customer_name, cust.customer_company
+      from
+        production_stat pstat
+      left join
+        equipment equip on pstat.e_id = equip.e_id
+      left join
+        rent_manager rent on pstat.e_id = rent.e_id
+      left join
+        customer cust on rent.customer_no = cust.customer_no
+      where 1=1
+      <if test="beginTime != null and endTime != null" >
+        and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_end_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="customerNo != null" >
+        and rent.customer_no = #{customerNo,jdbcType=VARCHAR}
+      </if>
+      <if test="customerName != null" >
+        and cust.customer_name like CONCAT('%',#{customerName},'%')
+      </if>
+    ) tmp group by e_id, e_name, customer_no, customer_name, customer_company
+    order by ps_mount desc
+  </select>
+
+  <!--设备状态统计结果-->
+  <resultMap id="DevStateResultMap" type="com.smart.sperms.dao.dto.StatDevStateDto" >
+    <id column="dev_count" property="devCount" jdbcType="INTEGER" />
+    <id column="count_type" property="countType" jdbcType="INTEGER" />
+    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
+    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--设备状态统计SQL-->
+  <select resultMap="DevStateResultMap" parameterType="java.util.Map" id="statDevState" >
+    select count(e_id) as dev_count, customer_no, customer_name, customer_company, customer_phone, IFNULL(count_type,0) as count_type from (
+      select
+        equip.e_id,
+        rent.customer_no,
+        cust.customer_name, cust.customer_company, cust.customer_phone, '0' as count_type
+      from
+        equipment equip
+      left join
+        rent_manager rent on equip.e_id = rent.e_id
+      left join
+        customer cust on rent.customer_no = cust.customer_no
+      where equip.e_state !=3 and equip.e_state !=4 and equip.e_state !=5
+      <if test="beginTime != null and endTime != null" >
+        and rent.rent_begin_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and rent.rent_end_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      </if>
+        and rent.customer_no is not null
+    ) tmp0
+
+    union
+
+    select count(e_id) as dev_count, customer_no, customer_name, customer_company, customer_phone, IFNULL(count_type, 1) as count_type from (
+      select
+        repr.e_id,
+        rent.customer_no,
+        cust.customer_name, cust.customer_company, cust.customer_phone, '1' as count_type
+      from
+        repair repr
+      left join
+        (select e_id, customer_no from rent_manager group by e_id, customer_no) rent on repr.e_id = rent.e_id
+      left join
+        customer cust on rent.customer_no = cust.customer_no
+      where repr.r_state =1
+      <if test="beginTime != null and endTime != null" >
+        and repr.r_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and repr.r_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      </if>
+        and rent.customer_no is not null
+    ) tmp1
+
+    union
+
+    select count(e_id) as dev_count, customer_no, customer_name, customer_company, customer_phone, IFNULL(count_type, 2) as count_type from (
+      select
+        scra.e_id,
+        rent.customer_no,
+        cust.customer_name, cust.customer_company, cust.customer_phone, '2' as count_type
+      from
+        scrapp scra
+      left join
+        (select e_id, customer_no from rent_manager group by e_id, customer_no) rent on scra.e_id = rent.e_id
+      left join
+        customer cust on rent.customer_no = cust.customer_no
+      where 1=1
+      <if test="beginTime != null and endTime != null" >
+        and scra.sc_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and scra.sc_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      </if>
+        and rent.customer_no is not null
+    ) tmp2
+  </select>
+</mapper>

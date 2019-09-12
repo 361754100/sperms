@@ -1,9 +1,11 @@
 package com.smart.sperms.service;
 
+import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.ScrappDao;
 import com.smart.sperms.dao.dto.ScrappDto;
 import com.smart.sperms.dao.model.Repair;
 import com.smart.sperms.dao.model.Scrapp;
+import com.smart.sperms.enums.DevStateEnum;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.ScrappEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -21,6 +23,9 @@ public class ScrappService {
 
     @Autowired
     private ScrappDao scrappDao;
+
+    @Autowired
+    private EquipmentDao equipmentDao;
 
     /**
      * 新增记录
@@ -44,6 +49,7 @@ public class ScrappService {
 
         int cnt = scrappDao.saveData(info);
         if(cnt > 0) {
+            equipmentDao.updateStateSingle(req.geteId(), String.valueOf(DevStateEnum.SCRAPP.getCode()));
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
         }

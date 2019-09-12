@@ -3,6 +3,7 @@ package com.smart.sperms.dao;
 import com.smart.sperms.dao.mapper.EquipmentMapper;
 import com.smart.sperms.dao.model.Equipment;
 import com.smart.sperms.dao.model.EquipmentExample;
+import com.smart.sperms.enums.DevStateEnum;
 import com.smart.sperms.utils.DateUtils;
 import com.smart.sperms.utils.RowBoundsUtil;
 import com.smart.sperms.utils.StringUtils;
@@ -10,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -146,6 +149,64 @@ public class EquipmentDao {
         }
         result = mapper.selectByExample(example);
         return result;
+    }
+
+    /**
+     * 修改设备状态
+     * @param eIds
+     * @param newState
+     * @param oldState
+     * @param optType  0: 不进行状态过滤  1：状态过滤
+     * @return
+     */
+    public int updateState(List<String> eIds, String newState, String oldState, int optType) {
+        int cnt = 0;
+        try {
+            EquipmentExample example = new EquipmentExample();
+            EquipmentExample.Criteria criteria = example.createCriteria();
+            if(!CollectionUtils.isEmpty(eIds)) {
+                criteria.andEIdIn(eIds);
+            }
+            if(!StringUtils.isEmpty(oldState)) {
+                criteria.andEStateEqualTo(oldState);
+            }
+            if(1 == optType) {
+                criteria.andEStateNotEqualTo(String.valueOf(DevStateEnum.STOP.getCode()));
+                criteria.andEStateNotEqualTo(String.valueOf(DevStateEnum.ERROR.getCode()));
+                criteria.andEStateNotEqualTo(String.valueOf(DevStateEnum.SCRAPP.getCode()));
+                criteria.andEStateNotEqualTo(String.valueOf(DevStateEnum.UNKNOW.getCode()));
+            }
+
+            Equipment record = new Equipment();
+            record.seteState(newState);
+
+            cnt = mapper.updateByExampleSelective(record, example);
+        } catch (Exception e) {
+            logger.error("update dev state error...", e);
+        }
+        return cnt;
+    }
+
+    /**
+     * 修改设备状态
+     * @param eId
+     * @param newState
+     * @return
+     */
+    public int updateStateSingle(String eId, String newState) {
+        int cnt = 0;
+        try {
+            EquipmentExample example = new EquipmentExample();
+            example.createCriteria().andEIdEqualTo(eId);
+
+            Equipment record = new Equipment();
+            record.seteState(newState);
+
+            cnt = mapper.updateByExampleSelective(record, example);
+        } catch (Exception e) {
+            logger.error("update dev state error...", e);
+        }
+        return cnt;
     }
 
 }

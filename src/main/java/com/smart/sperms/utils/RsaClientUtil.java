@@ -175,7 +175,7 @@ public class RsaClientUtil {
 
 	public static void main(String[] args) {
 		try {
-    		byte[] encryData = RsaClientUtil.encryptData("sperms:2019-08-29 17:26:11");
+    		byte[] encryData = RsaClientUtil.encryptData("sperms:20190909114532");
 			String baseEncryData = Base64.getEncoder().encodeToString(encryData);
 			logger.info("baseEncryData="+ baseEncryData  );
 

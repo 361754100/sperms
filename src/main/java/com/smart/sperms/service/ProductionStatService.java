@@ -31,11 +31,11 @@ public class ProductionStatService {
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
         String eId = req.geteId();
-        boolean isExist = this.isExists(eId);
-        if(isExist) {
-            wrapper.setResultMsg("该应用信息已存在");
-            return wrapper;
-        }
+//        boolean isExist = this.isExists(eId);
+//        if(isExist) {
+//            wrapper.setResultMsg("该应用信息已存在");
+//            return wrapper;
+//        }
         ProductionStat info = new ProductionStat();
         info.seteId(req.geteId());
         info.setPsMount(req.getPsMount());

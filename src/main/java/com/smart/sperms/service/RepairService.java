@@ -1,8 +1,10 @@
 package com.smart.sperms.service;
 
+import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.RepairDao;
 import com.smart.sperms.dao.dto.RepairDto;
 import com.smart.sperms.dao.model.Repair;
+import com.smart.sperms.enums.DevStateEnum;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.RepairEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -11,8 +13,10 @@ import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,11 +26,15 @@ public class RepairService {
     @Autowired
     private RepairDao repairDao;
 
+    @Autowired
+    private EquipmentDao equipmentDao;
+
     /**
      * 新增记录
      * @param req
      * @return
      */
+    @Transactional
     public CommonWrapper addInfo(RepairEditReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
@@ -48,6 +56,7 @@ public class RepairService {
 
         int cnt = repairDao.saveData(info);
         if(cnt > 0) {
+            equipmentDao.updateStateSingle(req.geteId(), String.valueOf(DevStateEnum.ERROR.getCode()));
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
         }
@@ -73,6 +82,9 @@ public class RepairService {
 
         int cnt = repairDao.updateData(req.geteId(), info);
         if(cnt > 0) {
+            if("0".equals(req.getrState())) {
+                equipmentDao.updateStateSingle(req.geteId(), String.valueOf(DevStateEnum.OFFLINE.getCode()));
+            }
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
         }

@@ -62,6 +62,11 @@ public class SysMenuService {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
+        if(req.getMenuId().intValue() == req.getParentId().intValue()) {
+            wrapper.setResultMsg("不能自选为父节点");
+            return wrapper;
+        }
+
         SysMenu info = new SysMenu();
 //        info.setMenuId(req.getMenuId());
         info.setMenuIcon(req.getMenuIcon());
