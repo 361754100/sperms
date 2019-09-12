@@ -5,9 +5,13 @@ import java.io.Serializable;
 public class CaculationMethod implements Serializable {
     private String cmNo;
 
-    private Integer cmDay;
+    private String cmName;
 
-    private Double cmFee;
+    private Integer cmType;
+
+    private Integer cmUnit;
+
+    private Double cmPrice;
 
     private Integer cmRemain;
 
@@ -21,20 +25,36 @@ public class CaculationMethod implements Serializable {
         this.cmNo = cmNo;
     }
 
-    public Integer getCmDay() {
-        return cmDay;
+    public String getCmName() {
+        return cmName;
     }
 
-    public void setCmDay(Integer cmDay) {
-        this.cmDay = cmDay;
+    public void setCmName(String cmName) {
+        this.cmName = cmName;
     }
 
-    public Double getCmFee() {
-        return cmFee;
+    public Integer getCmType() {
+        return cmType;
     }
 
-    public void setCmFee(Double cmFee) {
-        this.cmFee = cmFee;
+    public void setCmType(Integer cmType) {
+        this.cmType = cmType;
+    }
+
+    public Integer getCmUnit() {
+        return cmUnit;
+    }
+
+    public void setCmUnit(Integer cmUnit) {
+        this.cmUnit = cmUnit;
+    }
+
+    public Double getCmPrice() {
+        return cmPrice;
+    }
+
+    public void setCmPrice(Double cmPrice) {
+        this.cmPrice = cmPrice;
     }
 
     public Integer getCmRemain() {

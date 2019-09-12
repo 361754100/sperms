@@ -35,12 +35,13 @@ public class CaculationMethodService {
             wrapper.setResultMsg("该计费方式已存在");
             return wrapper;
         }
-        Date date = new Date();
         CaculationMethod info = new CaculationMethod();
-        info.setCmDay(req.getCmDay());
-        info.setCmFee(req.getCmFee());
         info.setCmNo(req.getCmNo());
         info.setCmRemain(req.getCmRemain());
+        info.setCmName(req.getCmName());
+        info.setCmPrice(req.getCmPrice());
+        info.setCmType(req.getCmType());
+        info.setCmUnit(req.getCmUnit());
 
         int cnt = caculationMethodDao.saveData(info);
         if(cnt > 0) {
@@ -61,8 +62,10 @@ public class CaculationMethodService {
 
         CaculationMethod info = new CaculationMethod();
         info.setCmRemain(req.getCmRemain());
-        info.setCmFee(req.getCmFee());
-        info.setCmDay(req.getCmDay());
+        info.setCmName(req.getCmName());
+        info.setCmPrice(req.getCmPrice());
+        info.setCmType(req.getCmType());
+        info.setCmUnit(req.getCmUnit());
 
         int cnt = caculationMethodDao.updateData(req.getCmNo(), info);
         if(cnt > 0) {

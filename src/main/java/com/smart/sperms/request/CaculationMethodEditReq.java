@@ -14,11 +14,17 @@ public class CaculationMethodEditReq implements Serializable {
     @ApiModelProperty(value = "计费编号")
     private String cmNo;
 
-    @ApiModelProperty(value = "按天或按量")
-    private Integer cmDay;
+    @ApiModelProperty(value = "计费名称")
+    private String cmName;
 
-    @ApiModelProperty(value = "费用")
-    private Double cmFee;
+    @ApiModelProperty(value = "按天或按量,1=按量; 2=按天; 3=其它")
+    private Integer cmType;
+
+    @ApiModelProperty(value = "计量单位")
+    private Integer cmUnit;
+
+    @ApiModelProperty(value = "单价")
+    private Double cmPrice;
 
     @ApiModelProperty(value = "保留")
     private Integer cmRemain;
@@ -31,20 +37,36 @@ public class CaculationMethodEditReq implements Serializable {
         this.cmNo = cmNo;
     }
 
-    public Integer getCmDay() {
-        return cmDay;
+    public String getCmName() {
+        return cmName;
     }
 
-    public void setCmDay(Integer cmDay) {
-        this.cmDay = cmDay;
+    public void setCmName(String cmName) {
+        this.cmName = cmName;
     }
 
-    public Double getCmFee() {
-        return cmFee;
+    public Integer getCmType() {
+        return cmType;
     }
 
-    public void setCmFee(Double cmFee) {
-        this.cmFee = cmFee;
+    public void setCmType(Integer cmType) {
+        this.cmType = cmType;
+    }
+
+    public Integer getCmUnit() {
+        return cmUnit;
+    }
+
+    public void setCmUnit(Integer cmUnit) {
+        this.cmUnit = cmUnit;
+    }
+
+    public Double getCmPrice() {
+        return cmPrice;
+    }
+
+    public void setCmPrice(Double cmPrice) {
+        this.cmPrice = cmPrice;
     }
 
     public Integer getCmRemain() {
@@ -59,8 +81,10 @@ public class CaculationMethodEditReq implements Serializable {
     public String toString() {
         return "CaculationMethodEditReq{" +
                 "cmNo='" + cmNo + '\'' +
-                ", cmDay=" + cmDay +
-                ", cmFee=" + cmFee +
+                ", cmName='" + cmName + '\'' +
+                ", cmType=" + cmType +
+                ", cmUnit=" + cmUnit +
+                ", cmPrice=" + cmPrice +
                 ", cmRemain=" + cmRemain +
                 '}';
     }
