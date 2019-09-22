@@ -38,7 +38,7 @@
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
     -->
 
-    <logger name="cn.com.nexwise.sperms" level="DEBUG"/>
+    <logger name="com.smart.sperms" level="DEBUG"/>
 
     <!--myibatis log configure-->
     <logger name="com.apache.ibatis" level="TRACE"/>

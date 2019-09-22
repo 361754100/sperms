@@ -20,7 +20,7 @@ import java.util.Map;
 @Repository
 public class UsersDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(EquipmentDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 
     @Autowired
     private UsersMapper mapper;

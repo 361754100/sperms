@@ -1,6 +1,7 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.dao.dto.StatDevStateDto;
+import com.smart.sperms.dao.dto.StatDevStateGroupDto;
 import com.smart.sperms.dao.dto.StatProductionMountDto;
 import com.smart.sperms.dao.dto.StatSalesAccountDto;
 import com.smart.sperms.dao.mapper.StatsMapper;
@@ -8,9 +9,9 @@ import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 @Service
 public class StatsService {
@@ -77,9 +78,46 @@ public class StatsService {
             params.put("beginTime", beginTime);
             params.put("endTime", endTime);
         }
-
+        Map<String, StatDevStateGroupDto> stateGroupDtoMap = new HashMap<>();
         List<StatDevStateDto> result = statsMapper.statDevState(params);
-        wrapper.setRecords(result);
+        String custNo = null;
+        StatDevStateGroupDto stateGroupDto = null;
+        for(StatDevStateDto stateDto:result) {
+            custNo = stateDto.getCustomerNo();
+            if(StringUtils.isEmpty(custNo)) {
+                continue;
+            }
+            stateGroupDto = stateGroupDtoMap.get(custNo);
+            if(stateGroupDto == null) {
+                stateGroupDto = new StatDevStateGroupDto();
+            }
+            stateGroupDto.setCustomerCompany(stateDto.getCustomerCompany());
+            stateGroupDto.setCustomerName(stateDto.getCustomerName());
+            stateGroupDto.setCustomerPhone(stateDto.getCustomerPhone());
+            stateGroupDto.setCustomerNo(custNo);
+
+            int countType = stateDto.getCountType();
+            switch (countType) {
+                case 0:
+                    stateGroupDto.setNormalCount(stateDto.getDevCount());
+                    break;
+                case 1:
+                    stateGroupDto.setRepairCount(stateDto.getDevCount());
+                    break;
+                case 2:
+                    stateGroupDto.setScrappCount(stateDto.getDevCount());
+                    break;
+            }
+            stateGroupDtoMap.put(custNo, stateGroupDto);
+        }
+
+        List<StatDevStateGroupDto> groupList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(stateGroupDtoMap)) {
+            for(Map.Entry<String, StatDevStateGroupDto> entry : stateGroupDtoMap.entrySet()) {
+                groupList.add(entry.getValue());
+            }
+        }
+        wrapper.setRecords(groupList);
         return wrapper;
     }
 }

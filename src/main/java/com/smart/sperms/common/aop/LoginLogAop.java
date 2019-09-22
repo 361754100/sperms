@@ -28,7 +28,7 @@ public class LoginLogAop {
     public long spendTime = 0L;
 
     //登录方法切入
-    @Pointcut("execution(public * com.smart.sperms..controller.LoginController.login(..))")
+    @Pointcut("execution(public * com.smart.sperms..controller.SysMainController.auth(..))")
     public void loginLog() { }
 
     @Around("loginLog()")
