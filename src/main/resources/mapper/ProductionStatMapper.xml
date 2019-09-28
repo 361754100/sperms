@@ -191,7 +191,7 @@
     equipment equip on pstat.e_id = equip.e_id
     where 1=1
     <if test="beginTime != null and endTime != null" >
-      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_end_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
     </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
@@ -206,7 +206,7 @@
     equipment equip on pstat.e_id = equip.e_id
     where 1=1
     <if test="beginTime != null and endTime != null" >
-      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+      and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_end_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
     </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
