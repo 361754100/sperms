@@ -18,6 +18,14 @@ public class Equipment implements Serializable {
 
     private String eState;
 
+    private Integer eEnable;
+
+    private String eLongitude;
+
+    private String eLatitude;
+
+    private String eCondition;
+
     private static final long serialVersionUID = 1L;
 
     public String geteId() {
@@ -74,5 +82,37 @@ public class Equipment implements Serializable {
 
     public void seteState(String eState) {
         this.eState = eState;
+    }
+
+    public Integer geteEnable() {
+        return eEnable;
+    }
+
+    public void seteEnable(Integer eEnable) {
+        this.eEnable = eEnable;
+    }
+
+    public String geteLongitude() {
+        return eLongitude;
+    }
+
+    public void seteLongitude(String eLongitude) {
+        this.eLongitude = eLongitude;
+    }
+
+    public String geteLatitude() {
+        return eLatitude;
+    }
+
+    public void seteLatitude(String eLatitude) {
+        this.eLatitude = eLatitude;
+    }
+
+    public String geteCondition() {
+        return eCondition;
+    }
+
+    public void seteCondition(String eCondition) {
+        this.eCondition = eCondition;
     }
 }

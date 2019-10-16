@@ -5,11 +5,11 @@ import java.util.List;
 
 /**
  * 设备状态码
- * 0：在线、1：离线、2：停机、3：故障、4：报废、5：其它
+ * 0：在线、1：离线、2：停机、3：故障、4：报废、9：其它
  */
 public enum DevStateEnum {
 
-    UNKNOW(5, "未知异常"),
+    UNKNOW(9, "未知异常"),
     ONLINE(0, "在线"),
     OFFLINE(1, "离线"),
     STOP(2, "停机"),

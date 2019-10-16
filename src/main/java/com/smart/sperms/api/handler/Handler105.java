@@ -1,11 +1,9 @@
 package com.smart.sperms.api.handler;
 
-import com.smart.sperms.api.protocol.DataBody102;
 import com.smart.sperms.api.protocol.DataBody105;
 import com.smart.sperms.api.protocol.MsgPayload;
-import com.smart.sperms.dao.EquipmentEnableDao;
-import com.smart.sperms.dao.dto.EquipmentEnableDto;
-import com.smart.sperms.dao.model.EquipmentEnable;
+import com.smart.sperms.dao.EquipmentDao;
+import com.smart.sperms.dao.model.Equipment;
 import com.smart.sperms.enums.ProtocolEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +18,7 @@ import java.util.List;
 public class Handler105 extends Handler {
 
     @Autowired
-    private EquipmentEnableDao equipmentEnableDao;
+    private EquipmentDao equipmentDao;
 
     @Override
     public void execute(String eId, MsgPayload req) {
@@ -32,24 +30,24 @@ public class Handler105 extends Handler {
 
         super.sendMsg(eId, resp);
 
-        EquipmentEnableDto condition = new EquipmentEnableDto();
+        Equipment condition = new Equipment();
         condition.seteId(eId);
 
-        List<EquipmentEnableDto> equipEnables = equipmentEnableDao.queryList(condition);
-        if(CollectionUtils.isEmpty(equipEnables)) {
+        List<Equipment> equips = equipmentDao.queryList(condition);
+        if(CollectionUtils.isEmpty(equips)) {
             logger.error("equipment enable is not exists...eId = {}", eId);
             return;
         }
 
-        EquipmentEnableDto enableDto = equipEnables.get(0);
+        Equipment equip = equips.get(0);
         String lng = String.valueOf(reqBody.getLongitude());
         String lat = String.valueOf(reqBody.getLatitude());
 
-        if(!lng.equals(enableDto.getEeLongitude()) || !lat.equals(enableDto.getEeLatitude())) {
-            EquipmentEnable equipmentEnable = new EquipmentEnable();
-            equipmentEnable.setEeLongitude(lng);
-            equipmentEnable.setEeLatitude(lat);
-            equipmentEnableDao.updateData(eId, equipmentEnable);
+        if(!lng.equals(equip.geteLongitude()) || !lat.equals(equip.geteLatitude())) {
+            Equipment tmpEquip = new Equipment();
+            tmpEquip.seteLongitude(lng);
+            tmpEquip.seteLatitude(lat);
+            equipmentDao.updateData(eId, tmpEquip);
         }
     }
 

@@ -1,14 +1,22 @@
 package com.smart.sperms.service;
 
+import com.smart.sperms.api.handler.Handler107;
+import com.smart.sperms.api.protocol.DataBody107;
+import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.config.mqtt.MqttInputHandler;
 import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.model.Equipment;
+import com.smart.sperms.dao.model.EquipmentExample;
+import com.smart.sperms.enums.DevEnableEnum;
+import com.smart.sperms.enums.ProtocolEnum;
 import com.smart.sperms.enums.ResultCodeEnum;
 import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
 import com.smart.sperms.utils.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.core.MessageProducer;
 import org.springframework.stereotype.Service;
@@ -19,6 +27,8 @@ import java.util.List;
 
 @Service
 public class EquipmentService {
+
+    private static Logger logger = LoggerFactory.getLogger(EquipmentService.class);
 
     @Autowired
     private EquipmentDao equipmentDao;
@@ -48,13 +58,17 @@ public class EquipmentService {
         info.seteStandard(req.geteStandard());
         info.seteType(req.geteType());
         info.seteDate(DateUtils.parseStrToDate(req.geteDate(), DateUtils.DEFAULT_FORMAT));
+        info.seteEnable(req.geteEnable());
+        info.seteLatitude(req.geteLatitude());
+        info.seteLongitude(req.geteLongitude());
 
         int cnt = equipmentDao.saveData(info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
-
+            // 订阅设备消息
             mqttInputHandler.addListenTopic(eId);
+            this.controlDev(eId, req.geteEnable().intValue());
         }
         return wrapper;
     }
@@ -74,11 +88,16 @@ public class EquipmentService {
         info.seteStandard(req.geteStandard());
         info.seteType(req.geteType());
         info.seteDate(DateUtils.parseStrToDate(req.geteDate(), DateUtils.DEFAULT_FORMAT));
+        info.seteEnable(req.geteEnable());
+        info.seteLatitude(req.geteLatitude());
+        info.seteLongitude(req.geteLongitude());
 
         int cnt = equipmentDao.updateData(req.geteId(), info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+
+            this.controlDev(req.geteId(), req.geteEnable().intValue());
         }
         return wrapper;
     }
@@ -99,6 +118,8 @@ public class EquipmentService {
         if(cnt > 0 ) {
             for(String eId: eIds) {
                 mqttInputHandler.removeListenTopic(eId);
+
+                this.controlDev(eId, DevEnableEnum.STOP.getCode());
             }
         }
         return wrapper;
@@ -162,5 +183,57 @@ public class EquipmentService {
             isExist = true;
         }
         return isExist;
+    }
+
+    /**
+     * 批量启停设备
+     * @param eIds
+     * @param enable
+     */
+    public CommonWrapper controlDevs(List<String> eIds, int enable) {
+        EquipmentExample example = new EquipmentExample();
+        example.createCriteria().andEIdIn(eIds);
+
+        Equipment record = new Equipment();
+        record.seteEnable(enable);
+
+        CommonWrapper wrapper = new CommonWrapper();
+        int cnt = equipmentDao.updateByExample(example, record);
+        wrapper.setResultMsg("成功设置【"+ cnt +"】台设备");
+
+        for(String eId: eIds) {
+            this.controlDev(eId, enable);
+        }
+
+        return wrapper;
+    }
+
+    /**
+     * 控制设备启停
+     * @param eId
+     * @param enable
+     */
+    private void controlDev(String eId, int enable) {
+        // 开启Or关闭设备
+        DevEnableEnum devEnableEnum = DevEnableEnum.getResult(enable);
+
+        MsgPayload payload = new MsgPayload();
+        DataBody107 dataBody = new DataBody107();
+        // 发消息给安卓端
+        switch (devEnableEnum) {
+            case STOP:
+                dataBody.setWork(false);
+                break;
+            case TURN_ON:
+                dataBody.setWork(true);
+                break;
+        }
+        payload.setProtocol(ProtocolEnum.CODE_107.getCode());
+        payload.setData(dataBody);
+
+        Handler107 handler = new Handler107();
+        handler.execute(eId, payload);
+
+        logger.debug("control dev dataBody...{}", dataBody);
     }
 }

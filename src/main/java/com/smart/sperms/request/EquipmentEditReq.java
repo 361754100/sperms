@@ -24,8 +24,17 @@ public class EquipmentEditReq implements Serializable {
     @ApiModelProperty(value = "生产厂家")
     private String eManufacturer;
 
+    @ApiModelProperty(value = "应用授权（0：关停；1：正常使用）")
+    private Integer eEnable;
+
     @ApiModelProperty(value = "类型")
     private String eType;
+
+    @ApiModelProperty(value = "GPS经度")
+    private String eLongitude;
+
+    @ApiModelProperty(value = "GPS纬度")
+    private String eLatitude;
 
     @ApiModelProperty(value = "生产日期 yyyy-MM-dd HH:mm:ss")
     private String eDate;
@@ -78,6 +87,30 @@ public class EquipmentEditReq implements Serializable {
         this.eDate = eDate;
     }
 
+    public String geteLongitude() {
+        return eLongitude;
+    }
+
+    public void seteLongitude(String eLongitude) {
+        this.eLongitude = eLongitude;
+    }
+
+    public String geteLatitude() {
+        return eLatitude;
+    }
+
+    public void seteLatitude(String eLatitude) {
+        this.eLatitude = eLatitude;
+    }
+
+    public Integer geteEnable() {
+        return eEnable;
+    }
+
+    public void seteEnable(Integer eEnable) {
+        this.eEnable = eEnable;
+    }
+
     @Override
     public String toString() {
         return "EquipmentEditReq{" +
@@ -85,7 +118,10 @@ public class EquipmentEditReq implements Serializable {
                 ", eName='" + eName + '\'' +
                 ", eStandard='" + eStandard + '\'' +
                 ", eManufacturer='" + eManufacturer + '\'' +
+                ", eEnable=" + eEnable +
                 ", eType='" + eType + '\'' +
+                ", eLongitude='" + eLongitude + '\'' +
+                ", eLatitude='" + eLatitude + '\'' +
                 ", eDate='" + eDate + '\'' +
                 '}';
     }

@@ -1,7 +1,9 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.dao.model.EquipmentEnable;
 import com.smart.sperms.request.EquipmentDelReq;
 import com.smart.sperms.request.EquipmentEditReq;
+import com.smart.sperms.request.EquipmentEnableEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
@@ -77,6 +79,14 @@ public class EquipmentController {
 
         logger.debug(" recordId = {}",
                 new Object[]{recordId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "设备启停控制")
+    @PostMapping(value = "/control_set")
+    public CommonWrapper control_set(@RequestBody EquipmentEnableEditReq params) {
+        logger.debug(" params = {}", new Object[]{params});
+        CommonWrapper wrapper = equipmentService.controlDevs(params.geteIds(), params.geteEnable().intValue());
         return wrapper;
     }
 }

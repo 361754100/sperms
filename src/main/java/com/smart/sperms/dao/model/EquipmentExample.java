@@ -585,6 +585,276 @@ public class EquipmentExample {
             return (Criteria) this;
         }
 
+        public Criteria andEEnableIsNull() {
+            addCriterion("e_enable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableIsNotNull() {
+            addCriterion("e_enable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableEqualTo(Integer value) {
+            addCriterion("e_enable =", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableNotEqualTo(Integer value) {
+            addCriterion("e_enable <>", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableGreaterThan(Integer value) {
+            addCriterion("e_enable >", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableGreaterThanOrEqualTo(Integer value) {
+            addCriterion("e_enable >=", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableLessThan(Integer value) {
+            addCriterion("e_enable <", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableLessThanOrEqualTo(Integer value) {
+            addCriterion("e_enable <=", value, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableIn(List<Integer> values) {
+            addCriterion("e_enable in", values, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableNotIn(List<Integer> values) {
+            addCriterion("e_enable not in", values, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableBetween(Integer value1, Integer value2) {
+            addCriterion("e_enable between", value1, value2, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andEEnableNotBetween(Integer value1, Integer value2) {
+            addCriterion("e_enable not between", value1, value2, "eEnable");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeIsNull() {
+            addCriterion("e_longitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeIsNotNull() {
+            addCriterion("e_longitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeEqualTo(String value) {
+            addCriterion("e_longitude =", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeNotEqualTo(String value) {
+            addCriterion("e_longitude <>", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeGreaterThan(String value) {
+            addCriterion("e_longitude >", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("e_longitude >=", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeLessThan(String value) {
+            addCriterion("e_longitude <", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeLessThanOrEqualTo(String value) {
+            addCriterion("e_longitude <=", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeLike(String value) {
+            addCriterion("e_longitude like", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeNotLike(String value) {
+            addCriterion("e_longitude not like", value, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeIn(List<String> values) {
+            addCriterion("e_longitude in", values, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeNotIn(List<String> values) {
+            addCriterion("e_longitude not in", values, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeBetween(String value1, String value2) {
+            addCriterion("e_longitude between", value1, value2, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeNotBetween(String value1, String value2) {
+            addCriterion("e_longitude not between", value1, value2, "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeIsNull() {
+            addCriterion("e_latitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeIsNotNull() {
+            addCriterion("e_latitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeEqualTo(String value) {
+            addCriterion("e_latitude =", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeNotEqualTo(String value) {
+            addCriterion("e_latitude <>", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeGreaterThan(String value) {
+            addCriterion("e_latitude >", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("e_latitude >=", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeLessThan(String value) {
+            addCriterion("e_latitude <", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeLessThanOrEqualTo(String value) {
+            addCriterion("e_latitude <=", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeLike(String value) {
+            addCriterion("e_latitude like", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeNotLike(String value) {
+            addCriterion("e_latitude not like", value, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeIn(List<String> values) {
+            addCriterion("e_latitude in", values, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeNotIn(List<String> values) {
+            addCriterion("e_latitude not in", values, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeBetween(String value1, String value2) {
+            addCriterion("e_latitude between", value1, value2, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeNotBetween(String value1, String value2) {
+            addCriterion("e_latitude not between", value1, value2, "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionIsNull() {
+            addCriterion("e_condition is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionIsNotNull() {
+            addCriterion("e_condition is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionEqualTo(String value) {
+            addCriterion("e_condition =", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionNotEqualTo(String value) {
+            addCriterion("e_condition <>", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionGreaterThan(String value) {
+            addCriterion("e_condition >", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionGreaterThanOrEqualTo(String value) {
+            addCriterion("e_condition >=", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionLessThan(String value) {
+            addCriterion("e_condition <", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionLessThanOrEqualTo(String value) {
+            addCriterion("e_condition <=", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionLike(String value) {
+            addCriterion("e_condition like", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionNotLike(String value) {
+            addCriterion("e_condition not like", value, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionIn(List<String> values) {
+            addCriterion("e_condition in", values, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionNotIn(List<String> values) {
+            addCriterion("e_condition not in", values, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionBetween(String value1, String value2) {
+            addCriterion("e_condition between", value1, value2, "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionNotBetween(String value1, String value2) {
+            addCriterion("e_condition not between", value1, value2, "eCondition");
+            return (Criteria) this;
+        }
+
         public Criteria andEIdLikeInsensitive(String value) {
             addCriterion("upper(e_id) like", value.toUpperCase(), "eId");
             return (Criteria) this;
@@ -612,6 +882,21 @@ public class EquipmentExample {
 
         public Criteria andEStateLikeInsensitive(String value) {
             addCriterion("upper(e_state) like", value.toUpperCase(), "eState");
+            return (Criteria) this;
+        }
+
+        public Criteria andELongitudeLikeInsensitive(String value) {
+            addCriterion("upper(e_longitude) like", value.toUpperCase(), "eLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andELatitudeLikeInsensitive(String value) {
+            addCriterion("upper(e_latitude) like", value.toUpperCase(), "eLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andEConditionLikeInsensitive(String value) {
+            addCriterion("upper(e_condition) like", value.toUpperCase(), "eCondition");
             return (Criteria) this;
         }
     }

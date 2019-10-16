@@ -3,9 +3,8 @@ package com.smart.sperms.api.handler;
 import com.smart.sperms.api.protocol.DataBody101;
 import com.smart.sperms.api.protocol.DataBody102;
 import com.smart.sperms.api.protocol.MsgPayload;
-import com.smart.sperms.dao.EquipmentEnableDao;
-import com.smart.sperms.dao.dto.EquipmentEnableDto;
-import com.smart.sperms.dao.model.EquipmentEnable;
+import com.smart.sperms.dao.EquipmentDao;
+import com.smart.sperms.dao.model.Equipment;
 import com.smart.sperms.enums.ProtocolEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ import java.util.List;
 public class Handler101 extends Handler {
 
     @Autowired
-    private EquipmentEnableDao equipmentEnableDao;
+    private EquipmentDao equipmentDao;
 
     @Override
     public void execute(String eId, MsgPayload req) {
@@ -30,12 +29,12 @@ public class Handler101 extends Handler {
         MsgPayload resp = new MsgPayload();
         resp.setProtocol(ProtocolEnum.CODE_102.getCode());
 
-        EquipmentEnableDto condition = new EquipmentEnableDto();
+        Equipment condition = new Equipment();
         condition.seteId(eId);
 
-        List<EquipmentEnableDto> equipEnables = equipmentEnableDao.queryList(condition);
+        List<Equipment> equips = equipmentDao.queryList(condition);
 
-        if(CollectionUtils.isEmpty(equipEnables)) {
+        if(CollectionUtils.isEmpty(equips)) {
             logger.error("equipment is not enable...eId = {}", eId);
 
             DataBody102 respBody = new DataBody102();
@@ -46,9 +45,9 @@ public class Handler101 extends Handler {
             return;
         }
 
-        EquipmentEnableDto enableDto = equipEnables.get(0);
+        Equipment equip = equips.get(0);
         boolean work = false;
-        if(enableDto.getEeEnable().intValue() == 1) {
+        if(equip.geteEnable().intValue() == 1) {
             work = true;
         }
         DataBody102 respBody = new DataBody102();
@@ -57,9 +56,9 @@ public class Handler101 extends Handler {
 
         super.sendMsg(eId, resp);
 
-        EquipmentEnable equipmentEnable = new EquipmentEnable();
-        equipmentEnable.setEeCondition("firmwareVersion:"+ reqBody.getFirmwareVersion() + " softwareVersion:" + reqBody.getSoftwareVersion());
-        equipmentEnableDao.updateData(eId, equipmentEnable);
+        Equipment record = new Equipment();
+        record.seteCondition("firmwareVersion:"+ reqBody.getFirmwareVersion() + " softwareVersion:" + reqBody.getSoftwareVersion());
+        equipmentDao.updateData(eId, record);
     }
 
 }

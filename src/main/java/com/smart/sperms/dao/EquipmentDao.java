@@ -59,6 +59,22 @@ public class EquipmentDao {
     }
 
     /**
+     * 修改记录
+     * @param example
+     * @param record
+     * @return
+     */
+    public int updateByExample(EquipmentExample example, Equipment record) {
+        int cnt = 0;
+        try {
+            cnt = mapper.updateByExampleSelective(record, example);
+        } catch (Exception e) {
+            logger.error("update data error...", e);
+        }
+        return cnt;
+    }
+
+    /**
      * 删除记录
      * @param recordIds
      * @return

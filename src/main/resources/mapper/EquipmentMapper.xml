@@ -9,6 +9,10 @@
     <result column="e_type" property="eType" jdbcType="VARCHAR" />
     <result column="e_date" property="eDate" jdbcType="TIMESTAMP" />
     <result column="e_state" property="eState" jdbcType="VARCHAR" />
+    <result column="e_enable" property="eEnable" jdbcType="INTEGER" />
+    <result column="e_longitude" property="eLongitude" jdbcType="VARCHAR" />
+    <result column="e_latitude" property="eLatitude" jdbcType="VARCHAR" />
+    <result column="e_condition" property="eCondition" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    e_id, e_name, e_standard, e_manufacturer, e_type, e_date, e_state
+    e_id, e_name, e_standard, e_manufacturer, e_type, e_date, e_state, e_enable, e_longitude, 
+    e_latitude, e_condition
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentExample" >
     select
@@ -104,10 +109,12 @@
   <insert id="insert" parameterType="com.smart.sperms.dao.model.Equipment" >
     insert into equipment (e_id, e_name, e_standard, 
       e_manufacturer, e_type, e_date, 
-      e_state)
+      e_state, e_enable, e_longitude, 
+      e_latitude, e_condition)
     values (#{eId,jdbcType=VARCHAR}, #{eName,jdbcType=VARCHAR}, #{eStandard,jdbcType=VARCHAR}, 
       #{eManufacturer,jdbcType=VARCHAR}, #{eType,jdbcType=VARCHAR}, #{eDate,jdbcType=TIMESTAMP}, 
-      #{eState,jdbcType=VARCHAR})
+      #{eState,jdbcType=VARCHAR}, #{eEnable,jdbcType=INTEGER}, #{eLongitude,jdbcType=VARCHAR}, 
+      #{eLatitude,jdbcType=VARCHAR}, #{eCondition,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Equipment" >
     insert into equipment
@@ -133,6 +140,18 @@
       <if test="eState != null" >
         e_state,
       </if>
+      <if test="eEnable != null" >
+        e_enable,
+      </if>
+      <if test="eLongitude != null" >
+        e_longitude,
+      </if>
+      <if test="eLatitude != null" >
+        e_latitude,
+      </if>
+      <if test="eCondition != null" >
+        e_condition,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="eId != null" >
@@ -155,6 +174,18 @@
       </if>
       <if test="eState != null" >
         #{eState,jdbcType=VARCHAR},
+      </if>
+      <if test="eEnable != null" >
+        #{eEnable,jdbcType=INTEGER},
+      </if>
+      <if test="eLongitude != null" >
+        #{eLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="eLatitude != null" >
+        #{eLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="eCondition != null" >
+        #{eCondition,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +219,18 @@
       <if test="record.eState != null" >
         e_state = #{record.eState,jdbcType=VARCHAR},
       </if>
+      <if test="record.eEnable != null" >
+        e_enable = #{record.eEnable,jdbcType=INTEGER},
+      </if>
+      <if test="record.eLongitude != null" >
+        e_longitude = #{record.eLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eLatitude != null" >
+        e_latitude = #{record.eLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eCondition != null" >
+        e_condition = #{record.eCondition,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +244,11 @@
       e_manufacturer = #{record.eManufacturer,jdbcType=VARCHAR},
       e_type = #{record.eType,jdbcType=VARCHAR},
       e_date = #{record.eDate,jdbcType=TIMESTAMP},
-      e_state = #{record.eState,jdbcType=VARCHAR}
+      e_state = #{record.eState,jdbcType=VARCHAR},
+      e_enable = #{record.eEnable,jdbcType=INTEGER},
+      e_longitude = #{record.eLongitude,jdbcType=VARCHAR},
+      e_latitude = #{record.eLatitude,jdbcType=VARCHAR},
+      e_condition = #{record.eCondition,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +274,18 @@
       <if test="eState != null" >
         e_state = #{eState,jdbcType=VARCHAR},
       </if>
+      <if test="eEnable != null" >
+        e_enable = #{eEnable,jdbcType=INTEGER},
+      </if>
+      <if test="eLongitude != null" >
+        e_longitude = #{eLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="eLatitude != null" >
+        e_latitude = #{eLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="eCondition != null" >
+        e_condition = #{eCondition,jdbcType=VARCHAR},
+      </if>
     </set>
     where e_id = #{eId,jdbcType=VARCHAR}
   </update>
@@ -237,7 +296,11 @@
       e_manufacturer = #{eManufacturer,jdbcType=VARCHAR},
       e_type = #{eType,jdbcType=VARCHAR},
       e_date = #{eDate,jdbcType=TIMESTAMP},
-      e_state = #{eState,jdbcType=VARCHAR}
+      e_state = #{eState,jdbcType=VARCHAR},
+      e_enable = #{eEnable,jdbcType=INTEGER},
+      e_longitude = #{eLongitude,jdbcType=VARCHAR},
+      e_latitude = #{eLatitude,jdbcType=VARCHAR},
+      e_condition = #{eCondition,jdbcType=VARCHAR}
     where e_id = #{eId,jdbcType=VARCHAR}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentExample" id="selectByExampleWithRowbounds" >
