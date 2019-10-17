@@ -1,8 +1,10 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.api.handler.Handler107;
+import com.smart.sperms.api.handler.Handler111;
 import com.smart.sperms.api.protocol.DataBody107;
 import com.smart.sperms.api.protocol.MsgPayload;
+import com.smart.sperms.common.SpringContext;
 import com.smart.sperms.config.mqtt.MqttInputHandler;
 import com.smart.sperms.dao.EquipmentDao;
 import com.smart.sperms.dao.model.Equipment;
@@ -18,7 +20,6 @@ import com.smart.sperms.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.core.MessageProducer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -203,6 +204,25 @@ public class EquipmentService {
 
         for(String eId: eIds) {
             this.controlDev(eId, enable);
+        }
+
+        return wrapper;
+    }
+
+    /**
+     * 设备拍照
+     * @param eIds
+     */
+    public CommonWrapper takePicture(List<String> eIds) {
+        CommonWrapper wrapper = new CommonWrapper();
+
+        Handler111 handler = SpringContext.getBean(Handler111.class);
+
+        MsgPayload payload = new MsgPayload();
+        payload.setProtocol(ProtocolEnum.CODE_111.getCode());
+
+        for(String eId: eIds) {
+            handler.execute(eId, payload);
         }
 
         return wrapper;

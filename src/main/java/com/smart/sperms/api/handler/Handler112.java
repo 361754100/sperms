@@ -3,6 +3,8 @@ package com.smart.sperms.api.handler;
 import com.smart.sperms.api.protocol.DataBody112;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.config.PropertiesConfig;
+import com.smart.sperms.dao.MonitorPicDao;
+import com.smart.sperms.dao.model.MonitorPic;
 import com.smart.sperms.utils.DateUtils;
 import com.smart.sperms.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class Handler112 extends Handler {
 
     @Autowired
     private PropertiesConfig propsConfig;
+
+    @Autowired
+    private MonitorPicDao monitorPicDao;
 
     @Override
     public void execute(String eId, MsgPayload req) {
@@ -45,11 +50,13 @@ public class Handler112 extends Handler {
         uuid = uuid.replaceAll("-", "");
         String imgName = "IMG112_"+ eId +"_"+ timeMs +"_"+ uuid +".jpg";
 
+        String IMG_GROUP_PATH = propsConfig.getImage_file_group();
         String IMG_STORE_PATH = propsConfig.getImage_file_path();
         if(StringUtils.isEmpty(IMG_STORE_PATH)) {
             IMG_STORE_PATH = "/opt/file_store/images";
         }
-        IMG_STORE_PATH += File.separator + eId + File.separator + timeDir + File.separator +imgName;
+        String absPath = IMG_STORE_PATH + File.separator + eId + File.separator + timeDir + File.separator +imgName;
+        String groupPath = absPath.replace(IMG_STORE_PATH, IMG_GROUP_PATH);
 
         OutputStream out = null;
         try {
@@ -69,6 +76,14 @@ public class Handler112 extends Handler {
             out = new FileOutputStream(imgFile);
             out.write(imgByte);
             out.flush();
+
+            MonitorPic pic = new MonitorPic();
+            pic.seteId(eId);
+            pic.setPicFilename(imgFile.getName());
+            pic.setPicPath(groupPath);
+            pic.setPicTime(curDate);
+
+            monitorPicDao.saveData(pic);
 
         } catch (Exception e) {
             logger.error("保存图片数据异常", e);

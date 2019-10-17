@@ -105,6 +105,66 @@ public class ProductionStatExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
         public Criteria andEIdIsNull() {
             addCriterion("e_id is null");
             return (Criteria) this;
@@ -355,8 +415,143 @@ public class ProductionStatExample {
             return (Criteria) this;
         }
 
+        public Criteria andProIdIsNull() {
+            addCriterion("pro_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdIsNotNull() {
+            addCriterion("pro_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdEqualTo(String value) {
+            addCriterion("pro_id =", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotEqualTo(String value) {
+            addCriterion("pro_id <>", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdGreaterThan(String value) {
+            addCriterion("pro_id >", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdGreaterThanOrEqualTo(String value) {
+            addCriterion("pro_id >=", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLessThan(String value) {
+            addCriterion("pro_id <", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLessThanOrEqualTo(String value) {
+            addCriterion("pro_id <=", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLike(String value) {
+            addCriterion("pro_id like", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotLike(String value) {
+            addCriterion("pro_id not like", value, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdIn(List<String> values) {
+            addCriterion("pro_id in", values, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotIn(List<String> values) {
+            addCriterion("pro_id not in", values, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdBetween(String value1, String value2) {
+            addCriterion("pro_id between", value1, value2, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdNotBetween(String value1, String value2) {
+            addCriterion("pro_id not between", value1, value2, "proId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityIsNull() {
+            addCriterion("ps_quantity is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityIsNotNull() {
+            addCriterion("ps_quantity is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityEqualTo(Integer value) {
+            addCriterion("ps_quantity =", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityNotEqualTo(Integer value) {
+            addCriterion("ps_quantity <>", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityGreaterThan(Integer value) {
+            addCriterion("ps_quantity >", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ps_quantity >=", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityLessThan(Integer value) {
+            addCriterion("ps_quantity <", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityLessThanOrEqualTo(Integer value) {
+            addCriterion("ps_quantity <=", value, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityIn(List<Integer> values) {
+            addCriterion("ps_quantity in", values, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityNotIn(List<Integer> values) {
+            addCriterion("ps_quantity not in", values, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityBetween(Integer value1, Integer value2) {
+            addCriterion("ps_quantity between", value1, value2, "psQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPsQuantityNotBetween(Integer value1, Integer value2) {
+            addCriterion("ps_quantity not between", value1, value2, "psQuantity");
+            return (Criteria) this;
+        }
+
         public Criteria andEIdLikeInsensitive(String value) {
             addCriterion("upper(e_id) like", value.toUpperCase(), "eId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProIdLikeInsensitive(String value) {
+            addCriterion("upper(pro_id) like", value.toUpperCase(), "proId");
             return (Criteria) this;
         }
     }

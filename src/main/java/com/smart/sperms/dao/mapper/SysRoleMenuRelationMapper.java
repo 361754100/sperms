@@ -1,14 +1,13 @@
 package com.smart.sperms.dao.mapper;
 
-import com.smart.sperms.dao.dto.EquipmentEnableDto;
 import com.smart.sperms.dao.dto.SysMenuDto;
 import com.smart.sperms.dao.model.SysRoleMenuRelation;
 import com.smart.sperms.dao.model.SysRoleMenuRelationExample;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SysRoleMenuRelationMapper {
     int countByExample(SysRoleMenuRelationExample example);

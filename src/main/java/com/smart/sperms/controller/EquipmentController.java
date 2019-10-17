@@ -1,9 +1,9 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.dao.model.EquipmentEnable;
 import com.smart.sperms.request.EquipmentDelReq;
 import com.smart.sperms.request.EquipmentEditReq;
 import com.smart.sperms.request.EquipmentEnableEditReq;
+import com.smart.sperms.request.EquipmentTakePicReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
 import com.smart.sperms.response.SingleQueryWrapper;
@@ -87,6 +87,14 @@ public class EquipmentController {
     public CommonWrapper control_set(@RequestBody EquipmentEnableEditReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = equipmentService.controlDevs(params.geteIds(), params.geteEnable().intValue());
+        return wrapper;
+    }
+
+    @ApiOperation(value = "下发拍照指令")
+    @PostMapping(value = "/take_picture")
+    public CommonWrapper takePicture(@RequestBody EquipmentTakePicReq params) {
+        logger.debug(" params = {}", new Object[]{params});
+        CommonWrapper wrapper = equipmentService.takePicture(params.geteIds());
         return wrapper;
     }
 }

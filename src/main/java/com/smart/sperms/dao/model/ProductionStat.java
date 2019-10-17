@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ProductionStat implements Serializable {
+    private Integer id;
+
     private String eId;
 
     private Date psDate;
@@ -12,7 +14,19 @@ public class ProductionStat implements Serializable {
 
     private Integer psMount;
 
+    private String proId;
+
+    private Integer psQuantity;
+
     private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String geteId() {
         return eId;
@@ -44,5 +58,21 @@ public class ProductionStat implements Serializable {
 
     public void setPsMount(Integer psMount) {
         this.psMount = psMount;
+    }
+
+    public String getProId() {
+        return proId;
+    }
+
+    public void setProId(String proId) {
+        this.proId = proId;
+    }
+
+    public Integer getPsQuantity() {
+        return psQuantity;
+    }
+
+    public void setPsQuantity(Integer psQuantity) {
+        this.psQuantity = psQuantity;
     }
 }

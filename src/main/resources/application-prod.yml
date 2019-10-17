@@ -86,6 +86,7 @@ encrypt:
 
 # 文件存储路径
 file_store:
+  image_group: /monitor_pic
   image_path: /opt/file_store/images
 
 #management:

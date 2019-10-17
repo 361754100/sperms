@@ -23,6 +23,9 @@ public class ProductionStatEditReq implements Serializable {
     @ApiModelProperty(value = "产量")
     private Integer psMount;
 
+    @ApiModelProperty(value = "产品类型ID")
+    private String proId;
+
     public String geteId() {
         return eId;
     }
@@ -55,13 +58,22 @@ public class ProductionStatEditReq implements Serializable {
         this.psMount = psMount;
     }
 
+    public String getProId() {
+        return proId;
+    }
+
+    public void setProId(String proId) {
+        this.proId = proId;
+    }
+
     @Override
     public String toString() {
         return "ProductionStatEditReq{" +
                 "eId='" + eId + '\'' +
-                ", psDate=" + psDate +
-                ", psEndDate=" + psEndDate +
+                ", psDate='" + psDate + '\'' +
+                ", psEndDate='" + psEndDate + '\'' +
                 ", psMount=" + psMount +
+                ", proId='" + proId + '\'' +
                 '}';
     }
 }

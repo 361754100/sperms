@@ -18,6 +18,9 @@ public class PropertiesConfig {
     @Value("${file_store.image_path}")
     private String image_file_path;
 
+    @Value("${file_store.image_group}")
+    private String image_file_group;
+
     public String getXxtea_key_smart() {
         return xxtea_key_smart;
     }
@@ -32,5 +35,13 @@ public class PropertiesConfig {
 
     public void setImage_file_path(String image_file_path) {
         this.image_file_path = image_file_path;
+    }
+
+    public String getImage_file_group() {
+        return image_file_group;
+    }
+
+    public void setImage_file_group(String image_file_group) {
+        this.image_file_group = image_file_group;
     }
 }

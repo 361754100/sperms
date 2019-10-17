@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.sperms.dao.mapper.MonitorPicMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.MonitorPic" >
+    <id column="pic_id" property="picId" jdbcType="INTEGER" />
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="pic_time" property="picTime" jdbcType="TIMESTAMP" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="pic_filename" property="picFilename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pic_id, e_id, pic_time, pic_path, pic_filename
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.MonitorPicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from monitor_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from monitor_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from monitor_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.MonitorPicExample" >
+    delete from monitor_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smart.sperms.dao.model.MonitorPic" >
+    insert into monitor_pic (pic_id, e_id, pic_time, 
+      pic_path, pic_filename)
+    values (#{picId,jdbcType=INTEGER}, #{eId,jdbcType=VARCHAR}, #{picTime,jdbcType=TIMESTAMP}, 
+      #{picPath,jdbcType=VARCHAR}, #{picFilename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.MonitorPic" >
+    insert into monitor_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="picId != null" >
+        pic_id,
+      </if>
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="picTime != null" >
+        pic_time,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="picFilename != null" >
+        pic_filename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="picId != null" >
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null" >
+        #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="picTime != null" >
+        #{picTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="picFilename != null" >
+        #{picFilename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smart.sperms.dao.model.MonitorPicExample" resultType="java.lang.Integer" >
+    select count(*) from monitor_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update monitor_pic
+    <set >
+      <if test="record.picId != null" >
+        pic_id = #{record.picId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picTime != null" >
+        pic_time = #{record.picTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picPath != null" >
+        pic_path = #{record.picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picFilename != null" >
+        pic_filename = #{record.picFilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update monitor_pic
+    set pic_id = #{record.picId,jdbcType=INTEGER},
+      e_id = #{record.eId,jdbcType=VARCHAR},
+      pic_time = #{record.picTime,jdbcType=TIMESTAMP},
+      pic_path = #{record.picPath,jdbcType=VARCHAR},
+      pic_filename = #{record.picFilename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smart.sperms.dao.model.MonitorPic" >
+    update monitor_pic
+    <set >
+      <if test="eId != null" >
+        e_id = #{eId,jdbcType=VARCHAR},
+      </if>
+      <if test="picTime != null" >
+        pic_time = #{picTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="picFilename != null" >
+        pic_filename = #{picFilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.MonitorPic" >
+    update monitor_pic
+    set e_id = #{eId,jdbcType=VARCHAR},
+      pic_time = #{picTime,jdbcType=TIMESTAMP},
+      pic_path = #{picPath,jdbcType=VARCHAR},
+      pic_filename = #{picFilename,jdbcType=VARCHAR}
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.MonitorPicExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from monitor_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.MonitorPicDto" >
+    <id column="pic_id" property="picId" jdbcType="INTEGER" />
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="pic_time" property="picTime" jdbcType="TIMESTAMP" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="pic_filename" property="picFilename" jdbcType="VARCHAR" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
+    select monitor.*, equip.e_name from monitor_pic monitor
+    left join
+    equipment equip on monitor.e_id = equip.e_id
+    where 1=1
+    <if test="eId != null" >
+      and monitor.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="beginTime != null and endTime != null" >
+      and monitor.pic_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and monitor.pic_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+    order by monitor.pic_time desc
+    limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from monitor_pic monitor
+    left join
+    equipment equip on monitor.e_id = equip.e_id
+    where 1=1
+    <if test="eId != null" >
+      and monitor.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="beginTime != null and endTime != null" >
+      and monitor.pic_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and monitor.pic_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+  </select>
+
+  <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByCondition" >
+    select monitor.*, equip.e_name from monitor_pic monitor
+    left join
+    equipment equip on monitor.e_id = equip.e_id
+    where 1=1
+    <if test="eId != null" >
+      and monitor.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="eName != null" >
+      and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+  </select>
+
+</mapper>
