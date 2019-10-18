@@ -39,15 +39,36 @@ public class StatsController {
             @ApiImplicitParam(name="startTime", value = "开始时间", paramType = "form", dataType = "String"),
             @ApiImplicitParam(name="endTime", value = "结束时间", paramType = "form", dataType = "String"),
             @ApiImplicitParam(name="customerNo", value = "客户编号", paramType = "form", dataType = "String"),
-            @ApiImplicitParam(name="customerName", value = "客户名称", paramType = "form", dataType = "String")
+            @ApiImplicitParam(name="eId", value = "设备编号", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="statType", value = "统计方式（1=按天，2=按月）", required = true, paramType = "form", dataType = "int")
 
     })
-    @PostMapping(value = "/produce_mount")
+    @PostMapping(value = "/prod_mount")
     public ListQueryWrapper produceMount(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
-                                         @RequestParam(required = false) String customerNo, @RequestParam(required = false) String customerName) {
-        ListQueryWrapper wrapper = statsService.produceMount(startTime, endTime, customerNo, customerName);
+                                         @RequestParam(required = false) String customerNo, @RequestParam(required = false) String eId,
+                                         @RequestParam int statType) {
+        ListQueryWrapper wrapper = statsService.prodMount(statType, startTime, endTime, customerNo, eId);
 
-        logger.debug(" startTime = {}, endTime = {}, customerNo = {}, customerName = {}", new Object[]{startTime, endTime, customerNo, customerName});
+        logger.debug(" statType = {}, startTime = {}, endTime = {}, customerNo = {}, customerName = {}", new Object[]{statType, startTime, endTime, customerNo, eId});
+        return wrapper;
+    }
+
+    @ApiOperation(value = "产品类型产量统计")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="startTime", value = "开始时间", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="endTime", value = "结束时间", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="customerNo", value = "客户编号", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="eId", value = "设备编号", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="statType", value = "统计方式（1=按天，2=按月）", required = true, paramType = "form", dataType = "int")
+
+    })
+    @PostMapping(value = "/prod_mount_by_type")
+    public ListQueryWrapper produceMountByType(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
+                                         @RequestParam(required = false) String customerNo, @RequestParam(required = false) String eId,
+                                         @RequestParam int statType) {
+        ListQueryWrapper wrapper = statsService.prodMountByType(statType, startTime, endTime, customerNo, eId);
+
+        logger.debug(" statType = {}, startTime = {}, endTime = {}, customerNo = {}, eId = {}", new Object[]{statType, startTime, endTime, customerNo, eId});
         return wrapper;
     }
 

@@ -29,47 +29,6 @@
     order by customer_no asc
   </select>
 
-
-  <!--生产统计结果-->
-  <resultMap id="ProductMountResultMap" type="com.smart.sperms.dao.dto.StatProductionMountDto" >
-    <id column="e_id" property="eId" jdbcType="VARCHAR" />
-    <id column="e_name" property="eName" jdbcType="VARCHAR" />
-    <id column="customer_no" property="customerNo" jdbcType="VARCHAR" />
-    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
-    <result column="customer_phone" property="customerPhone" jdbcType="CHAR" />
-    <result column="customer_company" property="customerCompany" jdbcType="VARCHAR" />
-    <result column="ps_mount" property="psMount" jdbcType="DOUBLE" />
-  </resultMap>
-
-  <!--生产统计SQL-->
-  <select resultMap="ProductMountResultMap" parameterType="java.util.Map" id="statProductMount" >
-    select e_id, e_name, customer_no, customer_name, customer_company, sum(ps_mount) as ps_mount from(
-      select pstat.e_id, pstat.ps_mount,
-        equip.e_name,
-        rent.customer_no,
-        cust.customer_name, cust.customer_company
-      from
-        production_stat pstat
-      left join
-        equipment equip on pstat.e_id = equip.e_id
-      left join
-        rent_manager rent on pstat.e_id = rent.e_id
-      left join
-        customer cust on rent.customer_no = cust.customer_no
-      where 1=1
-      <if test="beginTime != null and endTime != null" >
-        and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and pstat.ps_end_date <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
-      </if>
-      <if test="customerNo != null" >
-        and rent.customer_no = #{customerNo,jdbcType=VARCHAR}
-      </if>
-      <if test="customerName != null" >
-        and cust.customer_name like CONCAT('%',#{customerName},'%')
-      </if>
-    ) tmp group by e_id, e_name, customer_no, customer_name, customer_company
-    order by ps_mount desc
-  </select>
-
   <!--设备状态统计结果-->
   <resultMap id="DevStateResultMap" type="com.smart.sperms.dao.dto.StatDevStateDto" >
     <id column="dev_count" property="devCount" jdbcType="INTEGER" />
@@ -140,4 +99,135 @@
         and rent.customer_no is not null
     ) tmp2
   </select>
+
+  <!--类型产量统计结果-->
+  <resultMap id="StatProdTypeMountResultMap" type="com.smart.sperms.dao.dto.StatProdMountByTypeDto" >
+    <id column="pro_id" property="proId" jdbcType="VARCHAR" />
+    <id column="pro_name" property="proName" jdbcType="VARCHAR" />
+    <id column="data_time" property="dataTime" jdbcType="VARCHAR" />
+    <result column="ps_mount" property="psMount" jdbcType="DOUBLE" />
+  </resultMap>
+  <!--类型产量统计（按天）-->
+  <select resultMap="StatProdTypeMountResultMap" parameterType="java.util.Map" id="statProdTypeMountByDay">
+    select pro_id, pro_name, data_time, SUM(ps_mount) ps_mount from (
+      select pstat.id, pstat.e_id, DATE_FORMAT(ps_date,'%Y-%m-%d') data_time,
+        pstat.pro_id, pstat.ps_quantity, pstat.ps_mount, pstat.ps_date,
+        prod.pro_name,
+        rent.customer_no,
+        cust.customer_name
+      from
+        production_stat pstat
+      left join
+        product prod on pstat.pro_id = prod.pro_id
+      left join
+        rent_manager rent on pstat.e_id = rent.e_id
+      left JOIN
+        customer cust on rent.customer_no = cust.customer_no
+      where 1=1
+      <if test="beginTime != null and endTime != null">and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR}
+        and pstat.ps_date <![CDATA[ <= ]]> #{
+        endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="customerNo != null">
+        and cust.customer_no = #{customerNo}
+      </if>
+      <if test="eId != null">
+        and pstat.e_id = #{eId}
+      </if>
+    ) tmp group by pro_id, pro_name, data_time order by data_time asc
+  </select>
+  <!--类型产量统计（按月）-->
+  <select resultMap="StatProdTypeMountResultMap" parameterType="java.util.Map" id="statProdTypeMountByMonth">
+    select pro_id, pro_name, data_time, SUM(ps_mount) ps_mount from (
+    select pstat.id, pstat.e_id, DATE_FORMAT(ps_date,'%Y-%m') data_time,
+    pstat.pro_id, pstat.ps_quantity, pstat.ps_mount, pstat.ps_date,
+    prod.pro_name,
+    rent.customer_no,
+    cust.customer_name
+    from
+    production_stat pstat
+    left join
+    product prod on pstat.pro_id = prod.pro_id
+    left join
+    rent_manager rent on pstat.e_id = rent.e_id
+    left JOIN
+    customer cust on rent.customer_no = cust.customer_no
+    where 1=1
+    <if test="beginTime != null and endTime != null">and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR}
+      and pstat.ps_date <![CDATA[ <= ]]> #{
+        endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="customerNo != null">
+      and cust.customer_no = #{customerNo}
+    </if>
+    <if test="eId != null">
+      and pstat.e_id = #{eId}
+    </if>
+    ) tmp group by pro_id, pro_name, data_time order by data_time asc
+  </select>
+
+  <!--产量统计结果-->
+  <resultMap id="StatProdMountResultMap" type="com.smart.sperms.dao.dto.StatProdMountDto" >
+    <id column="data_time" property="dataTime" jdbcType="VARCHAR" />
+    <result column="ps_mount" property="psMount" jdbcType="DOUBLE" />
+  </resultMap>
+  <!--产量统计（按天）-->
+  <select resultMap="StatProdMountResultMap" parameterType="java.util.Map" id="statProdMountByDay">
+    select data_time, SUM(ps_mount) ps_mount from (
+    select pstat.id, pstat.e_id, DATE_FORMAT(ps_date,'%Y-%m-%d') data_time,
+    pstat.pro_id, pstat.ps_quantity, pstat.ps_mount, pstat.ps_date,
+    prod.pro_name,
+    rent.customer_no,
+    cust.customer_name
+    from
+    production_stat pstat
+    left join
+    product prod on pstat.pro_id = prod.pro_id
+    left join
+    rent_manager rent on pstat.e_id = rent.e_id
+    left JOIN
+    customer cust on rent.customer_no = cust.customer_no
+    where 1=1
+    <if test="beginTime != null and endTime != null">and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR}
+      and pstat.ps_date <![CDATA[ <= ]]> #{
+        endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="customerNo != null">
+      and cust.customer_no = #{customerNo}
+    </if>
+    <if test="eId != null">
+      and pstat.e_id = #{eId}
+    </if>
+    ) tmp group by data_time order by data_time asc
+  </select>
+  <!--产量统计（按月）-->
+  <select resultMap="StatProdMountResultMap" parameterType="java.util.Map" id="statProdMountByMonth">
+    select data_time, SUM(ps_mount) ps_mount from (
+    select pstat.id, pstat.e_id, DATE_FORMAT(ps_date,'%Y-%m') data_time,
+    pstat.pro_id, pstat.ps_quantity, pstat.ps_mount, pstat.ps_date,
+    prod.pro_name,
+    rent.customer_no,
+    cust.customer_name
+    from
+    production_stat pstat
+    left join
+    product prod on pstat.pro_id = prod.pro_id
+    left join
+    rent_manager rent on pstat.e_id = rent.e_id
+    left JOIN
+    customer cust on rent.customer_no = cust.customer_no
+    where 1=1
+    <if test="beginTime != null and endTime != null">and pstat.ps_date <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR}
+      and pstat.ps_date <![CDATA[ <= ]]> #{
+        endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="customerNo != null">
+      and cust.customer_no = #{customerNo}
+    </if>
+    <if test="eId != null">
+      and pstat.e_id = #{eId}
+    </if>
+    ) tmp group by data_time order by data_time asc
+  </select>
+
 </mapper>

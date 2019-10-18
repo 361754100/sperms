@@ -44,7 +44,7 @@ public enum DevStateEnum {
         return result;
     }
 
-    public static List<DevStateEnum> getResultCodes() {
+    public static List<DevStateEnum> getStateCodes() {
         DevStateEnum[] enums = values();
         List<DevStateEnum> list = Arrays.asList(enums);
         return list;

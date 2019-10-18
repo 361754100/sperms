@@ -1,17 +1,18 @@
 package com.smart.sperms.service;
 
-import com.smart.sperms.dao.dto.StatDevStateDto;
-import com.smart.sperms.dao.dto.StatDevStateGroupDto;
-import com.smart.sperms.dao.dto.StatProductionMountDto;
-import com.smart.sperms.dao.dto.StatSalesAccountDto;
+import com.smart.sperms.dao.dto.*;
 import com.smart.sperms.dao.mapper.StatsMapper;
+import com.smart.sperms.enums.StatTypeEnum;
 import com.smart.sperms.response.ListQueryWrapper;
 import com.smart.sperms.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StatsService {
@@ -39,33 +40,7 @@ public class StatsService {
     }
 
     /**
-     * 统计销售额
-     * @param beginTime
-     * @param endTime
-     * @return
-     */
-    public ListQueryWrapper produceMount(String beginTime, String endTime, String customerNo, String customerName) {
-        ListQueryWrapper wrapper = new ListQueryWrapper();
-
-        Map<String, Object> params = new HashMap<>();
-        if(!StringUtils.isEmpty(beginTime) && !StringUtils.isEmpty(endTime)) {
-            params.put("beginTime", beginTime);
-            params.put("endTime", endTime);
-        }
-        if(!StringUtils.isEmpty(customerNo)) {
-            params.put("customerNo", customerNo);
-        }
-        if(!StringUtils.isEmpty(customerName)) {
-            params.put("customerName", customerName);
-        }
-
-        List<StatProductionMountDto> result = statsMapper.statProductMount(params);
-        wrapper.setRecords(result);
-        return wrapper;
-    }
-
-    /**
-     * 统计销售额
+     * 设备状态统计
      * @param beginTime
      * @param endTime
      * @return
@@ -118,6 +93,87 @@ public class StatsService {
             }
         }
         wrapper.setRecords(groupList);
+        return wrapper;
+    }
+
+    /**
+     * 产量统计
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    public ListQueryWrapper prodMount(int statType, String beginTime,
+                                         String endTime, String customerNo,
+                                         String eId) {
+        ListQueryWrapper wrapper = new ListQueryWrapper();
+
+        Map<String, Object> params = new HashMap<>();
+        if(!StringUtils.isEmpty(beginTime) && !StringUtils.isEmpty(endTime)) {
+            params.put("beginTime", beginTime);
+            params.put("endTime", endTime);
+        }
+        if(!StringUtils.isEmpty(customerNo)) {
+            params.put("customerNo", customerNo);
+        }
+        if(!StringUtils.isEmpty(eId)) {
+            params.put("eId", eId);
+        }
+
+        List<StatProdMountDto> result = new ArrayList<>();
+        StatTypeEnum statTypeEnum = StatTypeEnum.getType(statType);
+        switch (statTypeEnum) {
+            case UNKNOW:
+                break;
+            case BY_DAY:
+                result = statsMapper.statProdMountByDay(params);
+                break;
+            case BY_MONTH:
+                result = statsMapper.statProdMountByMonth(params);
+                break;
+        }
+        wrapper.setRecords(result);
+        return wrapper;
+    }
+
+    /**
+     * 产品类型的产量统计
+     * @param statType      统计方式（1：按天，2：按月）
+     * @param beginTime     开始时间
+     * @param endTime       结束时间
+     * @param customerNo    客户编号
+     * @param eId           设备编号
+     * @return
+     */
+    public ListQueryWrapper prodMountByType(int statType, String beginTime,
+                                            String endTime, String customerNo,
+                                            String eId) {
+        ListQueryWrapper wrapper = new ListQueryWrapper();
+
+        Map<String, Object> params = new HashMap<>();
+        if(!StringUtils.isEmpty(beginTime) && !StringUtils.isEmpty(endTime)) {
+            params.put("beginTime", beginTime);
+            params.put("endTime", endTime);
+        }
+        if(!StringUtils.isEmpty(customerNo)) {
+            params.put("customerNo", customerNo);
+        }
+        if(!StringUtils.isEmpty(eId)) {
+            params.put("eId", eId);
+        }
+
+        List<StatProdMountByTypeDto> result = new ArrayList<>();
+                StatTypeEnum statTypeEnum = StatTypeEnum.getType(statType);
+        switch (statTypeEnum) {
+            case UNKNOW:
+                break;
+            case BY_DAY:
+                result = statsMapper.statProdTypeMountByDay(params);
+                break;
+            case BY_MONTH:
+                result = statsMapper.statProdTypeMountByMonth(params);
+                break;
+        }
+        wrapper.setRecords(result);
         return wrapper;
     }
 }

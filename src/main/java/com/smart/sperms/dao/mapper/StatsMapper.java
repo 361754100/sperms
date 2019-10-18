@@ -1,7 +1,8 @@
 package com.smart.sperms.dao.mapper;
 
 import com.smart.sperms.dao.dto.StatDevStateDto;
-import com.smart.sperms.dao.dto.StatProductionMountDto;
+import com.smart.sperms.dao.dto.StatProdMountByTypeDto;
+import com.smart.sperms.dao.dto.StatProdMountDto;
 import com.smart.sperms.dao.dto.StatSalesAccountDto;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface StatsMapper {
      * @param params
      * @return
      */
-    List<StatProductionMountDto> statProductMount(Map<String, Object> params);
+    List<StatProdMountDto> statProductMount(Map<String, Object> params);
 
     /**
      * 统计设备状态
@@ -29,4 +30,32 @@ public interface StatsMapper {
      * @return
      */
     List<StatDevStateDto> statDevState(Map<String, Object> params);
+
+    /**
+     * 产量统计（按日）
+     * @param params
+     * @return
+     */
+    List<StatProdMountDto> statProdMountByDay(Map<String, Object> params);
+
+    /**
+     * 产量统计（按月）
+     * @param params
+     * @return
+     */
+    List<StatProdMountDto> statProdMountByMonth(Map<String, Object> params);
+
+    /**
+     * 产品类型产量统计（按日）
+     * @param params
+     * @return
+     */
+    List<StatProdMountByTypeDto> statProdTypeMountByDay(Map<String, Object> params);
+
+    /**
+     * 产品类型产量统计（按月）
+     * @param params
+     * @return
+     */
+    List<StatProdMountByTypeDto> statProdTypeMountByMonth(Map<String, Object> params);
 }
