@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 编辑设备信息
@@ -38,6 +37,15 @@ public class EquipmentEditReq implements Serializable {
 
     @ApiModelProperty(value = "生产日期 yyyy-MM-dd HH:mm:ss")
     private String eDate;
+
+    @ApiModelProperty(value = "modbux数据类型-安卓端")
+    private int androidAddress;
+
+    @ApiModelProperty(value = "信号类型（0：表示只有0/1信号类型，1：表示可以传输一个Byte类型）-安卓端")
+    private int androidType;
+
+    @ApiModelProperty(value = "密钥-安卓端")
+    private String androidPwd;
 
     public String geteId() {
         return eId;
@@ -111,6 +119,30 @@ public class EquipmentEditReq implements Serializable {
         this.eEnable = eEnable;
     }
 
+    public int getAndroidAddress() {
+        return androidAddress;
+    }
+
+    public void setAndroidAddress(int androidAddress) {
+        this.androidAddress = androidAddress;
+    }
+
+    public int getAndroidType() {
+        return androidType;
+    }
+
+    public void setAndroidType(int androidType) {
+        this.androidType = androidType;
+    }
+
+    public String getAndroidPwd() {
+        return androidPwd;
+    }
+
+    public void setAndroidPwd(String androidPwd) {
+        this.androidPwd = androidPwd;
+    }
+
     @Override
     public String toString() {
         return "EquipmentEditReq{" +
@@ -123,6 +155,9 @@ public class EquipmentEditReq implements Serializable {
                 ", eLongitude='" + eLongitude + '\'' +
                 ", eLatitude='" + eLatitude + '\'' +
                 ", eDate='" + eDate + '\'' +
+                ", androidAddress=" + androidAddress +
+                ", androidType=" + androidType +
+                ", androidPwd='" + androidPwd + '\'' +
                 '}';
     }
 }

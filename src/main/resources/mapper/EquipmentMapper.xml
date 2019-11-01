@@ -13,6 +13,9 @@
     <result column="e_longitude" property="eLongitude" jdbcType="VARCHAR" />
     <result column="e_latitude" property="eLatitude" jdbcType="VARCHAR" />
     <result column="e_condition" property="eCondition" jdbcType="VARCHAR" />
+    <result column="android_type" property="androidType" jdbcType="INTEGER" />
+    <result column="android_address" property="androidAddress" jdbcType="INTEGER" />
+    <result column="android_pwd" property="androidPwd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     e_id, e_name, e_standard, e_manufacturer, e_type, e_date, e_state, e_enable, e_longitude, 
-    e_latitude, e_condition
+    e_latitude, e_condition, android_type, android_address, android_pwd
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentExample" >
     select
@@ -110,11 +113,13 @@
     insert into equipment (e_id, e_name, e_standard, 
       e_manufacturer, e_type, e_date, 
       e_state, e_enable, e_longitude, 
-      e_latitude, e_condition)
+      e_latitude, e_condition, android_type, 
+      android_address, android_pwd)
     values (#{eId,jdbcType=VARCHAR}, #{eName,jdbcType=VARCHAR}, #{eStandard,jdbcType=VARCHAR}, 
       #{eManufacturer,jdbcType=VARCHAR}, #{eType,jdbcType=VARCHAR}, #{eDate,jdbcType=TIMESTAMP}, 
       #{eState,jdbcType=VARCHAR}, #{eEnable,jdbcType=INTEGER}, #{eLongitude,jdbcType=VARCHAR}, 
-      #{eLatitude,jdbcType=VARCHAR}, #{eCondition,jdbcType=VARCHAR})
+      #{eLatitude,jdbcType=VARCHAR}, #{eCondition,jdbcType=VARCHAR}, #{androidType,jdbcType=INTEGER}, 
+      #{androidAddress,jdbcType=INTEGER}, #{androidPwd,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Equipment" >
     insert into equipment
@@ -152,6 +157,15 @@
       <if test="eCondition != null" >
         e_condition,
       </if>
+      <if test="androidType != null" >
+        android_type,
+      </if>
+      <if test="androidAddress != null" >
+        android_address,
+      </if>
+      <if test="androidPwd != null" >
+        android_pwd,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="eId != null" >
@@ -186,6 +200,15 @@
       </if>
       <if test="eCondition != null" >
         #{eCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="androidType != null" >
+        #{androidType,jdbcType=INTEGER},
+      </if>
+      <if test="androidAddress != null" >
+        #{androidAddress,jdbcType=INTEGER},
+      </if>
+      <if test="androidPwd != null" >
+        #{androidPwd,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,6 +254,15 @@
       <if test="record.eCondition != null" >
         e_condition = #{record.eCondition,jdbcType=VARCHAR},
       </if>
+      <if test="record.androidType != null" >
+        android_type = #{record.androidType,jdbcType=INTEGER},
+      </if>
+      <if test="record.androidAddress != null" >
+        android_address = #{record.androidAddress,jdbcType=INTEGER},
+      </if>
+      <if test="record.androidPwd != null" >
+        android_pwd = #{record.androidPwd,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +280,10 @@
       e_enable = #{record.eEnable,jdbcType=INTEGER},
       e_longitude = #{record.eLongitude,jdbcType=VARCHAR},
       e_latitude = #{record.eLatitude,jdbcType=VARCHAR},
-      e_condition = #{record.eCondition,jdbcType=VARCHAR}
+      e_condition = #{record.eCondition,jdbcType=VARCHAR},
+      android_type = #{record.androidType,jdbcType=INTEGER},
+      android_address = #{record.androidAddress,jdbcType=INTEGER},
+      android_pwd = #{record.androidPwd,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +321,15 @@
       <if test="eCondition != null" >
         e_condition = #{eCondition,jdbcType=VARCHAR},
       </if>
+      <if test="androidType != null" >
+        android_type = #{androidType,jdbcType=INTEGER},
+      </if>
+      <if test="androidAddress != null" >
+        android_address = #{androidAddress,jdbcType=INTEGER},
+      </if>
+      <if test="androidPwd != null" >
+        android_pwd = #{androidPwd,jdbcType=VARCHAR},
+      </if>
     </set>
     where e_id = #{eId,jdbcType=VARCHAR}
   </update>
@@ -300,7 +344,10 @@
       e_enable = #{eEnable,jdbcType=INTEGER},
       e_longitude = #{eLongitude,jdbcType=VARCHAR},
       e_latitude = #{eLatitude,jdbcType=VARCHAR},
-      e_condition = #{eCondition,jdbcType=VARCHAR}
+      e_condition = #{eCondition,jdbcType=VARCHAR},
+      android_type = #{androidType,jdbcType=INTEGER},
+      android_address = #{androidAddress,jdbcType=INTEGER},
+      android_pwd = #{androidPwd,jdbcType=VARCHAR}
     where e_id = #{eId,jdbcType=VARCHAR}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.EquipmentExample" id="selectByExampleWithRowbounds" >

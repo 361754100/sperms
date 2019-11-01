@@ -7,20 +7,31 @@ import java.io.Serializable;
  */
 public class DataBody109 implements Serializable {
 
-    private String address;
+    private short address;
 
-    public String getAddress() {
+    private int type;
+
+    public short getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(short address) {
         this.address = address;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "DataBody109{" +
-                "address='" + address + '\'' +
+                "address=" + address +
+                ", type=" + type +
                 '}';
     }
 }

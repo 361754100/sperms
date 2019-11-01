@@ -855,6 +855,196 @@ public class EquipmentExample {
             return (Criteria) this;
         }
 
+        public Criteria andAndroidTypeIsNull() {
+            addCriterion("android_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeIsNotNull() {
+            addCriterion("android_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeEqualTo(Integer value) {
+            addCriterion("android_type =", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeNotEqualTo(Integer value) {
+            addCriterion("android_type <>", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeGreaterThan(Integer value) {
+            addCriterion("android_type >", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("android_type >=", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeLessThan(Integer value) {
+            addCriterion("android_type <", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("android_type <=", value, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeIn(List<Integer> values) {
+            addCriterion("android_type in", values, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeNotIn(List<Integer> values) {
+            addCriterion("android_type not in", values, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeBetween(Integer value1, Integer value2) {
+            addCriterion("android_type between", value1, value2, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("android_type not between", value1, value2, "androidType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressIsNull() {
+            addCriterion("android_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressIsNotNull() {
+            addCriterion("android_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressEqualTo(Integer value) {
+            addCriterion("android_address =", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressNotEqualTo(Integer value) {
+            addCriterion("android_address <>", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressGreaterThan(Integer value) {
+            addCriterion("android_address >", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressGreaterThanOrEqualTo(Integer value) {
+            addCriterion("android_address >=", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressLessThan(Integer value) {
+            addCriterion("android_address <", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressLessThanOrEqualTo(Integer value) {
+            addCriterion("android_address <=", value, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressIn(List<Integer> values) {
+            addCriterion("android_address in", values, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressNotIn(List<Integer> values) {
+            addCriterion("android_address not in", values, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressBetween(Integer value1, Integer value2) {
+            addCriterion("android_address between", value1, value2, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidAddressNotBetween(Integer value1, Integer value2) {
+            addCriterion("android_address not between", value1, value2, "androidAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdIsNull() {
+            addCriterion("android_pwd is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdIsNotNull() {
+            addCriterion("android_pwd is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdEqualTo(String value) {
+            addCriterion("android_pwd =", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdNotEqualTo(String value) {
+            addCriterion("android_pwd <>", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdGreaterThan(String value) {
+            addCriterion("android_pwd >", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdGreaterThanOrEqualTo(String value) {
+            addCriterion("android_pwd >=", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdLessThan(String value) {
+            addCriterion("android_pwd <", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdLessThanOrEqualTo(String value) {
+            addCriterion("android_pwd <=", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdLike(String value) {
+            addCriterion("android_pwd like", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdNotLike(String value) {
+            addCriterion("android_pwd not like", value, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdIn(List<String> values) {
+            addCriterion("android_pwd in", values, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdNotIn(List<String> values) {
+            addCriterion("android_pwd not in", values, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdBetween(String value1, String value2) {
+            addCriterion("android_pwd between", value1, value2, "androidPwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdNotBetween(String value1, String value2) {
+            addCriterion("android_pwd not between", value1, value2, "androidPwd");
+            return (Criteria) this;
+        }
+
         public Criteria andEIdLikeInsensitive(String value) {
             addCriterion("upper(e_id) like", value.toUpperCase(), "eId");
             return (Criteria) this;
@@ -897,6 +1087,11 @@ public class EquipmentExample {
 
         public Criteria andEConditionLikeInsensitive(String value) {
             addCriterion("upper(e_condition) like", value.toUpperCase(), "eCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidPwdLikeInsensitive(String value) {
+            addCriterion("upper(android_pwd) like", value.toUpperCase(), "androidPwd");
             return (Criteria) this;
         }
     }

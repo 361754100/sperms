@@ -24,6 +24,8 @@ public enum ProtocolEnum {
     CODE_112(112, "Android端响应111"),
     CODE_113(113, "服务端下发更新密钥"),
     CODE_114(114, "Android端响应113"),
+    CODE_115(115, "客户端请求当前密钥"),
+    CODE_116(116, "Android端响应115"),
 
     CODE_SUCCESS(0, "成功"),
     CODE_ERROR(-1,"失败");

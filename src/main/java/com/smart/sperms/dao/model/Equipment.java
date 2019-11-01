@@ -26,6 +26,12 @@ public class Equipment implements Serializable {
 
     private String eCondition;
 
+    private Integer androidType;
+
+    private Integer androidAddress;
+
+    private String androidPwd;
+
     private static final long serialVersionUID = 1L;
 
     public String geteId() {
@@ -114,5 +120,29 @@ public class Equipment implements Serializable {
 
     public void seteCondition(String eCondition) {
         this.eCondition = eCondition;
+    }
+
+    public Integer getAndroidType() {
+        return androidType;
+    }
+
+    public void setAndroidType(Integer androidType) {
+        this.androidType = androidType;
+    }
+
+    public Integer getAndroidAddress() {
+        return androidAddress;
+    }
+
+    public void setAndroidAddress(Integer androidAddress) {
+        this.androidAddress = androidAddress;
+    }
+
+    public String getAndroidPwd() {
+        return androidPwd;
+    }
+
+    public void setAndroidPwd(String androidPwd) {
+        this.androidPwd = androidPwd;
     }
 }

@@ -90,6 +90,11 @@ public class MsgDecoder {
 //                break;
             case CODE_114:
                 break;
+            case CODE_115:
+                handler = SpringContext.getBean(Handler115.class);
+                break;
+            case CODE_116:
+                break;
             case CODE_SUCCESS:
                 break;
             case CODE_ERROR:

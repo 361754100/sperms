@@ -1,8 +1,10 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.api.handler.Handler107;
+import com.smart.sperms.api.handler.Handler109;
 import com.smart.sperms.api.handler.Handler111;
 import com.smart.sperms.api.protocol.DataBody107;
+import com.smart.sperms.api.protocol.DataBody109;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.common.SpringContext;
 import com.smart.sperms.config.mqtt.MqttInputHandler;
@@ -62,11 +64,26 @@ public class EquipmentService {
         info.seteEnable(req.geteEnable());
         info.seteLatitude(req.geteLatitude());
         info.seteLongitude(req.geteLongitude());
+        info.setAndroidAddress(req.getAndroidAddress());
+        info.setAndroidPwd(req.getAndroidPwd());
+        info.setAndroidType(req.getAndroidType());
 
         int cnt = equipmentDao.saveData(info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+
+            Handler109 handler109 = SpringContext.getBean(Handler109.class);
+            DataBody109 dataBody109 = new DataBody109();
+            dataBody109.setAddress((short)req.getAndroidAddress());
+            dataBody109.setType(req.getAndroidType());
+
+            MsgPayload payload = new MsgPayload();
+            payload.setProtocol(ProtocolEnum.CODE_109.getCode());
+            payload.setData(dataBody109);
+
+            handler109.execute(req.geteId(), payload);
+
             // 订阅设备消息
             mqttInputHandler.addListenTopic(eId);
             this.controlDev(eId, req.geteEnable().intValue());
@@ -92,11 +109,25 @@ public class EquipmentService {
         info.seteEnable(req.geteEnable());
         info.seteLatitude(req.geteLatitude());
         info.seteLongitude(req.geteLongitude());
+        info.setAndroidAddress(req.getAndroidAddress());
+        info.setAndroidPwd(req.getAndroidPwd());
+        info.setAndroidType(req.getAndroidType());
 
         int cnt = equipmentDao.updateData(req.geteId(), info);
         if(cnt > 0) {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
+
+            Handler109 handler109 = SpringContext.getBean(Handler109.class);
+            DataBody109 dataBody109 = new DataBody109();
+            dataBody109.setAddress((short)req.getAndroidAddress());
+            dataBody109.setType(req.getAndroidType());
+
+            MsgPayload payload = new MsgPayload();
+            payload.setProtocol(ProtocolEnum.CODE_109.getCode());
+            payload.setData(dataBody109);
+
+            handler109.execute(req.geteId(), payload);
 
             this.controlDev(req.geteId(), req.geteEnable().intValue());
         }
