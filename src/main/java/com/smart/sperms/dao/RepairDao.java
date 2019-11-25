@@ -83,21 +83,31 @@ public class RepairDao {
      * @param eName
      * @return
      */
-    public List<RepairDto> queryPage(int pageNo, int pageSize, String beginTime, String endTime, String eName) {
+    public List<RepairDto> queryPage(int pageNo, int pageSize, String beginTime, String endTime,
+                                     String customerNo, String customerName, String eId, String eName) {
         int offset = (pageNo-1)*pageSize;
 
         Map<String, Object> params = new HashMap<>();
         params.put("offset", offset);
         params.put("pageSize", pageSize);
 
-        if(!StringUtils.isEmpty(eName)) {
-            params.put("eName", eName);
-        }
         if(!StringUtils.isEmpty(beginTime)) {
             params.put("beginTime", beginTime);
         }
         if(!StringUtils.isEmpty(endTime)) {
             params.put("endTime", endTime);
+        }
+        if(!StringUtils.isEmpty(customerNo)) {
+            params.put("customerNo", customerNo);
+        }
+        if(!StringUtils.isEmpty(customerName)) {
+            params.put("customerName", customerName);
+        }
+        if(!StringUtils.isEmpty(eId)) {
+            params.put("eId", eId);
+        }
+        if(!StringUtils.isEmpty(eName)) {
+            params.put("eName", eName);
         }
 
         List<RepairDto> result = mapper.selectDtoByConditionWithRowbounds(params);
@@ -111,17 +121,28 @@ public class RepairDao {
      * @param eName
      * @return
      */
-    public int queryPageTotal(String beginTime, String endTime, String eName) {
+    public int queryPageTotal(String beginTime, String endTime,
+                              String customerNo, String customerName,
+                              String eId, String eName) {
         Map<String, Object> params = new HashMap<>();
 
-        if(!StringUtils.isEmpty(eName)) {
-            params.put("eName", eName);
-        }
         if(!StringUtils.isEmpty(beginTime)) {
             params.put("beginTime", beginTime);
         }
         if(!StringUtils.isEmpty(endTime)) {
             params.put("endTime", endTime);
+        }
+        if(!StringUtils.isEmpty(customerNo)) {
+            params.put("customerNo", customerNo);
+        }
+        if(!StringUtils.isEmpty(customerName)) {
+            params.put("customerName", customerName);
+        }
+        if(!StringUtils.isEmpty(eId)) {
+            params.put("eId", eId);
+        }
+        if(!StringUtils.isEmpty(eName)) {
+            params.put("eName", eName);
         }
 
         int total = mapper.countByCondition(params);

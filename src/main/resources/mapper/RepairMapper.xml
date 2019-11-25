@@ -18,7 +18,9 @@
     <result column="r_cost" property="rCost" jdbcType="DOUBLE" />
     <result column="r_person" property="rPerson" jdbcType="VARCHAR" />
     <result column="e_name" property="eName" jdbcType="VARCHAR" />
+    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
     <result column="err_name" property="errName" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -269,6 +271,10 @@
     select count(*) from repair r
     left join
     equipment equip on r.e_id = equip.e_id
+    left join
+    rent_manager rent on r.e_id = rent.e_id
+    left join
+    customer cust on rent.customer_no = cust.customer_no
     where 1=1
     <if test="beginTime != null and endTime != null" >
       and r.r_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and r.r_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
@@ -278,15 +284,28 @@
     </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+    <if test="eId != null" >
+      and equip.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="customerName != null" >
+      and cust.customer_name like CONCAT('%',#{customerName},'%')
+    </if>
+    <if test="customerNo != null" >
+      and cust.customer_no = #{customerNo, jdbcType=VARCHAR}
     </if>
   </select>
 
   <select resultMap="DtoResultMap" parameterType="java.util.Map" id="selectDtoByConditionWithRowbounds" >
-    select r.*, equip.e_name, err.err_name from repair r
+    select r.*, equip.e_name, err.err_name, cust.customer_name from repair r
     left join
     equipment equip on r.e_id = equip.e_id
     left join
     equipment_err_code err on r.err_code = err.err_code
+    left join
+    rent_manager rent on r.e_id = rent.e_id
+    left join
+    customer cust on rent.customer_no = cust.customer_no
     where 1=1
     <if test="beginTime != null and endTime != null" >
       and r.r_time <![CDATA[ >= ]]> #{beginTime,jdbcType=VARCHAR} and r.r_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
@@ -296,6 +315,15 @@
     </if>
     <if test="eName != null" >
       and equip.e_name like CONCAT('%',#{eName},'%')
+    </if>
+    <if test="eId != null" >
+      and equip.e_id = #{eId, jdbcType=VARCHAR}
+    </if>
+    <if test="customerName != null" >
+      and cust.customer_name like CONCAT('%',#{customerName},'%')
+    </if>
+    <if test="customerNo != null" >
+      and cust.customer_no = #{customerNo, jdbcType=VARCHAR}
     </if>
     order by r.r_time desc
     limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}

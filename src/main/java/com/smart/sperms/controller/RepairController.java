@@ -31,15 +31,21 @@ public class RepairController {
             @ApiImplicitParam(name="endTime", value = "结束时间", paramType = "form", dataType = "String"),
             @ApiImplicitParam(name="pageNo", value = "当前页", required = true, paramType = "form", dataType = "int"),
             @ApiImplicitParam(name="pageSize", value = "每页大小", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name="keywords", value = "关键字", paramType = "form", dataType = "String")
+            @ApiImplicitParam(name="customerNo", value = "客户编号", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="customerName", value = "客户名称", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="eId", value = "设备编号", paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name="eName", value = "设备名称", paramType = "form", dataType = "String")
     })
     @PostMapping(value = "/page_search")
     public PageSearchWrapper pageSearch(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
-                                        @RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String keywords) {
-        PageSearchWrapper wrapper = repairService.queryPage(pageNo, pageSize, startTime, endTime, keywords);
+                                        @RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String customerNo,
+                                        @RequestParam(required = false) String customerName, @RequestParam(required = false) String eId,
+                                        @RequestParam(required = false) String eName) {
+        PageSearchWrapper wrapper = repairService.queryPage(pageNo, pageSize, startTime, endTime,
+                customerNo, customerName, eId, eName);
 
-        logger.debug(" startTime = {}, endTime = {}, pageNo = {}, pageSize = {}, keywords = {}",
-                new Object[]{startTime, endTime, pageNo, pageSize, keywords});
+        logger.debug(" startTime = {}, endTime = {}, pageNo = {}, pageSize = {}, customerNo = {}, customerName = {}, eId = {}, eName = {}",
+                new Object[]{startTime, endTime, pageNo, pageSize, customerNo, customerName, eId, eName});
         return wrapper;
     }
 

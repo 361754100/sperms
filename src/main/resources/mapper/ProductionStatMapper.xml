@@ -263,7 +263,7 @@
     <result column="ps_mount" property="psMount" jdbcType="INTEGER" />
     <result column="pro_id" property="proId" jdbcType="VARCHAR" />
     <result column="pro_name" property="proName" jdbcType="VARCHAR" />
-    <result column="pro_tpye" property="proType" jdbcType="VARCHAR" />
+    <result column="pro_type" property="proType" jdbcType="VARCHAR" />
     <result column="pro_size" property="proSize" jdbcType="VARCHAR" />
     <result column="ps_quantity" property="psQuantity" jdbcType="INTEGER" />
     <result column="e_name" property="eName" jdbcType="VARCHAR" />

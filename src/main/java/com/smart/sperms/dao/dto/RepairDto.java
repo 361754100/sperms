@@ -11,6 +11,8 @@ public class RepairDto extends Repair {
     private String eName;
     // 故障名称
     private String errName;
+    // 客户名称
+    private String customerName;
 
     public String geteName() {
         return eName;
@@ -28,11 +30,20 @@ public class RepairDto extends Repair {
         this.errName = errName;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     @Override
     public String toString() {
         return "RepairDto{" +
                 "eName='" + eName + '\'' +
                 ", errName='" + errName + '\'' +
+                ", customerName='" + customerName + '\'' +
                 '}';
     }
 }

@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -116,11 +114,14 @@ public class RepairService {
      * @param keywords  关键字
      * @return
      */
-    public PageSearchWrapper queryPage(int pageNo, int pageSize, String beginTime, String endTime, String keywords) {
+    public PageSearchWrapper queryPage(int pageNo, int pageSize,
+                                       String beginTime, String endTime,
+                                       String customerNo, String customerName,
+                                       String eId, String eName) {
         PageSearchWrapper wrapper = new PageSearchWrapper();
 
-        int total = repairDao.queryPageTotal(beginTime, endTime, keywords);
-        List<RepairDto> result = repairDao.queryPage(pageNo, pageSize, beginTime, endTime, keywords);
+        int total = repairDao.queryPageTotal(beginTime, endTime, customerNo, customerName, eId, eName);
+        List<RepairDto> result = repairDao.queryPage(pageNo, pageSize, beginTime, endTime, customerNo, customerName, eId, eName);
 
         wrapper.setTotalCount(total);
         wrapper.setPageNo(pageNo);
