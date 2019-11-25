@@ -1,6 +1,6 @@
 package com.smart.sperms.controller;
 
-import com.smart.sperms.request.RepairDelReq;
+import com.smart.sperms.request.ScrappDelReq;
 import com.smart.sperms.request.ScrappEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -59,9 +59,9 @@ public class ScrappController {
         return wrapper;
     }
 
-    @ApiOperation(value = "删除设备维修信息")
+    @ApiOperation(value = "删除设备报废信息")
     @PostMapping(value = "/delete")
-    public CommonWrapper delete(@RequestBody RepairDelReq params) {
+    public CommonWrapper delete(@RequestBody ScrappDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = scrappService.deleteInfo(params.geteIds());
         return wrapper;

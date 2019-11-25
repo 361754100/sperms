@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +44,11 @@ public class RepairDao {
      * @param record
      * @return
      */
-    public int updateData(String recordId, Repair record) {
+    public int updateData(Integer recordId, Repair record) {
         int cnt = 0;
         try {
             RepairExample example = new RepairExample();
-            example.createCriteria().andEIdEqualTo(recordId);
+            example.createCriteria().andIdEqualTo(recordId);
 
             cnt = mapper.updateByExampleSelective(record, example);
         } catch (Exception e) {
@@ -61,11 +62,11 @@ public class RepairDao {
      * @param recordIds
      * @return
      */
-    public int delData(List<String> recordIds) {
+    public int delData(List<Integer> recordIds) {
         int cnt = 0;
         try {
             RepairExample example = new RepairExample();
-            example.createCriteria().andEIdIn(recordIds);
+            example.createCriteria().andIdIn(recordIds);
 
             cnt = mapper.deleteByExample(example);
         } catch (Exception e) {
@@ -159,6 +160,11 @@ public class RepairDao {
         RepairExample example = new RepairExample();
         RepairExample.Criteria criteria = example.createCriteria();
 
+        int rId = condition.getId();
+        if(rId != 0) {
+            criteria.andIdEqualTo(rId);
+        }
+
         String eId = condition.geteId();
         if(!StringUtils.isEmpty(eId)) {
             criteria.andEIdEqualTo(eId);
@@ -169,6 +175,23 @@ public class RepairDao {
         }
         result = mapper.selectByExample(example);
         return result;
+    }
+
+    /**
+     * 条件查询
+     * @param id
+     * @return
+     */
+    public Repair querySingle(int id) {
+        Repair condition = new Repair();
+        condition.setId(id);
+
+        List<Repair> result = queryList(condition);
+        Repair rtObj = null;
+        if(!CollectionUtils.isEmpty(result)) {
+            rtObj = result.get(0);
+        }
+        return rtObj;
     }
 
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Repair implements Serializable {
+    private Integer id;
+
     private String eId;
 
     private Date rTime;
@@ -19,6 +21,14 @@ public class Repair implements Serializable {
     private String rPerson;
 
     private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String geteId() {
         return eId;

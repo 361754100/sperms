@@ -3,18 +3,18 @@ package com.smart.sperms.dao.mapper;
 import com.smart.sperms.dao.dto.RepairDto;
 import com.smart.sperms.dao.model.Repair;
 import com.smart.sperms.dao.model.RepairExample;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
 
 public interface RepairMapper {
     int countByExample(RepairExample example);
 
     int deleteByExample(RepairExample example);
 
-    int deleteByPrimaryKey(String eId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Repair record);
 
@@ -28,7 +28,7 @@ public interface RepairMapper {
 
     List<Repair> selectByExample(RepairExample example);
 
-    Repair selectByPrimaryKey(String eId);
+    Repair selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Repair record, @Param("example") RepairExample example);
 

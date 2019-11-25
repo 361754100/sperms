@@ -6,6 +6,7 @@ import com.smart.sperms.dao.dto.RepairDto;
 import com.smart.sperms.dao.model.Repair;
 import com.smart.sperms.enums.DevStateEnum;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.RepairAddReq;
 import com.smart.sperms.request.RepairEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RepairService {
@@ -33,16 +35,13 @@ public class RepairService {
      * @return
      */
     @Transactional
-    public CommonWrapper addInfo(RepairEditReq req) {
+    public CommonWrapper addInfo(RepairAddReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
-        String eId = req.geteId();
-        boolean isExist = this.isExists(eId);
-        if(isExist) {
-            wrapper.setResultMsg("该设备的维修信息已存在");
-            return wrapper;
-        }
+        String rId = UUID.randomUUID().toString();
+        rId = rId.replaceAll("-","");
+
         Repair info = new Repair();
         info.seteId(req.geteId());
         info.setrManufacturer(req.getrManufacturer());
@@ -78,10 +77,13 @@ public class RepairService {
         info.setErrCode(req.getErrCode());
         info.setrTime(DateUtils.parseStrToDate(req.getrTime(), DateUtils.DEFAULT_FORMAT));
 
-        int cnt = repairDao.updateData(req.geteId(), info);
+        int cnt = repairDao.updateData(req.getId(), info);
         if(cnt > 0) {
             if("0".equals(req.getrState())) {
-                equipmentDao.updateStateSingle(req.geteId(), String.valueOf(DevStateEnum.OFFLINE.getCode()));
+                Repair repair = repairDao.querySingle(req.getId());
+                if(repair != null){
+                    equipmentDao.updateStateSingle(repair.geteId(), String.valueOf(DevStateEnum.OFFLINE.getCode()));
+                }
             }
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
@@ -91,13 +93,13 @@ public class RepairService {
 
     /**
      * 删除记录
-     * @param eIds
+     * @param rIds
      * @return
      */
-    public CommonWrapper deleteInfo(List<String> eIds) {
+    public CommonWrapper deleteInfo(List<Integer> rIds) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
-        int cnt = repairDao.delData(eIds);
+        int cnt = repairDao.delData(rIds);
 
         wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         wrapper.setResultMsg("成功删除【"+ cnt +"】条记录");
@@ -111,7 +113,10 @@ public class RepairService {
      * @param pageSize  每页大小
      * @param beginTime 开始时间
      * @param endTime   结束时间
-     * @param keywords  关键字
+     * @param customerNo    客户编号
+     * @param customerName  客户名称
+     * @param eId       设备编号
+     * @param eName     设备名称
      * @return
      */
     public PageSearchWrapper queryPage(int pageNo, int pageSize,
@@ -136,11 +141,11 @@ public class RepairService {
      * @param recordId
      * @return
      */
-    public SingleQueryWrapper findRecordById(String recordId) {
+    public SingleQueryWrapper findRecordById(Integer recordId) {
         SingleQueryWrapper wrapper = new SingleQueryWrapper();
 
         Repair condition = new Repair();
-        condition.seteId(recordId);
+        condition.setId(recordId);
 
         List<Repair> result = repairDao.queryList(condition);
         if(!CollectionUtils.isEmpty(result)) {

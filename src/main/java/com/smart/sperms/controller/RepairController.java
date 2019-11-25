@@ -1,5 +1,6 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.request.RepairAddReq;
 import com.smart.sperms.request.RepairDelReq;
 import com.smart.sperms.request.RepairEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -51,7 +52,7 @@ public class RepairController {
 
     @ApiOperation(value = "新增设备维修信息")
     @PostMapping(value = "/add")
-    public CommonWrapper add(@RequestBody RepairEditReq params) {
+    public CommonWrapper add(@RequestBody RepairAddReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = repairService.addInfo(params);
         return wrapper;
@@ -69,16 +70,16 @@ public class RepairController {
     @PostMapping(value = "/delete")
     public CommonWrapper delete(@RequestBody RepairDelReq params) {
         logger.debug(" params = {}", new Object[]{params});
-        CommonWrapper wrapper = repairService.deleteInfo(params.geteIds());
+        CommonWrapper wrapper = repairService.deleteInfo(params.getrIds());
         return wrapper;
     }
 
     @ApiOperation(value = "按ID查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "String")
+            @ApiImplicitParam(name="recordId", value = "记录ID", required = true, paramType = "form", dataType = "int")
     })
     @PostMapping(value = "/find_by_id")
-    public SingleQueryWrapper findRecordById(@RequestParam String recordId) {
+    public SingleQueryWrapper findRecordById(@RequestParam int recordId) {
         SingleQueryWrapper wrapper = repairService.findRecordById(recordId);
 
         logger.debug(" recordId = {}",

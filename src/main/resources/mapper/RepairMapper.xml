@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smart.sperms.dao.mapper.RepairMapper" >
   <resultMap id="BaseResultMap" type="com.smart.sperms.dao.model.Repair" >
-    <id column="e_id" property="eId" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="e_id" property="eId" jdbcType="VARCHAR" />
     <result column="r_time" property="rTime" jdbcType="TIMESTAMP" />
     <result column="r_manufacturer" property="rManufacturer" jdbcType="VARCHAR" />
     <result column="err_code" property="errCode" jdbcType="VARCHAR" />
@@ -11,6 +12,7 @@
     <result column="r_person" property="rPerson" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.RepairDto" >
+    <id column="id" property="id" jdbcType="INTEGER" />
     <id column="e_id" property="eId" jdbcType="VARCHAR" />
     <result column="r_time" property="rTime" jdbcType="TIMESTAMP" />
     <result column="r_manufacturer" property="rManufacturer" jdbcType="VARCHAR" />
@@ -81,7 +83,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    e_id, r_time, r_manufacturer, err_code, r_state, r_cost, r_person
+    id, e_id, r_time, r_manufacturer, err_code, r_state, r_cost, r_person
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" >
     select
@@ -97,15 +99,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from repair
-    where e_id = #{eId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from repair
-    where e_id = #{eId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.smart.sperms.dao.model.RepairExample" >
     delete from repair
@@ -114,16 +116,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.smart.sperms.dao.model.Repair" >
-    insert into repair (e_id, r_time, r_manufacturer, 
-      err_code, r_state, r_cost, 
-      r_person)
-    values (#{eId,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, #{rManufacturer,jdbcType=VARCHAR}, 
-      #{errCode,jdbcType=VARCHAR}, #{rState,jdbcType=VARCHAR}, #{rCost,jdbcType=DOUBLE}, 
-      #{rPerson,jdbcType=VARCHAR})
+    insert into repair (id, e_id, r_time, 
+      r_manufacturer, err_code, r_state, 
+      r_cost, r_person)
+    values (#{id,jdbcType=INTEGER}, #{eId,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, 
+      #{rManufacturer,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{rState,jdbcType=VARCHAR}, 
+      #{rCost,jdbcType=DOUBLE}, #{rPerson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Repair" >
     insert into repair
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="eId != null" >
         e_id,
       </if>
@@ -147,6 +152,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="eId != null" >
         #{eId,jdbcType=VARCHAR},
       </if>
@@ -179,6 +187,9 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update repair
     <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.eId != null" >
         e_id = #{record.eId,jdbcType=VARCHAR},
       </if>
@@ -207,7 +218,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update repair
-    set e_id = #{record.eId,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
+      e_id = #{record.eId,jdbcType=VARCHAR},
       r_time = #{record.rTime,jdbcType=TIMESTAMP},
       r_manufacturer = #{record.rManufacturer,jdbcType=VARCHAR},
       err_code = #{record.errCode,jdbcType=VARCHAR},
@@ -221,6 +233,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.smart.sperms.dao.model.Repair" >
     update repair
     <set >
+      <if test="eId != null" >
+        e_id = #{eId,jdbcType=VARCHAR},
+      </if>
       <if test="rTime != null" >
         r_time = #{rTime,jdbcType=TIMESTAMP},
       </if>
@@ -240,17 +255,18 @@
         r_person = #{rPerson,jdbcType=VARCHAR},
       </if>
     </set>
-    where e_id = #{eId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.smart.sperms.dao.model.Repair" >
     update repair
-    set r_time = #{rTime,jdbcType=TIMESTAMP},
+    set e_id = #{eId,jdbcType=VARCHAR},
+      r_time = #{rTime,jdbcType=TIMESTAMP},
       r_manufacturer = #{rManufacturer,jdbcType=VARCHAR},
       err_code = #{errCode,jdbcType=VARCHAR},
       r_state = #{rState,jdbcType=VARCHAR},
       r_cost = #{rCost,jdbcType=DOUBLE},
       r_person = #{rPerson,jdbcType=VARCHAR}
-    where e_id = #{eId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" id="selectByExampleWithRowbounds" >
     select

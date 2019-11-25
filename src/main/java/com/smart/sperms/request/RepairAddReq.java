@@ -9,10 +9,10 @@ import java.io.Serializable;
  * 编辑设备维修信息
  */
 @ApiModel(description = "设备维修消息体")
-public class RepairEditReq implements Serializable {
+public class RepairAddReq implements Serializable {
 
-    @ApiModelProperty(value = "流水号")
-    private int id;
+    @ApiModelProperty(value = "设备ID")
+    private String eId;
 
     @ApiModelProperty(value = "维修厂家")
     private String rManufacturer;
@@ -32,12 +32,12 @@ public class RepairEditReq implements Serializable {
     @ApiModelProperty(value = "维修时间")
     private String rTime;
 
-    public int getId() {
-        return id;
+    public String geteId() {
+        return eId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void seteId(String eId) {
+        this.eId = eId;
     }
 
     public String getrManufacturer() {
@@ -91,7 +91,7 @@ public class RepairEditReq implements Serializable {
     @Override
     public String toString() {
         return "RepairEditReq{" +
-                "id='" + id + '\'' +
+                "eId='" + eId + '\'' +
                 ", rManufacturer='" + rManufacturer + '\'' +
                 ", rState='" + rState + '\'' +
                 ", rCost=" + rCost +

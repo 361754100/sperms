@@ -13,21 +13,20 @@ import java.util.List;
 public class RepairDelReq implements Serializable {
 
     @ApiModelProperty(value = "记录ID")
-    private List<String> eIds;
+    private List<Integer> rIds;
 
-    public List<String> geteIds() {
-        return eIds;
+    public List<Integer> getrIds() {
+        return rIds;
     }
 
-    public void seteIds(List<String> eIds) {
-        this.eIds = eIds;
+    public void setrIds(List<Integer> rIds) {
+        this.rIds = rIds;
     }
 
     @Override
     public String toString() {
         return "RepairDelReq{" +
-                "eIds=" + eIds +
+                "rIds=" + rIds +
                 '}';
     }
-
 }
