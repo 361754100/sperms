@@ -40,7 +40,7 @@ public class RentManagerService {
         info.seteId(req.geteId());
         info.setCustomerNo(req.getCustomerNo());
         info.setRentPlace(req.getRentPlace());
-        info.setTradeNo(tradeNo);
+        info.setTradeNo(tradeNo.toUpperCase());
         info.setRentBeginDate(DateUtils.parseStrToDate(req.getRentBeginDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentDate(DateUtils.parseStrToDate(req.getRentDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentEndDate(DateUtils.parseStrToDate(req.getRentEndDate(), DateUtils.DEFAULT_FORMAT));
