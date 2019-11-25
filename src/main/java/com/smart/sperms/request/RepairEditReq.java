@@ -32,6 +32,9 @@ public class RepairEditReq implements Serializable {
     @ApiModelProperty(value = "维修时间")
     private String rTime;
 
+    @ApiModelProperty(value = "故障时间")
+    private String downTime;
+
     public int getId() {
         return id;
     }
@@ -88,16 +91,25 @@ public class RepairEditReq implements Serializable {
         this.rTime = rTime;
     }
 
+    public String getDownTime() {
+        return downTime;
+    }
+
+    public void setDownTime(String downTime) {
+        this.downTime = downTime;
+    }
+
     @Override
     public String toString() {
         return "RepairEditReq{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", rManufacturer='" + rManufacturer + '\'' +
                 ", rState='" + rState + '\'' +
                 ", rCost=" + rCost +
                 ", rPerson='" + rPerson + '\'' +
                 ", errCode='" + errCode + '\'' +
                 ", rTime='" + rTime + '\'' +
+                ", downTime='" + downTime + '\'' +
                 '}';
     }
 }

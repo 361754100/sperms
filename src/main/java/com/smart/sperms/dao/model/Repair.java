@@ -20,6 +20,8 @@ public class Repair implements Serializable {
 
     private String rPerson;
 
+    private Date downTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -84,5 +86,13 @@ public class Repair implements Serializable {
 
     public void setrPerson(String rPerson) {
         this.rPerson = rPerson;
+    }
+
+    public Date getDownTime() {
+        return downTime;
+    }
+
+    public void setDownTime(Date downTime) {
+        this.downTime = downTime;
     }
 }

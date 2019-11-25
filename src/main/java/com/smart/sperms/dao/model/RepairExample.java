@@ -635,6 +635,66 @@ public class RepairExample {
             return (Criteria) this;
         }
 
+        public Criteria andDownTimeIsNull() {
+            addCriterion("down_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeIsNotNull() {
+            addCriterion("down_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeEqualTo(Date value) {
+            addCriterion("down_time =", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeNotEqualTo(Date value) {
+            addCriterion("down_time <>", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeGreaterThan(Date value) {
+            addCriterion("down_time >", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("down_time >=", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeLessThan(Date value) {
+            addCriterion("down_time <", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeLessThanOrEqualTo(Date value) {
+            addCriterion("down_time <=", value, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeIn(List<Date> values) {
+            addCriterion("down_time in", values, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeNotIn(List<Date> values) {
+            addCriterion("down_time not in", values, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeBetween(Date value1, Date value2) {
+            addCriterion("down_time between", value1, value2, "downTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDownTimeNotBetween(Date value1, Date value2) {
+            addCriterion("down_time not between", value1, value2, "downTime");
+            return (Criteria) this;
+        }
+
         public Criteria andEIdLikeInsensitive(String value) {
             addCriterion("upper(e_id) like", value.toUpperCase(), "eId");
             return (Criteria) this;

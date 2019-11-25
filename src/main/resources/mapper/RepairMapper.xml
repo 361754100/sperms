@@ -10,10 +10,12 @@
     <result column="r_state" property="rState" jdbcType="VARCHAR" />
     <result column="r_cost" property="rCost" jdbcType="DOUBLE" />
     <result column="r_person" property="rPerson" jdbcType="VARCHAR" />
+    <result column="down_time" property="downTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="DtoResultMap" type="com.smart.sperms.dao.dto.RepairDto" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="e_id" property="eId" jdbcType="VARCHAR" />
+    <result column="down_time" property="downTime" jdbcType="TIMESTAMP" />
     <result column="r_time" property="rTime" jdbcType="TIMESTAMP" />
     <result column="r_manufacturer" property="rManufacturer" jdbcType="VARCHAR" />
     <result column="r_state" property="rState" jdbcType="VARCHAR" />
@@ -83,7 +85,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, e_id, r_time, r_manufacturer, err_code, r_state, r_cost, r_person
+    id, e_id, r_time, r_manufacturer, err_code, r_state, r_cost, r_person, down_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" >
     select
@@ -118,10 +120,12 @@
   <insert id="insert" parameterType="com.smart.sperms.dao.model.Repair" >
     insert into repair (id, e_id, r_time, 
       r_manufacturer, err_code, r_state, 
-      r_cost, r_person)
+      r_cost, r_person, down_time
+      )
     values (#{id,jdbcType=INTEGER}, #{eId,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, 
       #{rManufacturer,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{rState,jdbcType=VARCHAR}, 
-      #{rCost,jdbcType=DOUBLE}, #{rPerson,jdbcType=VARCHAR})
+      #{rCost,jdbcType=DOUBLE}, #{rPerson,jdbcType=VARCHAR}, #{downTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.smart.sperms.dao.model.Repair" >
     insert into repair
@@ -150,6 +154,9 @@
       <if test="rPerson != null" >
         r_person,
       </if>
+      <if test="downTime != null" >
+        down_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -175,6 +182,9 @@
       </if>
       <if test="rPerson != null" >
         #{rPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="downTime != null" >
+        #{downTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -211,6 +221,9 @@
       <if test="record.rPerson != null" >
         r_person = #{record.rPerson,jdbcType=VARCHAR},
       </if>
+      <if test="record.downTime != null" >
+        down_time = #{record.downTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +238,8 @@
       err_code = #{record.errCode,jdbcType=VARCHAR},
       r_state = #{record.rState,jdbcType=VARCHAR},
       r_cost = #{record.rCost,jdbcType=DOUBLE},
-      r_person = #{record.rPerson,jdbcType=VARCHAR}
+      r_person = #{record.rPerson,jdbcType=VARCHAR},
+      down_time = #{record.downTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -254,6 +268,9 @@
       <if test="rPerson != null" >
         r_person = #{rPerson,jdbcType=VARCHAR},
       </if>
+      <if test="downTime != null" >
+        down_time = #{downTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -265,7 +282,8 @@
       err_code = #{errCode,jdbcType=VARCHAR},
       r_state = #{rState,jdbcType=VARCHAR},
       r_cost = #{rCost,jdbcType=DOUBLE},
-      r_person = #{rPerson,jdbcType=VARCHAR}
+      r_person = #{rPerson,jdbcType=VARCHAR},
+      down_time = #{downTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.smart.sperms.dao.model.RepairExample" id="selectByExampleWithRowbounds" >
@@ -344,4 +362,5 @@
     order by r.r_time desc
     limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
+
 </mapper>
