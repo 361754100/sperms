@@ -1,5 +1,6 @@
 package com.smart.sperms.controller;
 
+import com.smart.sperms.request.RentManagerAddReq;
 import com.smart.sperms.request.RentManagerDelReq;
 import com.smart.sperms.request.RentManagerEditReq;
 import com.smart.sperms.response.CommonWrapper;
@@ -51,7 +52,7 @@ public class RentManagerController {
 
     @ApiOperation(value = "新增租赁信息")
     @PostMapping(value = "/add")
-    public CommonWrapper add(@RequestBody RentManagerEditReq params) {
+    public CommonWrapper add(@RequestBody RentManagerAddReq params) {
         logger.debug(" params = {}", new Object[]{params});
         CommonWrapper wrapper = rentManagerService.addInfo(params);
         return wrapper;

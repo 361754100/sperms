@@ -4,6 +4,7 @@ import com.smart.sperms.dao.RentManagerDao;
 import com.smart.sperms.dao.dto.RentManagerDto;
 import com.smart.sperms.dao.model.RentManager;
 import com.smart.sperms.enums.ResultCodeEnum;
+import com.smart.sperms.request.RentManagerAddReq;
 import com.smart.sperms.request.RentManagerEditReq;
 import com.smart.sperms.response.CommonWrapper;
 import com.smart.sperms.response.PageSearchWrapper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RentManagerService {
@@ -26,16 +28,11 @@ public class RentManagerService {
      * @param req
      * @return
      */
-    public CommonWrapper addInfo(RentManagerEditReq req) {
+    public CommonWrapper addInfo(RentManagerAddReq req) {
         CommonWrapper wrapper = new CommonWrapper();
         wrapper.setResultCode(ResultCodeEnum.FAILURE.getCode());
 
-        String tradeNo = req.getTradeNo();
-        boolean isExist = this.isExists(tradeNo);
-        if(isExist) {
-            wrapper.setResultMsg("该租赁信息已存在");
-            return wrapper;
-        }
+        String tradeNo = UUID.randomUUID().toString().replaceAll("-","");
 
         RentManager info = new RentManager();
         info.setCustomerNo(req.getCustomerNo());
@@ -43,7 +40,7 @@ public class RentManagerService {
         info.seteId(req.geteId());
         info.setCustomerNo(req.getCustomerNo());
         info.setRentPlace(req.getRentPlace());
-        info.setTradeNo(req.getTradeNo());
+        info.setTradeNo(tradeNo);
         info.setRentBeginDate(DateUtils.parseStrToDate(req.getRentBeginDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentDate(DateUtils.parseStrToDate(req.getRentDate(), DateUtils.DEFAULT_FORMAT));
         info.setRentEndDate(DateUtils.parseStrToDate(req.getRentEndDate(), DateUtils.DEFAULT_FORMAT));
