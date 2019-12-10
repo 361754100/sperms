@@ -76,6 +76,7 @@ public class EquipmentService {
             Handler109 handler109 = SpringContext.getBean(Handler109.class);
             DataBody109 dataBody109 = new DataBody109();
             dataBody109.setAddress((short)req.getAndroidAddress());
+            dataBody109.setSlaveAddress(req.getAndroidSlaveAddress());
             dataBody109.setType(req.getAndroidType());
 
             MsgPayload payload = new MsgPayload();
@@ -121,6 +122,7 @@ public class EquipmentService {
             Handler109 handler109 = SpringContext.getBean(Handler109.class);
             DataBody109 dataBody109 = new DataBody109();
             dataBody109.setAddress((short)req.getAndroidAddress());
+            dataBody109.setSlaveAddress(req.getAndroidSlaveAddress());
             dataBody109.setType(req.getAndroidType());
 
             MsgPayload payload = new MsgPayload();

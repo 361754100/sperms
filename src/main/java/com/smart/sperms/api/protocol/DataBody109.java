@@ -9,6 +9,8 @@ public class DataBody109 implements Serializable {
 
     private short address;
 
+    private int slaveAddress;
+
     private int type;
 
     public short getAddress() {
@@ -27,10 +29,19 @@ public class DataBody109 implements Serializable {
         this.type = type;
     }
 
+    public int getSlaveAddress() {
+        return slaveAddress;
+    }
+
+    public void setSlaveAddress(int slaveAddress) {
+        this.slaveAddress = slaveAddress;
+    }
+
     @Override
     public String toString() {
         return "DataBody109{" +
                 "address=" + address +
+                ", slaveAddress=" + slaveAddress +
                 ", type=" + type +
                 '}';
     }

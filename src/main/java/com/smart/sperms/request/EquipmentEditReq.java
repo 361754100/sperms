@@ -41,6 +41,9 @@ public class EquipmentEditReq implements Serializable {
     @ApiModelProperty(value = "modbux数据类型-安卓端")
     private int androidAddress;
 
+    @ApiModelProperty(value = "modbux从站地址-安卓端")
+    private int androidSlaveAddress;
+
     @ApiModelProperty(value = "信号类型（0：表示只有0/1信号类型，1：表示可以传输一个Byte类型）-安卓端")
     private int androidType;
 
@@ -143,6 +146,14 @@ public class EquipmentEditReq implements Serializable {
         this.androidPwd = androidPwd;
     }
 
+    public int getAndroidSlaveAddress() {
+        return androidSlaveAddress;
+    }
+
+    public void setAndroidSlaveAddress(int androidSlaveAddress) {
+        this.androidSlaveAddress = androidSlaveAddress;
+    }
+
     @Override
     public String toString() {
         return "EquipmentEditReq{" +
@@ -156,6 +167,7 @@ public class EquipmentEditReq implements Serializable {
                 ", eLatitude='" + eLatitude + '\'' +
                 ", eDate='" + eDate + '\'' +
                 ", androidAddress=" + androidAddress +
+                ", androidSlaveAddress=" + androidSlaveAddress +
                 ", androidType=" + androidType +
                 ", androidPwd='" + androidPwd + '\'' +
                 '}';
