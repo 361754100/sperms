@@ -273,7 +273,7 @@
     select pstat.*, equip.e_name, prod.pro_name, prod.pro_type, prod.pro_size from production_stat pstat
     left join
     equipment equip on pstat.e_id = equip.e_id
-    left join
+    left joininsertSelective
     product prod on pstat.pro_id = prod.pro_id
     where 1=1
     <if test="beginTime != null and endTime != null" >
@@ -324,4 +324,13 @@
       and equip.e_name like CONCAT('%',#{eName},'%')
     </if>
   </select>
+
+  <insert id="insertBatch" parameterType="list" >
+    INSERT INTO production_stat (e_id, ps_date, ps_end_date, ps_mount, pro_id, ps_quantity)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      (#{item.eId}, #{item.psDate}, #{item.psEndDate}, #{item.psMount}, #{item.proId}, #{item.psQuantity})
+    </foreach>
+  </insert>
+
 </mapper>

@@ -1,17 +1,16 @@
 package com.smart.sperms;
 
+import com.alibaba.fastjson.JSON;
+import com.smart.sperms.api.protocol.DataBody103;
+import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.utils.DateUtils;
-import com.smart.sperms.utils.RsaUtil;
-import com.smart.sperms.utils.StringUtils;
 import com.smart.sperms.utils.XxteaUtils;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Base64;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class TestUtils {
 
@@ -175,4 +174,15 @@ public class TestUtils {
         }
     }
 
+    @Test
+    public void testJsonMsg() {
+        String msgBody = "{\"protocol\":103, \"code\": 0, \"data\": [{\"type\":1, \"count\":5, \"startTime\":\"2019-11-01 16:38:22\",\"endTime\":\"2019-11-01 16:38:30\"},{\"type\":2, \"count\":5, \"startTime\":\"2019-11-01 16:38:22\",\"endTime\":\"2019-11-01 16:38:30\"}]}";
+        MsgPayload payload = JSON.parseObject(msgBody, MsgPayload.class);
+        String dataStr = String.valueOf(payload.getData());
+        Object dataBody = JSON.parseArray(dataStr, DataBody103.class);
+        payload.setData(dataBody);
+
+        List<DataBody103> dataList = (ArrayList<DataBody103>)payload.getData();
+        System.out.println(" dataStr = " + dataStr);
+    }
 }

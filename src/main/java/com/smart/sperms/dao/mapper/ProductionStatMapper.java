@@ -3,11 +3,11 @@ package com.smart.sperms.dao.mapper;
 import com.smart.sperms.dao.dto.ProductionStatDto;
 import com.smart.sperms.dao.model.ProductionStat;
 import com.smart.sperms.dao.model.ProductionStatExample;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ProductionStatMapper {
     int countByExample(ProductionStatExample example);
@@ -39,4 +39,6 @@ public interface ProductionStatMapper {
     List<ProductionStatDto> selectDtoByCondition(Map<String, Object> params);
 
     int countByCondition(Map<String, Object> params);
+
+    int insertBatch(List<ProductionStat> list);
 }

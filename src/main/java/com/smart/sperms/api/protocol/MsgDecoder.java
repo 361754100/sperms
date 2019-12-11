@@ -54,7 +54,7 @@ public class MsgDecoder {
                 break;
             case CODE_103:
                 handler = SpringContext.getBean(Handler103.class);
-                dataBody = JSON.parseObject(dataStr, DataBody103.class);
+                dataBody = JSON.parseArray(dataStr, DataBody103.class);
                 break;
             case CODE_104:
                 break;

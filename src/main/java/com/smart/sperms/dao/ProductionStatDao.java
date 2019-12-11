@@ -38,6 +38,21 @@ public class ProductionStatDao {
     }
 
     /**
+     * 新增记录
+     * @param records
+     * @return
+     */
+    public int saveList(List<ProductionStat> records) {
+        int cnt = 0;
+        try {
+            cnt = mapper.insertBatch(records);
+        } catch (Exception e) {
+            logger.error("save data list error...", e);
+        }
+        return cnt;
+    }
+
+    /**
      * 修改记录
      * @param recordId
      * @param record

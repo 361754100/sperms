@@ -11,7 +11,9 @@ public class DataBody103 implements Serializable {
 
     private int count;
 
-    private String image;
+    private String startTime;
+
+    private String endTime;
 
     public int getType() {
         return type;
@@ -29,12 +31,20 @@ public class DataBody103 implements Serializable {
         this.count = count;
     }
 
-    public String getImage() {
-        return image;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -42,7 +52,8 @@ public class DataBody103 implements Serializable {
         return "DataBody103{" +
                 "type=" + type +
                 ", count=" + count +
-                ", image='" + image + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 '}';
     }
 }

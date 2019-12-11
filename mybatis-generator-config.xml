@@ -25,64 +25,9 @@
 		<javaClientGenerator targetPackage="com.smart.sperms.dao.mapper"
 			targetProject="src/main/java" type="XMLMAPPER" />
 
-		<table tableName="sys_role" domainObjectName="SysRole">
+		<table tableName="repair" domainObjectName="Repair">
 			<property name="useActualColumnNames" value="false"/>
-			<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />
-		</table>
-
-		<table tableName="caculation_method" domainObjectName="CaculationMethod">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="customer" domainObjectName="Customer">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="equipment" domainObjectName="Equipment">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="equipment_enable" domainObjectName="EquipmentEnable">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="production_stat" domainObjectName="ProductionStat">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="rent_manager" domainObjectName="RentManager">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="ROLE_ID" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="sys_menu" domainObjectName="SysMenu">
-			<property name="useActualColumnNames" value="false"/>
-			<generatedKey column="menu_id" sqlStatement="JDBC" identity="true" />
-		</table>
-
-		<table tableName="sys_role" domainObjectName="SysRole">
-			<property name="useActualColumnNames" value="false"/>
-			<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />
-		</table>
-
-		<table tableName="sys_role_menu_relation" domainObjectName="SysRoleMenuRelation">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="users" domainObjectName="Users">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />-->
-		</table>
-
-		<table tableName="users_customer_relation" domainObjectName="UsersCustomerRelation">
-			<property name="useActualColumnNames" value="false"/>
-			<!--<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />-->
+			<!--<generatedKey column="E_ID" sqlStatement="JDBC" identity="true" />-->
 		</table>
 
 	</context>

@@ -3,18 +3,19 @@ package com.smart.sperms.api.handler;
 import com.smart.sperms.api.protocol.DataBody103;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.config.PropertiesConfig;
+import com.smart.sperms.dao.ProductionStatDao;
+import com.smart.sperms.dao.model.ProductionStat;
 import com.smart.sperms.enums.ProtocolEnum;
 import com.smart.sperms.utils.DateUtils;
 import com.smart.sperms.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Base64;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 处理103协议
@@ -25,20 +26,50 @@ public class Handler103 extends Handler {
     @Autowired
     private PropertiesConfig propsConfig;
 
+    @Autowired
+    private ProductionStatDao statDao;
+
     @Override
     public void execute(String eId, MsgPayload req) {
-        DataBody103 reqBody = (DataBody103)req.getData();
-        logger.info("recv android msg...body = {}", reqBody);
+        List<DataBody103> dataList = (ArrayList<DataBody103>)req.getData();
+        logger.info("recv android msg...body = {}", dataList);
 
         MsgPayload resp = new MsgPayload();
         resp.setProtocol(ProtocolEnum.CODE_104.getCode());
         super.sendMsg(eId, resp);
 
+        saveProductStat(eId, dataList);
         // 保存图片
-        String imgBase64 = reqBody.getImage();
-        if(!StringUtils.isEmpty(imgBase64)) {
-            saveImage(eId, reqBody.getType(), imgBase64);
+//        String imgBase64 = reqBody.getImage();
+//        if(!StringUtils.isEmpty(imgBase64)) {
+//            saveImage(eId, reqBody.getType(), imgBase64);
+//        }
+    }
+
+    /**
+     * 保存生成统计信息
+     * @param eId
+     * @param dataList
+     */
+    private void saveProductStat(String eId, List<DataBody103> dataList) {
+        if(CollectionUtils.isEmpty(dataList)) {
+            logger.error("dataList is Empty...eId={}", eId);
+            return;
         }
+        List<ProductionStat> stats = new ArrayList<>();
+        for(DataBody103 dataBody103: dataList) {
+            ProductionStat stat = new ProductionStat();
+            stat.setPsMount(dataBody103.getCount());
+            stat.setPsDate(DateUtils.parseStrToDate(dataBody103.getStartTime(), "yyyy-MM-dd HH:mm:ss"));
+            stat.setPsEndDate(DateUtils.parseStrToDate(dataBody103.getEndTime(), "yyyy-MM-dd HH:mm:ss"));
+            stat.seteId(eId);
+            stat.setProId(String.valueOf(dataBody103.getType()));
+//            stat.setPsQuantity();
+            stats.add(stat);
+        }
+
+        int cnt  = statDao.saveList(stats);
+        logger.debug("insert product stat record...cnt = {}", cnt);
     }
 
     /**

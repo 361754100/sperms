@@ -62,6 +62,7 @@ public class MqttInputHandler {
                 topicList.add(topic);
             }
         }
+//        topicList.add("/machine_web/1001");
         String[] topics = new String[topicList.size()];
         topicList.toArray(topics);
 
