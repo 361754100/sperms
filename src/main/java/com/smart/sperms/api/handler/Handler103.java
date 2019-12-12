@@ -3,7 +3,9 @@ package com.smart.sperms.api.handler;
 import com.smart.sperms.api.protocol.DataBody103;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.config.PropertiesConfig;
+import com.smart.sperms.dao.ProductDao;
 import com.smart.sperms.dao.ProductionStatDao;
+import com.smart.sperms.dao.model.Product;
 import com.smart.sperms.dao.model.ProductionStat;
 import com.smart.sperms.enums.ProtocolEnum;
 import com.smart.sperms.utils.DateUtils;
@@ -28,6 +30,9 @@ public class Handler103 extends Handler {
 
     @Autowired
     private ProductionStatDao statDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public void execute(String eId, MsgPayload req) {
@@ -57,14 +62,27 @@ public class Handler103 extends Handler {
             return;
         }
         List<ProductionStat> stats = new ArrayList<>();
+        Map<String, Product> prods = productDao.queryProMap();
+        Product tmpProd = null;
+        String proId = null;
         for(DataBody103 dataBody103: dataList) {
+            proId = String.valueOf(dataBody103.getType());
+
+            int psQuantity = dataBody103.getCount();
+            double actualWeight = 0;
+            tmpProd = prods.get(proId);
+            if(tmpProd != null) {
+                actualWeight = tmpProd.getProWeightActual();
+            }
+            int psMount = (int)(psQuantity * actualWeight);
+
             ProductionStat stat = new ProductionStat();
-            stat.setPsMount(dataBody103.getCount());
+            stat.setPsMount(psMount);
             stat.setPsDate(DateUtils.parseStrToDate(dataBody103.getStartTime(), "yyyy-MM-dd HH:mm:ss"));
             stat.setPsEndDate(DateUtils.parseStrToDate(dataBody103.getEndTime(), "yyyy-MM-dd HH:mm:ss"));
             stat.seteId(eId);
-            stat.setProId(String.valueOf(dataBody103.getType()));
-//            stat.setPsQuantity();
+            stat.setProId(proId);
+            stat.setPsQuantity(psQuantity);
             stats.add(stat);
         }
 

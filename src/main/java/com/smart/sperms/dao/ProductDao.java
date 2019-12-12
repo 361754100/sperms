@@ -9,8 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductDao {
@@ -128,6 +131,25 @@ public class ProductDao {
 
         result = mapper.selectByExample(example);
         return result;
+    }
+
+    /**
+     * 条件查询
+     * @return
+     */
+    public Map<String, Product> queryProMap() {
+        Map<String, Product> rtMap = new HashMap<>();
+
+        ProductExample example = new ProductExample();
+
+        List<Product> result = mapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(result)) {
+            return rtMap;
+        }
+        for(Product prod: result) {
+            rtMap.put(prod.getProId(), prod);
+        }
+        return rtMap;
     }
 
     /**
