@@ -44,7 +44,7 @@ public class EquipmentEditReq implements Serializable {
     @ApiModelProperty(value = "modbux从站地址-安卓端")
     private int androidSlaveAddress;
 
-    @ApiModelProperty(value = "信号类型（0：表示只有0/1信号类型，1：表示可以传输一个Byte类型）-安卓端")
+    @ApiModelProperty(value = "信号类型（1：表示只有0/1信号类型，2：表示可以传输一个Byte类型）-安卓端")
     private int androidType;
 
     @ApiModelProperty(value = "密钥-安卓端")

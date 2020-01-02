@@ -44,12 +44,13 @@ public class MqttMsgController {
     @ApiOperation(value = "发送消息--指定主题")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "topic", value = "消息主题", required = true, paramType = "form"),
-            @ApiImplicitParam(name = "message", value = "消息内容", required = true, paramType = "form")
+            @ApiImplicitParam(name = "message", value = "消息内容", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "xxteaKey", value = "消息内容", required = true, paramType = "form")
     })
     @PostMapping(value="/send_msg_by_topic")
-    public CommonWrapper sendMsgByTopic(@RequestParam String topic, @RequestParam String message){
+    public CommonWrapper sendMsgByTopic(@RequestParam String topic, @RequestParam String message, @RequestParam String xxteaKey){
         CommonWrapper wrapper = new CommonWrapper();
-        String key = propertiesConfig.getXxtea_key_smart();
+        String key = xxteaKey;
         try {
             String payload = XxteaUtils.encryptToHexString(message, key);
             mqttSendService.sendToMqtt(topic, payload);
@@ -67,7 +68,7 @@ public class MqttMsgController {
     @PostMapping(value="/send_payload_by_topic")
     public CommonWrapper sendPayloadByTopic(@RequestBody MqttPayloadReq req){
         CommonWrapper wrapper = new CommonWrapper();
-        String key = propertiesConfig.getXxtea_key_smart();
+        String key = req.getXxteaKey();
         String topic = req.getTopic();
         MsgPayload payload = req.getPayload();
         String message = JSON.toJSONString(payload);

@@ -21,6 +21,9 @@ public class MqttPayloadReq implements Serializable {
     @ApiModelProperty(value = "是否需要数据加密")
     private boolean isEncrypt;
 
+    @ApiModelProperty(value = "密钥")
+    private String xxteaKey;
+
     public String getTopic() {
         return topic;
     }
@@ -43,5 +46,13 @@ public class MqttPayloadReq implements Serializable {
 
     public void setEncrypt(boolean encrypt) {
         isEncrypt = encrypt;
+    }
+
+    public String getXxteaKey() {
+        return xxteaKey;
+    }
+
+    public void setXxteaKey(String xxteaKey) {
+        this.xxteaKey = xxteaKey;
     }
 }

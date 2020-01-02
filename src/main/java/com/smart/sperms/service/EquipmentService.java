@@ -1,10 +1,8 @@
 package com.smart.sperms.service;
 
 import com.smart.sperms.api.handler.Handler107;
-import com.smart.sperms.api.handler.Handler109;
 import com.smart.sperms.api.handler.Handler111;
 import com.smart.sperms.api.protocol.DataBody107;
-import com.smart.sperms.api.protocol.DataBody109;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.common.SpringContext;
 import com.smart.sperms.config.mqtt.MqttInputHandler;
@@ -73,6 +71,7 @@ public class EquipmentService {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
 
+            /*客户提出：不能从平台设置设备的工作参数
             Handler109 handler109 = SpringContext.getBean(Handler109.class);
             DataBody109 dataBody109 = new DataBody109();
             dataBody109.setAddress((short)req.getAndroidAddress());
@@ -83,7 +82,7 @@ public class EquipmentService {
             payload.setProtocol(ProtocolEnum.CODE_109.getCode());
             payload.setData(dataBody109);
 
-            handler109.execute(req.geteId(), payload);
+            handler109.execute(req.geteId(), payload);*/
 
             // 订阅设备消息
             mqttInputHandler.addListenTopic(eId);
@@ -119,6 +118,7 @@ public class EquipmentService {
             wrapper.setResultCode(ResultCodeEnum.SUCCESS.getCode());
             wrapper.setResultMsg(ResultCodeEnum.SUCCESS.getDesc());
 
+            /*客户提出：不能从平台设置设备的工作参数
             Handler109 handler109 = SpringContext.getBean(Handler109.class);
             DataBody109 dataBody109 = new DataBody109();
             dataBody109.setAddress((short)req.getAndroidAddress());
@@ -129,7 +129,7 @@ public class EquipmentService {
             payload.setProtocol(ProtocolEnum.CODE_109.getCode());
             payload.setData(dataBody109);
 
-            handler109.execute(req.geteId(), payload);
+            handler109.execute(req.geteId(), payload);*/
 
             this.controlDev(req.geteId(), req.geteEnable().intValue());
         }

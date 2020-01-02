@@ -3,8 +3,9 @@ package com.smart.sperms.api.handler;
 import com.alibaba.fastjson.JSON;
 import com.smart.sperms.api.protocol.MsgPayload;
 import com.smart.sperms.common.SpringContext;
-import com.smart.sperms.config.PropertiesConfig;
 import com.smart.sperms.config.mqtt.MqttConfig;
+import com.smart.sperms.dao.EquipmentDao;
+import com.smart.sperms.dao.model.Equipment;
 import com.smart.sperms.service.MqttSendService;
 import com.smart.sperms.utils.XxteaUtils;
 import org.slf4j.Logger;
@@ -22,12 +23,18 @@ public abstract class Handler {
     public abstract void execute(String eId, MsgPayload req);
 
     public void sendMsg(String eId, MsgPayload msgPayload) {
-        PropertiesConfig propsConfig = SpringContext.getBean(PropertiesConfig.class);
         MqttConfig mqttConfig = SpringContext.getBean(MqttConfig.class);
         MqttSendService mqttService = SpringContext.getBean(MqttSendService.class);
+        EquipmentDao equipmentDao = SpringContext.getBean(EquipmentDao.class);
+        //TODO 改用redis
+        Equipment equip = equipmentDao.queryByEid(eId);
+        if(equip == null) {
+            logger.error("equipment is not exists...eId = {}", eId);
+            return;
+        }
 
         String topic = mqttConfig.getTopic_smart_web() + eId;
-        String key = propsConfig.getXxtea_key_smart();
+        String key = equip.getAndroidPwd();
         String msg = JSON.toJSONString(msgPayload);
         String payload = XxteaUtils.encryptToHexString(msg, key);
         mqttService.sendToMqtt(topic, payload);

@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EquipmentDao {
@@ -165,6 +165,25 @@ public class EquipmentDao {
         }
         result = mapper.selectByExample(example);
         return result;
+    }
+
+    /**
+     * 条件查询
+     * @param eId
+     * @return
+     */
+    public Equipment queryByEid(String eId) {
+        Equipment rtObj = null;
+
+        EquipmentExample example = new EquipmentExample();
+        example.createCriteria().andEIdEqualTo(eId);
+
+        List<Equipment> result = mapper.selectByExample(example);
+        if(!CollectionUtils.isEmpty(result)) {
+            rtObj = result.get(0);
+        }
+
+        return rtObj;
     }
 
     /**
