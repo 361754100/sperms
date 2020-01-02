@@ -273,7 +273,7 @@
     select pstat.*, equip.e_name, prod.pro_name, prod.pro_type, prod.pro_size from production_stat pstat
     left join
     equipment equip on pstat.e_id = equip.e_id
-    left joininsertSelective
+    left join
     product prod on pstat.pro_id = prod.pro_id
     where 1=1
     <if test="beginTime != null and endTime != null" >
